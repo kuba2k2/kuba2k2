@@ -1,0 +1,27 @@
+name: "[reusable] gh-release"
+
+on:
+  workflow_call:
+    inputs:
+      artifact:
+        required: false
+        type: string
+
+jobs:
+  gh-release:
+    name: download, release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        if: ${{ inputs.artifact != '' }}
+        with:
+          name: ${{ inputs.artifact }}
+          path: artifact/
+
+      - name: Release on GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          files: artifact/*
+          fail_on_unmatched_files: false
+          generate_release_notes: true

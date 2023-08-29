@@ -1,0 +1,66 @@
+name: "[reusable] build-nsis"
+
+on:
+  workflow_call:
+    inputs:
+      input-artifact:
+        required: false
+        type: string
+      input-path:
+        required: false
+        type: string
+        default: "artifact/"
+      script-file:
+        required: true
+        type: string
+      pre-build:
+        required: false
+        type: string
+      post-build:
+        required: false
+        type: string
+      files:
+        required: false
+        type: string
+      output-artifact:
+        required: false
+        type: string
+        default: "nsis-build"
+    outputs:
+      artifact:
+        value: ${{ inputs.artifact }}
+
+jobs:
+  build-nsis:
+    name: makensis
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        if: ${{ inputs.input-artifact != '' }}
+        with:
+          name: ${{ inputs.input-artifact }}
+          path: ${{ inputs.input-path }}
+
+      - name: Run pre-build step
+        if: ${{ inputs.pre-build != '' }}
+        run: ${{ inputs.pre-build }}
+
+      - name: Build NSIS installer
+        uses: joncloud/makensis-action@v4
+        with:
+          script-file: ${{ inputs.script-file }}
+
+      - name: Run post-build step
+        if: ${{ inputs.post-build != '' }}
+        run: ${{ inputs.post-build }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        if: ${{ inputs.files != '' }}
+        with:
+          name: ${{ inputs.output-artifact }}
+          path: ${{ inputs.files }}

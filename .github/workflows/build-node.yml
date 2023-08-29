@@ -1,0 +1,70 @@
+name: "[reusable] build-node"
+
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
+      project-directory:
+        required: false
+        type: string
+        default: "."
+      task-build:
+        required: false
+        type: string
+        default: "build"
+      pre-build:
+        required: false
+        type: string
+      post-build:
+        required: false
+        type: string
+      files:
+        required: false
+        type: string
+      output-artifact:
+        required: false
+        type: string
+        default: "node-build"
+    outputs:
+      artifact:
+        value: ${{ inputs.artifact }}
+
+jobs:
+  build-node:
+    name: npm run
+    runs-on: ${{ inputs.runs-on }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install project
+        run: npm ci
+
+      - name: Run pre-build step
+        if: ${{ inputs.pre-build != '' }}
+        working-directory: ${{ inputs.project-directory }}
+        run: ${{ inputs.pre-build }}
+
+      - name: Build Node.js project
+        working-directory: ${{ inputs.project-directory }}
+        run: |
+          npm run ${{ inputs.task-build }}
+
+      - name: Run post-build step
+        if: ${{ inputs.post-build != '' }}
+        working-directory: ${{ inputs.project-directory }}
+        run: ${{ inputs.post-build }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        if: ${{ inputs.files != '' }}
+        with:
+          name: ${{ inputs.output-artifact }}
+          path: ${{ inputs.files }}

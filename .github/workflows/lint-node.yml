@@ -1,0 +1,31 @@
+name: "[reusable] lint-node"
+
+on:
+  workflow_call:
+    inputs:
+      task-lint:
+        required: false
+        type: string
+        default: lint
+      task-format-check:
+        required: false
+        type: string
+        default: format-check
+
+jobs:
+  lint-node:
+    name: lint, format-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install project
+        run: npm ci
+      - name: Run lint
+        run: npm run ${{ inputs.task-lint }}
+      - name: Check code formatting
+        run: npm run ${{ inputs.task-format-check }}

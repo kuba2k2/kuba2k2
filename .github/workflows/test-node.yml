@@ -1,0 +1,25 @@
+name: "[reusable] test-node"
+
+on:
+  workflow_call:
+    inputs:
+      task-test:
+        required: false
+        type: string
+        default: test
+
+jobs:
+  test-node:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install project
+        run: npm ci
+      - name: Run tests
+        run: npm run ${{ inputs.task-test }}

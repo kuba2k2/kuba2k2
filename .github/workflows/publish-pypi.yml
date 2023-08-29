@@ -23,5 +23,5 @@ jobs:
 
       - name: Build package
         run: poetry build
-      - name: Publish to PyPI
+      - name: Publish PyPI package
         run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}

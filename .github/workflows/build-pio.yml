@@ -23,7 +23,7 @@ on:
       files:
         required: false
         type: string
-      artifact:
+      output-artifact:
         required: false
         type: string
         default: "platformio-build"
@@ -36,7 +36,7 @@ jobs:
     name: pio run
     runs-on: ${{ inputs.runs-on }}
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Cache pip
@@ -78,5 +78,5 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ inputs.files != '' }}
         with:
-          name: ${{ inputs.artifact }}
+          name: ${{ inputs.output-artifact }}
           path: ${{ inputs.files }}

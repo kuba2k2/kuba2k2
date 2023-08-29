@@ -22,7 +22,7 @@ jobs:
           name: ${{ inputs.artifact }}
           path: artifact/
 
-      - name: Release on GitHub
+      - name: Publish GitHub release
         uses: softprops/action-gh-release@v1
         with:
           files: artifact/*

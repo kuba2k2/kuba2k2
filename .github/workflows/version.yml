@@ -1,0 +1,38 @@
+name: "[reusable] version"
+
+on:
+  workflow_call:
+    outputs:
+      now-short:
+        value: ${{ jobs.version.outputs.now-short }}
+      now-long:
+        value: ${{ jobs.version.outputs.now-long }}
+      git-short:
+        value: ${{ jobs.version.outputs.git-short }}
+      git-long:
+        value: ${{ jobs.version.outputs.git-long }}
+      tag:
+        value: ${{ jobs.version.outputs.tag }}
+
+jobs:
+  version:
+    name: version number
+    runs-on: ubuntu-latest
+    outputs:
+      now-short: ${{ steps.version.outputs.now-short }}
+      now-long: ${{ steps.version.outputs.now-long }}
+      git-short: ${{ steps.version.outputs.git-short }}
+      git-long: ${{ steps.version.outputs.git-long }}
+      tag: ${{ steps.version.outputs.tag }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get version numbers
+        id: version
+        run: |
+          echo git-short=$(date -d $(git log -1 --format=%cs) +%y.%-m.%-d) >> $GITHUB_OUTPUT
+          echo git-long=$(date -d $(git log -1 --format=%cs) +%Y.%-m.%-d) >> $GITHUB_OUTPUT
+          echo now-short=$(date +%y.%-m.%-d) >> $GITHUB_OUTPUT
+          echo now-long=$(date +%Y.%-m.%-d) >> $GITHUB_OUTPUT
+          echo tag=${{ github.ref_name }} | sed 's/=v/=/' >> $GITHUB_OUTPUT

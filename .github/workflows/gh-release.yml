@@ -6,6 +6,9 @@ on:
       artifact:
         required: false
         type: string
+      name:
+        required: false
+        type: string
 
 jobs:
   gh-release:
@@ -23,5 +26,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: artifact/*
+          tag_name: ${{ inputs.name }}
           fail_on_unmatched_files: false
           generate_release_notes: true

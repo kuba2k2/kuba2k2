@@ -14,6 +14,10 @@ on:
         required: false
         type: string
         default: "artifact/"
+      node-version:
+        required: false
+        type: string
+        default: "16"
       project-directory:
         required: false
         type: string
@@ -57,7 +61,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: ${{ inputs.node-version }}
       - name: Install project
         run: npm ci
 

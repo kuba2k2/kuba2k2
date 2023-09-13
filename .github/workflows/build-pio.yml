@@ -7,6 +7,13 @@ on:
         required: false
         type: string
         default: "ubuntu-latest"
+      input-artifact:
+        required: false
+        type: string
+      input-path:
+        required: false
+        type: string
+        default: "artifact/"
       project-directory:
         required: false
         type: string
@@ -29,7 +36,7 @@ on:
         default: "platformio-build"
     outputs:
       artifact:
-        value: ${{ inputs.artifact }}
+        value: ${{ inputs.output-artifact }}
 
 jobs:
   build-pio:
@@ -38,6 +45,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        if: ${{ inputs.input-artifact != '' }}
+        with:
+          name: ${{ inputs.input-artifact }}
+          path: ${{ inputs.input-path }}
 
       - name: Cache pip
         uses: actions/cache@v2

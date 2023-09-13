@@ -28,7 +28,7 @@ on:
         default: "nsis-build"
     outputs:
       artifact:
-        value: ${{ inputs.artifact }}
+        value: ${{ inputs.output-artifact }}
 
 jobs:
   build-nsis:

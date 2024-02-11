@@ -106,6 +106,10 @@ jobs:
           ABUILD_PRIVKEY: ${{ secrets.ABUILD_PRIVKEY }}
           ABUILD_PUBKEY: ${{ secrets.ABUILD_PUBKEY }}
         run: |
+          echo "PWD=`pwd`"
+          echo "ID=`id`"
+          echo "UNAME=`uname -a`"
+          echo ""
           adduser actions -D
           addgroup actions abuild
           mkdir -p /var/cache/distfiles

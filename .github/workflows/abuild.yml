@@ -1,0 +1,149 @@
+name: "[reusable] abuild"
+
+on:
+  workflow_call:
+    secrets:
+      ABUILD_KEYNAME:
+        required: true
+      ABUILD_PRIVKEY:
+        required: true
+      ABUILD_PUBKEY:
+        required: true
+    inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
+      input-artifact:
+        required: false
+        type: string
+      input-path:
+        required: false
+        type: string
+        default: "artifact/"
+      project-directory:
+        required: false
+        type: string
+        default: "."
+      pre-build:
+        required: false
+        type: string
+      arch:
+        required: true
+        type: string
+      branch:
+        required: false
+        type: string
+        default: "latest-stable"
+      extra-repositories:
+        required: false
+        type: string
+      packages:
+        required: false
+        type: string
+      build:
+        required: true
+        type: string
+      post-build:
+        required: false
+        type: string
+      files:
+        required: false
+        type: string
+      output-artifact:
+        required: false
+        type: string
+        default: "abuild"
+      deploy:
+        required: false
+        type: boolean
+        default: true
+    outputs:
+      artifact:
+        value: ${{ inputs.output-artifact }}
+
+jobs:
+  abuild:
+    name: abuild
+    runs-on: ${{ inputs.runs-on }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        if: ${{ inputs.input-artifact != '' }}
+        with:
+          name: ${{ inputs.input-artifact }}
+          path: ${{ inputs.input-path }}
+
+      - name: Prepare output directory
+        run: |
+          mkdir /home/runner/packages
+      - name: Setup Alpine ${{ inputs.arch }}
+        uses: jirutka/setup-alpine@v1
+        with:
+          arch: ${{ inputs.arch }}
+          branch: ${{ inputs.branch }}
+          extra-repositories: ${{ inputs.extra-repositories }}
+          packages: >
+            alpine-sdk
+            ${{ inputs.packages }}
+          volumes: /home/runner/packages:/packages
+
+      - name: Run pre-build step
+        if: ${{ inputs.pre-build != '' }}
+        working-directory: ${{ inputs.project-directory }}
+        run: ${{ inputs.pre-build }}
+
+      - name: Run build step
+        shell: alpine.sh --root {0}
+        env:
+          ABUILD_KEYNAME: ${{ secrets.ABUILD_KEYNAME }}
+          ABUILD_PRIVKEY: ${{ secrets.ABUILD_PRIVKEY }}
+          ABUILD_PUBKEY: ${{ secrets.ABUILD_PUBKEY }}
+        run: |
+          adduser actions -D
+          addgroup actions abuild
+          mkdir -p /var/cache/distfiles
+          chgrp abuild /var/cache/distfiles
+          chmod g+w /var/cache/distfiles
+          chmod -R a+w .
+
+          su actions -c "mkdir -p ~/.abuild/"
+          su actions -c "echo \"$ABUILD_PRIVKEY\" > ~/.abuild/$ABUILD_KEYNAME"
+          su actions -c "echo \"$ABUILD_PUBKEY\" > ~/.abuild/$ABUILD_KEYNAME.pub"
+          su actions -c "echo PACKAGER_PRIVKEY=\"/home/actions/.abuild/$ABUILD_KEYNAME\" > ~/.abuild/abuild.conf"
+          cp /home/actions/.abuild/$ABUILD_KEYNAME.pub /etc/apk/keys/$ABUILD_KEYNAME.pub
+
+          cat <<EOF > /build.sh
+          ${{ inputs.build }}
+          EOF
+          chmod +x /build.sh
+
+          cd ${{ inputs.project-directory }}
+          su actions -c /build.sh
+
+          cp -R /home/actions/packages/*/* /packages/
+
+      - name: Run post-build step
+        if: ${{ inputs.post-build != '' }}
+        working-directory: ${{ inputs.project-directory }}
+        run: ${{ inputs.post-build }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.output-artifact }}
+          path: |
+            /packages/**/*.apk
+            ${{ inputs.files }}
+
+      - name: Deploy APK repo to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        if: ${{ inputs.deploy }}
+        with:
+          folder: /home/runner/packages/${{ inputs.arch }}/
+          target-folder: ${{ inputs.arch }}/
+          clean: false
+          force: false

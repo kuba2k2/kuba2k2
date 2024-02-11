@@ -110,6 +110,7 @@ jobs:
           echo "ID=`id`"
           echo "UNAME=`uname -a`"
           echo ""
+          set -e
           adduser actions -D
           addgroup actions abuild
           mkdir -p /var/cache/distfiles
@@ -124,6 +125,7 @@ jobs:
           cp /home/actions/.abuild/$ABUILD_KEYNAME.pub /etc/apk/keys/$ABUILD_KEYNAME.pub
 
           cat <<EOF > /build.sh
+          set -e
           ${{ inputs.build }}
           EOF
           chmod +x /build.sh

@@ -79,7 +79,8 @@ jobs:
 
       - name: Prepare output directory
         run: |
-          mkdir /home/runner/packages
+          mkdir /home/runner/repo
+          mkdir /home/runner/apks
       - name: Setup Alpine ${{ inputs.arch }}
         uses: jirutka/setup-alpine@v1
         with:
@@ -89,7 +90,9 @@ jobs:
           packages: >
             alpine-sdk
             ${{ inputs.packages }}
-          volumes: /home/runner/packages:/packages
+          volumes: |
+            /home/runner/repo:/repo
+            /home/runner/apks:/apks
 
       - name: Run pre-build step
         if: ${{ inputs.pre-build != '' }}
@@ -124,7 +127,18 @@ jobs:
           cd ${{ inputs.project-directory }}
           su actions -c /build.sh
 
-          cp -R /home/actions/packages/*/* /packages/
+          cp -R /home/actions/packages/*/* /repo/
+
+          for file in /repo/**/*.apk; do
+            name=${file##*/}
+            path=${file%/*}
+            arch=${path##*/}
+            prefix=${name%-*}
+            pkgrel=${name##*-}
+            pkgname=${prefix%-*}
+            pkgver=${prefix##*-}
+            cp $file /apks/$pkgname-$arch-$pkgver-$pkgrel
+          done
 
       - name: Run post-build step
         if: ${{ inputs.post-build != '' }}
@@ -136,14 +150,14 @@ jobs:
         with:
           name: ${{ inputs.output-artifact }}
           path: |
-            /packages/**/*.apk
+            /home/runner/apks/*.apk
             ${{ inputs.files }}
 
       - name: Deploy APK repo to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         if: ${{ inputs.deploy }}
         with:
-          folder: /home/runner/packages/${{ inputs.arch }}/
+          folder: /home/runner/repo/${{ inputs.arch }}/
           target-folder: ${{ inputs.arch }}/
           clean: false
           force: false

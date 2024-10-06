@@ -6,7 +6,7 @@ ENV SETTINGS_DIR=/data
 
 RUN pip install --no-cache-dir poetry==1.8.3
 
-COPY pyproject.toml poetry.lock .
+COPY pyproject.toml .
 
 RUN poetry install
 

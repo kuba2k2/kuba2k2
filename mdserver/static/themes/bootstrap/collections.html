@@ -1,0 +1,95 @@
+{% extends "bootstrap/base/base.html" %}
+
+{% block lead %}
+{% import "bootstrap/macros/page-boxes.html" as page_boxes %}
+{{ page_boxes.lead(page, util) }}
+{% endblock %}
+
+{%- macro icon(name, yes, no, title) -%}
+{%- if name or no -%}
+<i class="bi bi-{{ ((yes and name and yes or name) or no)|lower }}" data-bs-toggle="tooltip"
+	title="{{ title or '' }}{{ title and name and ' - ' or '' }}{{ name or '' }}"></i>
+{%- endif -%}
+{%- endmacro -%}
+
+{% macro text(item, field) %}
+{% if field.key in item and field.format %}
+{% for fmt in field.format -%}
+{# BUILD FIELD CONTENT #}
+{%- set value -%}
+{{- icon(item[field.key][fmt.icon], fmt._yes, fmt._no, fmt.title) -}}
+{{- fmt.text or "" -}}
+{{- item[field.key][fmt.key] or fmt.missing or "" -}}
+{%- endset -%}
+{# SHOW FIELD CONTENT WITH PREFIX/SUFFIX #}
+{{- value and fmt.prefix or "" -}}
+{{- value -}}
+{{- value and fmt.suffix or "" -}}
+{%- endfor %}
+{% else %}
+{# SHOW SIMPLE FIELDS #}
+{{ item[field.key] or field.missing or "" }}
+{% endif %}
+{% endmacro %}
+
+{% block content %}
+<article>
+	{{ html|safe }}
+
+	{% for category in sxs.categories %}
+	{# FIND FIELDS PRESENT IN CATEGORY #}
+	{% set fields %}
+	{% for item in category.list %}
+	{% for field in item %}
+	{{ field }}
+	{% endfor %}
+	{% endfor %}
+	{% endset %}
+	{# OPTIONAL TITLE #}
+	<h2 class="mb-3">{{ category.title }}</h2>
+	<div class="table-responsive">
+		<table class="table table-striped table-hover">
+			<tr>
+				{% for field in sxs.fields %}
+				{% if field.key in fields %}
+				<th class="{{ field.cls }}">{{ field.title }}</th>
+				{% endif %}
+				{% endfor %}
+			</tr>
+			{% for item in category.list|sort(attribute=sxs.sort) %}
+			<tr>
+				{% for field in sxs.fields %}
+				{% if field.key in fields %}
+				<td nowrap class="{{ field.cls }}">
+					{% if field.url and item[field.url] %}
+					<a href="{{ item[field.url] }}">{{ text(item, field) }}</a>
+					{% elif field.tooltip and item[field.key] %}
+					<i class="bi bi-{{ field.tooltip }}" data-bs-toggle="tooltip" data-bs-placement="right"
+						data-bs-title="{{ text(item, field) }}"></i>
+					{% else %}
+					{{ text(item, field) }}
+					{% endif %}
+				</td>
+				{% endif %}
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	{% if loop.revindex0 %}
+	<hr>
+	{% endif %}
+	{% endfor %}
+</article>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block bodyend %}
+{{ super() }}
+<script>
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
+{% endblock %}

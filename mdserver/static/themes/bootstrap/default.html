@@ -1,0 +1,15 @@
+{% extends "bootstrap/base/base.html" %}
+
+{% block lead %}
+{% if page.categories %}
+{# POST HEADER FOR PAGES WITH ASSIGNED CATEGORY #}
+{% import "bootstrap/macros/page-boxes.html" as page_boxes %}
+{{ page_boxes.lead(page, util) }}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<article>
+	{{ html|safe }}
+</article>
+{% endblock %}

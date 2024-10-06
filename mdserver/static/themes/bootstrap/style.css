@@ -1,0 +1,192 @@
+/* FOR STICKY FOOTER */
+html,
+body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+/* PAGE CONTENT / ARTICLE */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Playfair Display", Georgia, "Times New Roman", serif /*rtl:Amiri, Georgia, "Times New Roman", serif*/;
+}
+
+article .table {
+	width: unset !important;
+}
+
+article * {
+	/* make everything fit inside the article */
+	max-width: 100%;
+}
+
+article img,
+article video {
+	/* max height for portrait images, videos */
+	max-height: 300px;
+}
+
+article div.image {
+	display: inline-block;
+	text-align: center;
+}
+
+article div.image > small {
+	display: block;
+	font-style: italic;
+}
+
+article > p:first-of-type {
+	font-size: 1.25rem;
+	font-weight: 300;
+}
+
+article blockquote {
+	padding-left: 1rem;
+	border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+	font-style: italic;
+}
+
+div.highlight {
+	margin-bottom: 1rem;
+	background-color: var(--bs-dark-bg-subtle);
+}
+
+div.highlight pre {
+	margin-bottom: 0;
+}
+
+/* ICONS */
+
+.bi {
+	fill: currentColor;
+}
+
+.icon-link > .bi {
+	height: unset !important;
+}
+
+[data-bs-theme="dark"] a[href^="http"]::after,
+[data-bs-theme="dark"] a[href^="https://"]::after
+{
+	filter: invert(1);
+}
+
+/* HEADER / NAVIGATION BAR */
+/* navbar top-level dropdown - underline on focus/hover */
+nav.navbar .dropdown:hover > .nav-link,
+nav.navbar .dropdown:focus-within > .nav-link {
+	border-bottom-color: currentcolor;
+}
+
+/* navbar dropdown - open on focus/hover */
+nav.navbar .dropdown:focus-within > .dropdown-menu,
+nav.navbar .dropdown:focus > .dropdown-menu {
+	display: block;
+}
+@media (min-width: 768px) {
+	nav.navbar .dropdown:hover > .dropdown-menu {
+		display: block;
+	}
+
+	/* move submenus to right */
+	nav.navbar .nav-item .dropdown:focus-within > .dropdown-menu,
+	nav.navbar .nav-item .dropdown:hover > .dropdown-menu {
+		top: 0;
+		left: 100%;
+	}
+}
+
+/* navbar dropdown - colorize item on focus/hover */
+nav.navbar .dropdown:focus-within > .dropdown-item {
+	color: var(--bs-dropdown-link-hover-color);
+	background-color: var(--bs-dropdown-link-hover-bg);
+}
+@media (min-width: 768px) {
+	nav.navbar .dropdown:hover > .dropdown-item {
+		color: var(--bs-dropdown-link-hover-color);
+		background-color: var(--bs-dropdown-link-hover-bg);
+	}
+}
+
+div.navbar .navbar-brand {
+	font-family: "Playfair Display", Georgia, "Times New Roman", serif /*rtl:Amiri, Georgia, "Times New Roman", serif*/;
+	font-size: 2.25rem;
+}
+
+div.navbar > div {
+	flex: 1;
+}
+
+div.navbar .input-group {
+	max-width: 75%;
+}
+@media (min-width: 992px) {
+	div.navbar .input-group {
+		max-width: 300px;
+	}
+}
+
+nav.navbar .input-group {
+	max-width: 300px;
+	margin: 0 auto;
+}
+
+/* TAG CLOUD */
+/* https://dev.to/alvaromontoro/create-a-tag-cloud-with-html-and-css-1e90 */
+
+.tag-cloud ol {
+	line-height: 2.5rem;
+}
+
+.tag-cloud li {
+	text-align: center;
+}
+
+.tag-cloud a {
+	padding: 0.125rem 0.25rem;
+	position: relative;
+	font-size: calc(var(--size) * 0.15rem + 0.75rem);
+	opacity: calc((15 - (9 - var(--size))) / 15);
+}
+
+/* PAGE LEAD */
+div.page-lead {
+	min-height: 200px;
+}
+
+@media (min-width: 768px) {
+	div.page-lead {
+		min-height: 300px;
+	}
+}
+
+@media (min-width: 992px) {
+	div.page-lead {
+		min-height: 400px;
+	}
+}
+
+div.page-lead img {
+	width: 100%;
+}
+
+div.page-lead > div {
+	background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+}
+
+/* MISC STYLES */
+.text-decoration-hover {
+	text-decoration: none;
+}
+.text-decoration-hover:hover {
+	text-decoration: underline;
+}

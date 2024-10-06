@@ -1,0 +1,30 @@
+{% extends "bootstrap/base/base.html" %}
+
+{#
+{% import "bootstrap/macros/page-boxes.html" as page_boxes %}
+{% set posts = util.filtered(database.pages.values(), {}, "post")[0:8] %}
+#}
+
+{% block content %}
+<article>
+	{#
+	<div class="row align-items-stretch pb-4">
+		{% for item in posts %}
+		<div class="col-sm-6 mt-4">
+			{{ page_boxes.featured(item, util) }}
+		</div>
+		{% endfor %}
+	</div>
+
+	<div class="row align-items-stretch pb-4">
+		{% for item in posts %}
+		<div class="col-sm-6 col-md-4 col-xl-3">
+			{{ page_boxes.simple(item, util) }}
+		</div>
+		{% endfor %}
+	</div>
+	#}
+
+	{{ html|safe }}
+</article>
+{% endblock %}

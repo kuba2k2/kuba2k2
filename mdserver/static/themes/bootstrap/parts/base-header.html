@@ -1,0 +1,83 @@
+{% set search %}
+<input class="form-control" type="search" name="q" value="{{ query.q }}">
+<button class="btn btn-outline-secondary" type="submit">
+	<i class="bi bi-search"></i>
+</button>
+{% endset %}
+
+<div class="navbar navbar-expand-{{ identity.navbar.expand }} border-bottom lh-1 py-3">
+	<div></div>
+	<a class="navbar-brand link-body-emphasis text-decoration-none" href="/">{{ identity.brand }}</a>
+	<div class="d-flex justify-content-end align-items-center">
+		<form method="get" action="{{ identity.navbar.search }}"
+			class="input-group input-group-sm d-none d-{{ identity.navbar.expand }}-flex">
+			{{ search }}
+		</form>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</div>
+</div>
+
+<nav class="navbar navbar-expand-{{ identity.navbar.expand }} py-1 mb-3">
+	<div class="collapse navbar-collapse w-75" id="navbar-menu">
+		<form method="get" action="{{ identity.navbar.search }}"
+			class="input-group input-group-sm d-{{ identity.navbar.expand }}-none my-3">
+			{{ search }}
+		</form>
+		<div class="nav nav-underline justify-content-between navbar-nav gap-1 gap-{{ identity.navbar.expand }}-4">
+			{% set full_url = page.url + (query and "?" + query|string or "") %}
+
+			{# TOP LEVEL MENU LOOP - START #}
+			{% for item in identity.menu.navbar %}
+			{# DETERMINE ACTIVE STATE #}
+			{% if item.url == "/" %}
+			{% set active = full_url == item.url and 'active' or '' %}
+			{% else %}
+			{% set active = full_url.startswith(item.url) and 'active' or '' %}
+			{% endif %}
+			{# NO SUB MENU #}
+			{% if not item.menu %}
+			<a class="nav-item nav-link link-body-emphasis {{ active }}" href="{{ item.url }}">
+				{{ item.title }}
+			</a>
+			{# WITH SUB MENU #}
+			{% else %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle link-body-emphasis {{ active }}" href="{{ item.url }}">
+					{{ item.title }}
+				</a>
+				<ul class="dropdown-menu">
+					{# SUB MENU RECURSIVE LOOP - START #}
+					{% for item in item.menu recursive %}
+					{% set active = full_url.startswith(item.url or "-") and 'active' or '' %}
+					<li class="{{ item.menu and 'dropdown dropend' or '' }}">
+						{# DEFAULT ITEM TYPE #}
+						{% if not item.type %}
+						<a class="dropdown-item {{ item.menu and 'dropdown-toggle' or '' }} {{ active }}"
+							href="{{ item.url }}">
+							{{ item.title }}
+						</a>
+						{% if item.menu %}
+						<ul class="dropdown-menu">
+							{{ loop(item.menu) }}
+						</ul>
+						{% endif %}
+						{# HEADER IN DROPDOWN #}
+						{% elif item.type == "header" %}
+						<p class="h6 dropdown-header">{{ item.title }}</p>
+						{# DIVIDER IN DROPDOWN #}
+						{% elif item.type == "divider" %}
+						<hr class="dropdown-divider">
+						{% endif %}
+					</li>
+					{# SUB MENU RECURSIVE LOOP - END #}
+					{% endfor %}
+				</ul>
+			</li>
+			{% endif %}
+			{# TOP LEVEL MENU LOOP - END #}
+			{% endfor %}
+		</div>
+	</div>
+</nav>

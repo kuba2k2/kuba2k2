@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/themes/bootstrap/style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap">
+<script src="https://getbootstrap.com/docs/5.3/assets/js/color-modes.js"></script>
+{% endblock %}
+
+{% block body %}
+{% include "bootstrap/parts/base-color-switch.html" %}
+
+{# HEADER #}
+<header class="container">
+	{% include "bootstrap/parts/base-header.html" %}
+</header>
+
+{# MAIN #}
+{% block main %}
+<main class="container">
+	{% block lead %}{% endblock %}
+
+	{% block content required %}{% endblock %}
+</main>
+{% endblock %}
+
+<div class="clear-both mb-4"></div>
+
+{# FOOTER #}
+<footer class="mt-auto py-4 text-center text-body-secondary bg-body-tertiary">
+	<p class="m-0">{{ identity.footer|safe }}</p>
+</footer>
+{% endblock %}

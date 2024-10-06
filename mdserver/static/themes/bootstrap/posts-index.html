@@ -1,0 +1,71 @@
+{% extends "bootstrap/base/sidebar.html" %}
+
+{% import "bootstrap/macros/page-boxes.html" as page_boxes %}
+{% set posts = util.filtered(database.pages.values(), query, "post") %}
+{% set page_current = (query.page or 1)|int or 1 %}
+{% set page_count = (posts|length / settings.per_page)|round(0, "ceil")|int %}
+
+{% block content %}
+{# TITLE #}
+<h1>{{ page.title }}</h1>
+
+{# FILTERS #}
+<p class="text-secondary"><i>Displaying {{ posts|length }} posts</i></p>
+{% for name, param in util.FILTER_PARAMS %}
+{% if query[param] %}
+<span class="badge rounded-pill text-bg-secondary mb-3">
+	<a href="{{ util.querymod(query, **{param: None}) }}" data-bs-theme="dark">
+		<button type="button" class="btn-close align-middle"></button>
+	</a>
+	{{ name }}: {{ query[param] }}
+</span>
+{% endif %}
+{% endfor %}
+
+{# HEADER INFO #}
+{% if query.category %}
+<p>{{ sxs.get(query.category) or "" }}</p>
+{% else %}
+{{ html|safe }}
+{% endif %}
+
+{# POSTS LIST DIVIDER #}
+{% if posts|length %}
+<hr>
+{% endif %}
+
+{# POSTS LIST LOOP #}
+<article>
+	{% for item in util.paged(posts, query) %}
+	{{ page_boxes.extended(item, util, query) }}
+	{% if loop.revindex0 %}
+	<hr>
+	{% endif %}
+	{% endfor %}
+</article>
+
+{# PAGINATION #}
+<ul class="pagination justify-content-center mb-0">
+	{% if (query.page or 1)|int is gt(1) %}
+	<li class="page-item">
+		<a class="page-link" href="{{ util.querymod(query, page=page_current - 1) }}"><span>&laquo;</span></a>
+	</li>
+	{% endif %}
+
+	{% for item in util.pagination(posts|length, query.page or 1) %}
+	<li class="page-item {{ item == page_current and 'active' or '' }} {{ item == 0 and 'disabled' or '' }}">
+		<a class="page-link" href="{{ util.querymod(query, page=item) }}">{{ item or "&nbsp;"|safe }}</a>
+	</li>
+	{% endfor %}
+
+	{% if (query.page or 1)|int is lt(page_count) %}
+	<li class="page-item">
+		<a class="page-link" href="{{ util.querymod(query, page=page_current + 1) }}"><span>&raquo;</span></a>
+	</li>
+	{% endif %}
+</ul>
+{% endblock %}
+
+{% block sidebar %}
+{% include "bootstrap/parts/sidebar-blog.html" %}
+{% endblock %}

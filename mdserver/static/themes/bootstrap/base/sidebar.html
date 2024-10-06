@@ -1,0 +1,16 @@
+{% extends "bootstrap/base/base.html" %}
+
+{% block main %}
+<main class="container">
+	{% block lead %}{% endblock %}
+
+	<div class="row g-5">
+		<div class="col-md-8">
+			{% block content required %}{% endblock %}
+		</div>
+		<div class="col-md-4">
+			{% block sidebar %}{% endblock %}
+		</div>
+	</div>
+</main>
+{% endblock %}

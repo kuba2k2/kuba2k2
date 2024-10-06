@@ -1,0 +1,44 @@
+{% extends "bootstrap/base/sidebar.html" %}
+
+{% import "bootstrap/macros/page-boxes.html" as page_boxes %}
+{% set tag_colors = ["primary", "secondary", "success", "danger", "warning", "info", "light"] %}
+
+{% block lead %}
+{# POST HEADER / TITLE #}
+{{ page_boxes.lead(page, util) }}
+{% endblock %}
+
+{% block content %}
+{# CATEGORIES #}
+<p class="h5 fst-italic pb-2">
+	{{ page.categories and "Posted in" or "" }}
+	{% for category in page.categories %}
+	<a href="/posts/?category={{ category }}">
+		{{ category }}</a>{{ loop.revindex0 and "," or "" }}
+	{% endfor %}
+</p>
+
+{# TAGS #}
+{% for tag in page.tags|sort %}
+<a href="/posts/?tag={{ tag }}" class="text-decoration-none">
+	{% set color = util.hashchoice(tag, tag_colors) %}
+	<span class="mb-1 badge rounded-pill bg-{{ color }}-subtle border border-{{ color }}-subtle text-{{ color }}-emphasis">{{ tag }}</span>
+</a>
+{% endfor %}
+
+<hr>
+
+{# DRAFT POST INFO #}
+{% if page.draft %}
+{{ page_boxes.draft(page, util, "post") }}
+{% endif %}
+
+{# POST CONTENT #}
+<article>
+	{{ html|safe }}
+</article>
+{% endblock %}
+
+{% block sidebar %}
+{% include "bootstrap/parts/sidebar-blog.html" %}
+{% endblock %}

@@ -1,0 +1,1093 @@
+sort: os.type,brand,model
+fields:
+  - key: story
+    tooltip: info-circle
+  - key: brand
+    title: Brand
+  - key: model
+    title: Model
+    url: url
+  - key: operator
+    title: Operator
+    format:
+      - key: name
+      - icon: simlock
+        title: SimLock
+        _yes: lock
+        prefix: " "
+  - key: color
+    tooltip: palette
+  - key: symbol
+    title: Symbol
+    cls: border-end
+    missing: "-"
+  - key: mfg
+    title: Mfg. date
+    missing: "?"
+  - key: date
+    title: Acq. date
+    missing: "?"
+  - key: state
+    title: Condition
+    cls: border-end
+  - key: cpu
+    title: CPU
+    missing: "?"
+  - key: memory
+    title: Memory (RAM / storage)
+    missing: "?"
+    format:
+      - key: ram
+      - text: " / "
+      - key: storage
+  - key: screen
+    title: Screen
+    missing: "?"
+    format:
+      - key: resolution
+      - text: ", "
+      - key: size
+      - prefix: " "
+        key: type
+  - key: comms
+    title: Connectivity
+    missing: "?"
+    format:
+      - icon: wifi
+        title: Wi-Fi
+        _yes: wifi
+        _no: dash
+        suffix: " "
+      - icon: bluetooth
+        title: Bluetooth
+        _yes: bluetooth
+        _no: dash
+        suffix: " "
+      - icon: infrared
+        title: Infrared
+        _yes: broadcast
+        _no: dash
+        suffix: " "
+      - icon: radio
+        title: FM Radio
+        _yes: speaker
+        _no: dash
+        suffix: " "
+      - icon: gps
+        title: GPS
+        _yes: geo-alt
+        _no: dash
+        suffix: " "
+      - icon: usb
+        title: USB
+        _yes: usb-symbol
+        _no: dash
+        suffix: " "
+  - key: os
+    title: OS
+    missing: "?"
+    format:
+      - icon: type
+        suffix: " "
+      - key: type
+      - text: " "
+      - key: version
+      - prefix: " / "
+        key: ui
+      - prefix: " / Linux "
+        key: kernel
+  - key: bootloader
+    title: Bootloader
+    missing: "?"
+  - key: camera
+    title: Camera (back / front)
+    missing: "-"
+    format:
+      - key: back
+        missing: "-"
+      - text: " / "
+      - key: front
+        missing: "-"
+  - key: battery
+    title: Battery
+    missing: "?"
+    format:
+      - key: capacity
+        missing: "?"
+      - text: " mAh"
+      - key: type
+        prefix: " "
+      - key: model
+        prefix: " ("
+        suffix: ")"
+      - text: " / "
+      - icon: removable
+        title: Removable
+        _yes: check
+        _no: x
+
+categories:
+  - title: Android devices
+    list:
+      - brand: Huawei
+        model: Mate 10 lite
+        symbol: RNE-L21
+        mfg: 10/2017
+        date: ??/2022
+        state: Cracked / OK
+        cpu: Kirin 659
+        memory:
+          ram: 4 GiB
+          storage: 64 GiB
+        screen:
+          resolution: 1080x2160
+          size: 5.90"
+        os:
+          type: Android
+          version: 8.0.0
+          ui: EMUI 8.0.0
+          kernel: 4.4.23+
+        bootloader: Unlocked
+        camera:
+          back: 16 Mpx
+          front: 13 Mpx
+        battery:
+          capacity: 3340
+          removable: no
+        story: Stock OS, touch screen is cracked but not falling apart yet.
+
+      - brand: Asus
+        model: ZenFone 2 Laser 5.0
+        symbol: ZE500KL
+        mfg: 08/2015
+        date: 04/2020
+        state: OK
+        cpu: Snapdragon 410
+        memory:
+          ram: 2 GiB
+          storage: 32 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.00"
+        os:
+          type: Android
+          version: 6.0
+          ui: ZenUI
+          kernel: 3.10.49
+        bootloader: Unlocked
+        camera:
+          back: 13 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 2400
+          removable: yes
+        story: LCD replaced after being cracked.
+
+      - brand: TP-LINK
+        model: C5 Max
+        symbol: TP702A
+        mfg: 10/2015
+        state: Deep bricked, won't flash
+        cpu: MT6753
+        memory:
+          ram: 2 GiB
+          storage: 32 GiB
+        screen:
+          resolution: 1080x1920
+          size: 5.50"
+        os:
+          type: Android
+          version: 5.1
+          ui: "?"
+          kernel: "?"
+        bootloader: Unlocked
+        camera:
+          back: 13 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 3045
+          removable: no
+        story: Phone randomly died during flashing, won't accept any more attempts.
+
+      - brand: Huawei
+        model: Y6
+        symbol: SCL-L01
+        mfg: 07/2015
+        date: 02/2020
+        state: Dead touch (mostly)
+        cpu: Snapdragon 210
+        memory:
+          ram: 1 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.00"
+        os:
+          type: Android
+          version: 5.0.1
+          ui: EMUI 3.1
+          kernel: 3.10.49
+        bootloader: Locked
+        camera:
+          back: 8 Mpx
+          front: 2 Mpx
+        battery:
+          capacity: 2200
+          removable: yes
+        story: Touch panel shattered, only a small part works. Wi-Fi not connecting unless it's open/WEP. Original motherboard wouldn't boot, working one moved from the other Y6.
+
+      - brand: Huawei
+        model: Y6
+        symbol: SCL-L01
+        mfg: 07/2015
+        date: 01/2021
+        state: Dead screen, won't boot
+        cpu: Snapdragon 210
+        memory:
+          ram: 1 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.00"
+        os:
+          type: Android
+          version: "?"
+        bootloader: Locked
+        camera:
+          back: 8 Mpx
+          front: 2 Mpx
+        battery:
+          capacity: 2200
+          removable: yes
+        story: Screen cracked, touch panel cracked. Motherboard was OK, moved to the other Y6.
+
+      - brand: Samsung
+        model: Galaxy J5
+        symbol: SM-J500FN
+        mfg: 07/2015
+        date: ??/2022
+        state: OK
+        cpu: Snapdragon 410
+        memory:
+          ram: 1.5 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.00"
+          type: OLED
+        os:
+          type: Android
+          version: 6.0.1
+          ui: TouchWiz
+          kernel: 3.10.49
+        bootloader: Unlocked
+        camera:
+          back: 13 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 2600
+          removable: yes
+
+      - brand: Samsung
+        model: Galaxy J3
+        symbol: SM-J320FN
+        mfg: 05/2016
+        state: Dead screen / OK
+        cpu: Spreadtrum SC9830
+        memory:
+          ram: 1.5 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.00"
+          type: OLED
+        os:
+          type: Android
+          version: "?"
+          ui: TouchWiz
+          kernel: "?"
+        bootloader: Unlocked
+        camera:
+          back: 8 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 2600
+          removable: yes
+        url: /posts/android-phone-permanent-hotspot/
+        story: OLED screen dead, converted to a wall-connected Wi-Fi hotspot.
+
+      - brand: Huawei
+        model: P8lite
+        symbol: ALE-L21
+        mfg: 05/2015
+        date: 01/2022
+        state: OK
+        cpu: Kirin 620
+        memory:
+          ram: 2 GiB
+          storage: 16 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.00"
+        os:
+          type: Android
+          version: 6.0
+          ui: EMUI 4.0.3
+          kernel: 3.10.86
+        bootloader: Unlocked
+        camera:
+          back: 13 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 2200
+          removable: no
+
+      - brand: Alcatel
+        model: 3L
+        symbol: 5034D
+        mfg: 02/2019
+        date: 08/2021
+        state: USB port dead / OK
+        cpu: MT6739
+        memory:
+          ram: 2 GiB
+          storage: 16 GiB
+        screen:
+          resolution: 720x1560
+          size: 5.94"
+        os:
+          type: Android
+          version: 8.1.0
+          ui: Joy UI
+          kernel: 4.4.95
+        bootloader: Unlocked
+        camera:
+          back: 13 Mpx
+          front: 8 Mpx
+        battery:
+          capacity: 3500
+          removable: no
+        story: Charging port completely unusable, unlocking bootloader doesn't even allow rooting it with Magisk.
+
+      - brand: Samsung
+        model: Galaxy A30s
+        symbol: SM-A307FN
+        mfg: 08/2019
+        date: 10/2022
+        state: Cracked / OK
+        cpu: Exynos 7904
+        memory:
+          ram: 4 GiB
+          storage: 64 GiB
+        screen:
+          resolution: 720x1560
+          size: 6.40"
+          type: OLED
+        os:
+          type: Android
+          version: 12
+          ui: PixelExperience Treble
+          kernel: 4.4.177
+        bootloader: Unlocked
+        camera:
+          back: 25 Mpx
+          front: 16 Mpx
+        battery:
+          capacity: 4000
+          removable: no
+        story: Treble ROM with some issues; only boots if powered on without the charger.
+
+      - brand: Huawei
+        model: Y5II LTE
+        symbol: CUN-L21
+        mfg: 06/2016
+        date: 05/2018
+        state: Cracked / OK
+        cpu: MT6735P
+        memory:
+          ram: 1 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.00"
+        os:
+          type: Android
+          version: 7.1.2
+          ui: dotOS 1.2
+          kernel: 3.10.65+
+        bootloader: Unlocked
+        camera:
+          back: 8 Mpx
+          front: 2 Mpx
+        battery:
+          capacity: 2200
+          removable: yes
+        story: Flashed to dotOS, ROM repartitioned to get more space for data.
+
+      - brand: Huawei
+        model: Y5II
+        symbol: CUN-L01
+        mfg: 06/2016
+        date: 02/2020
+        state: Hard-bricked, won't boot
+        cpu: MT6582
+        memory:
+          ram: 1 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.00"
+        os:
+          type: Android
+          version: 5.1
+          ui: EMUI 3.1
+        bootloader: Locked
+        camera:
+          back: 8 Mpx
+          front: 2 Mpx
+        battery:
+          capacity: 2200
+          removable: yes
+        story: Phone hard-bricked in an attempt to unlock the bootloader.
+
+      - brand: Telefunken
+        model: Enjoy TE1
+        symbol: TE1
+        mfg: 07/2014
+        date: 03/2020
+        state: Cracked / OK
+        cpu: MT6572A
+        memory:
+          ram: 512 MiB
+          storage: 4 GiB
+        screen:
+          resolution: 480x800
+          size: 4.00"
+        os:
+          type: Android
+          version: 4.4.2
+          kernel: 3.4.7
+        bootloader: Unlocked
+        camera:
+          back: 5 Mpx
+          front: 2 Mpx
+        battery:
+          capacity: 1400
+          removable: yes
+
+      - brand: Xiaomi
+        model: Mi A1
+        symbol: MDG2
+        mfg: 09/2017
+        date: 01/2022
+        state: OK
+        cpu: Snapdragon 625
+        memory:
+          ram: 4 GiB
+          storage: 64 GiB
+        screen:
+          resolution: 1080x1920
+          size: 5.50"
+        os:
+          type: Android
+          version: 10
+          ui: ResurrectionRemix
+          kernel: 3.18.120
+        bootloader: Unlocked
+        camera:
+          back: 12 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 3080
+          removable: no
+
+      - brand: Huawei
+        model: Y3II
+        symbol: LUA-L21
+        mfg: 06/2016
+        date: 01/2022
+        state: OK
+        cpu: MT6735M
+        memory:
+          ram: 1 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 480x854
+          size: 4.50"
+        os:
+          type: Android
+          version: 5.1
+          ui: EMUI 3.1 Lite
+          kernel: 3.10.65
+        bootloader: Locked
+        camera:
+          back: 5 Mpx
+          front: 2 Mpx
+        battery:
+          capacity: 2100
+          removable: yes
+
+      - brand: Samsung
+        model: Galaxy S III LTE
+        symbol: GT-I9305
+        mfg: 09/2012
+        date: 01/2022
+        state: OK
+        cpu: Exynos 4412
+        memory:
+          ram: 2 GiB
+          storage: 16 GiB
+        screen:
+          resolution: 720x1280
+          size: 4.80"
+          type: OLED
+        os:
+          type: Android
+          version: 4.4.4
+          ui: TouchWiz Nature UX 3.0
+          kernel: 3.0.31
+        bootloader: Unlocked
+        camera:
+          back: 8 Mpx
+          front: 1.9 Mpx
+        battery:
+          capacity: 2100
+          removable: yes
+
+      - brand: Samsung
+        model: Galaxy S III
+        symbol: GT-I9300
+        mfg: 05/2012
+        date: 11/2017
+        state: Dead screen, dead battery
+        cpu: Exynos 4412
+        memory:
+          ram: 1 GiB
+          storage: 16 GiB
+        screen:
+          resolution: 720x1280
+          size: 4.80"
+          type: OLED
+        os:
+          type: Android
+          version: 7.1.2
+          ui: LineageOS 14.1
+          kernel: "?"
+        bootloader: Unlocked
+        camera:
+          back: 8 Mpx
+          front: 1.9 Mpx
+        battery:
+          capacity: "0"
+          removable: yes
+        story: Phone converted into a timelapse camera for my 3D printer.
+
+      - brand: Sony
+        model: Xperia T
+        symbol: LT30p
+        mfg: 09/2012
+        date: ??/2022
+        state: Won't boot
+        cpu: Snapdragon S4 Plus
+        memory:
+          ram: 1 GiB
+          storage: 16 GiB
+        screen:
+          resolution: 720x1280
+          size: 4.55"
+        os:
+          type: Android
+          version: 4.1.2
+          ui: Xperia
+          kernel: 3.4.0
+        bootloader: Locked
+        camera:
+          back: 13 Mpx
+          front: 1.3 Mpx
+        battery:
+          capacity: 1850
+          removable: no
+        story: Probably dead battery.
+
+      - brand: Sony
+        model: Xperia T
+        symbol: LT30p
+        mfg: 09/2012
+        date: 01/2022
+        state: Swollen battery
+        cpu: Snapdragon S4 Plus
+        memory:
+          ram: 1 GiB
+          storage: 16 GiB
+        screen:
+          resolution: 720x1280
+          size: 4.55"
+        os:
+          type: Android
+          version: 4.1.2
+          ui: Xperia
+          kernel: 3.4.0
+        bootloader: Locked
+        camera:
+          back: 13 Mpx
+          front: 1.3 Mpx
+        battery:
+          capacity: "0"
+          removable: no
+        story: Swollen battery, still boots and charges somewhat.
+
+      - brand: Sony
+        model: Xperia E
+        symbol: C1505
+        mfg: 03/2013
+        state: OK
+        cpu: Snapdragon S1
+        memory:
+          ram: 512 MiB
+          storage: 4 GiB
+        screen:
+          resolution: 320x480
+          size: 3.50"
+        os:
+          type: Android
+          version: 4.1.1
+          ui: Xperia
+          kernel: 3.4.0
+        bootloader: Locked
+        camera:
+          back: 3.2 Mpx
+        battery:
+          capacity: 1530
+          removable: yes
+        story: SIMLock unlocked, rooted with SuperSU.
+
+      - brand: Lenovo
+        model: Vibe A
+        symbol: A1000m
+        mfg: 07/2016
+        date: <08/2021
+        state: OK
+        cpu: Spreadtrum SC7731
+        memory:
+          ram: 512 MiB
+          storage: 4 GiB
+        screen:
+          resolution: 480x800
+          size: 4.00"
+        os:
+          type: Android
+          version: 5.1
+          kernel: 3.10.65
+        bootloader: Locked
+        camera:
+          back: 5 Mpx
+          front: VGA
+        battery:
+          capacity: 1700
+          removable: yes
+        story: No custom ROMs, no rooting solutions, nothing works.
+
+      - brand: Samsung
+        model: Galaxy S III mini
+        symbol: GT-I8190N
+        mfg: 11/2012
+        date: 05/2018
+        state: Dead screen
+        cpu: NovaThor U8420
+        memory:
+          ram: 1 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 480x800
+          size: 4.00"
+          type: OLED
+        os:
+          type: Android
+          version: 7.1
+          ui: ResurrectionRemix
+          kernel: "?"
+        bootloader: Unlocked
+        camera:
+          back: 5 Mpx
+          front: VGA
+        battery:
+          capacity: 1500
+          removable: yes
+
+      - brand: UMI
+        model: London
+        mfg: 06/2016
+        state: Dead flash chip, won't boot
+        cpu: MT6580
+        memory:
+          ram: 1 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.00"
+        os:
+          type: Android
+          version: "?"
+        bootloader: Unlocked
+        camera:
+          back: 8 Mpx
+          front: 2 Mpx
+        battery:
+          capacity: 2050
+          removable: yes
+
+      - brand: Samsung
+        model: Galaxy S Plus
+        symbol: GT-I9001
+        mfg: 07/2011
+        date: ">2020"
+        state: OK
+        cpu: Snapdragon S2
+        memory:
+          ram: 512 MiB
+          storage: 8 GiB
+        screen:
+          resolution: 480x800
+          size: 4.00"
+          type: OLED
+        os:
+          type: Android
+          version: 2.3.4
+          ui: TouchWiz UI 4.0
+          kernel: 2.6.35.7
+        bootloader: Unlocked
+        camera:
+          back: 5 Mpx
+          front: VGA
+        battery:
+          capacity: 1650
+          removable: yes
+
+      - brand: Samsung
+        model: Galaxy S Plus
+        symbol: GT-I9001
+        mfg: 07/2011
+        date: 03/2020
+        state: Power key missing / OK
+        cpu: Snapdragon S2
+        memory:
+          ram: 512 MiB
+          storage: 8 GiB
+        screen:
+          resolution: 480x800
+          size: 4.00"
+          type: OLED
+        os:
+          type: Android
+          version: 5.1.1
+          ui: CyanogenMod 12
+          kernel: 3.4.110
+        bootloader: Unlocked
+        camera:
+          back: 5 Mpx
+          front: VGA
+        battery:
+          capacity: 1300
+          removable: yes
+
+      - brand: Samsung
+        model: Galaxy Ace 2
+        symbol: GT-I8160
+        mfg: 05/2012
+        date: 01/2019
+        state: Hole in screen / OK
+        cpu: NovaThor U8500
+        memory:
+          ram: 768 MiB
+          storage: 4 GiB
+        screen:
+          resolution: 480x800
+          size: 3.80"
+        os:
+          type: Android
+          version: 9
+          ui: LineageOS 16
+          kernel: 3.4.113
+        bootloader: Unlocked
+        camera:
+          back: 5 Mpx
+          front: VGA
+        battery:
+          capacity: 1500
+          removable: yes
+        story: A big circle of bad pixels on the screen.
+
+      - brand: Samsung
+        model: Galaxy Ace
+        symbol: GT-S5830
+        mfg: 02/2011
+        date: 09/2017
+        state: OK
+        cpu: Snapdragon S1
+        memory:
+          ram: 384 MiB
+          storage: 512 MiB
+        screen:
+          resolution: 320x480
+          size: 3.50"
+        os:
+          type: Android
+          version: 4.2.2
+          ui: CyanogenMod 10.1
+          kernel: 2.6.35.7
+        bootloader: Unlocked
+        camera:
+          back: 5 Mpx
+        battery:
+          capacity: 1000
+          removable: yes
+
+      - brand: Samsung
+        model: Galaxy Core Plus
+        symbol: SM-G350
+        mfg: 10/2013
+        date: 09/2017
+        state: OK
+        cpu: BCM21664
+        memory:
+          ram: 768 MiB
+          storage: 4 GiB
+        screen:
+          resolution: 480x800
+          size: 4.30"
+        os:
+          type: Android
+          version: 4.2.2
+          ui: TouchWiz
+          kernel: 3.4.5
+        bootloader: Unlocked
+        camera:
+          back: 5 Mpx
+          front: VGA
+        battery:
+          capacity: 1800
+          removable: yes
+
+      - brand: Xiaomi
+        model: Redmi Note 4
+        mfg: 01/2017
+        date: 02/2023
+        state: OK
+        cpu: Snapdragon 625
+        memory:
+          ram: 3 GiB
+          storage: 32 GiB
+        screen:
+          resolution: 1080x1920
+          size: 5.50"
+        os:
+          type: Android
+          version: 11
+          ui: EvolutionX 5.1
+          kernel: 4.9.243
+        bootloader: Unlocked
+        camera:
+          back: 13 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 4100
+          removable: no
+
+      - brand: Huawei
+        model: Mate 10 lite
+        symbol: RNE-L21
+        mfg: 10/2017
+        date: 01/2021
+        state: Dead battery, soft-bricked
+        cpu: Kirin 659
+        memory:
+          ram: 4 GiB
+          storage: 64 GiB
+        screen:
+          resolution: 1080x2160
+          size: 5.90"
+        os:
+          type: Android
+          version: "?"
+          ui: ResurrectionRemix
+          kernel: "?"
+        bootloader: Unlocked
+        camera:
+          back: 16 Mpx
+          front: 13 Mpx
+        battery:
+          capacity: "0"
+          removable: no
+        story: Battery won't charge, is swollen and doesn't fit in the enclosure. OS bootloops.
+
+      - brand: Microsoft
+        model: Lumia 535 Dual SIM
+        symbol: RM-1089
+        mfg: 12/2014
+        state: Touch problems / OK
+        cpu: Snapdragon 200
+        memory:
+          ram: 1 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 540x960
+          size: 5.00"
+        os:
+          type: Windows
+          version: 10 Mobile
+        camera:
+          back: 5 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 1905
+          removable: yes
+        story: Touch screen randomly started having issues, needs a few touches to register anything.
+
+      - brand: Xiaomi
+        model: Redmi Note 4
+        mfg: 01/2017
+        state: OK
+        cpu: Snapdragon 625
+        memory:
+          ram: 3 GiB
+          storage: 32 GiB
+        screen:
+          resolution: 1080x1920
+          size: 5.50"
+        os:
+          type: Android
+          version: 8.1.0
+          ui: ResurrectionRemix 6.2.1
+          kernel: 3.18.119
+        bootloader: Unlocked
+        camera:
+          back: 13 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 4100
+          removable: no
+
+      - brand: Xiaomi
+        model: Redmi Note 6 Pro
+        mfg: 10/2018
+        date: ??/2021
+        state: OK
+        cpu: Snapdragon 636
+        memory:
+          ram: 3 GiB
+          storage: 64 GiB
+        screen:
+          resolution: 1080x2280
+          size: 6.26"
+        os:
+          type: Android
+          version: 10
+          ui: ResurrectionRemix
+          kernel: "?"
+        bootloader: Unlocked
+        camera:
+          back: 12 Mpx
+          front: 20 Mpx
+        battery:
+          capacity: 4000
+          removable: no
+
+      - brand: Xiaomi
+        model: Redmi 4A
+        mfg: 11/2016
+        state: Dead / water damaged
+        cpu: Snapdragon 425
+        memory:
+          ram: 2 GiB
+          storage: 16 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.00"
+        os:
+          type: Android
+          version: 6.0.1
+          ui: MIUI 10
+          kernel: "?"
+        bootloader: Locked
+        camera:
+          back: 13 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 3120
+          removable: no
+
+  - title: PDAs / Navigation
+    list:
+      - brand: Mio
+        model: Moov 300
+        state: OK
+        cpu: Samsung S3C2442
+        screen:
+          resolution: 480x272
+          size: 4.30"
+        comms:
+          gps: Built-in
+          usb: microUSB
+        os:
+          type: Windows
+          version: CE 5.0
+          ui: MioPocket, unlocked
+        battery:
+          removable: no
+        story: Stock MioMap removed, MioPocket installed with many programs and games.
+
+      - brand: Mio
+        model: Moov 300
+        state: OK
+        cpu: Samsung S3C2442
+        screen:
+          resolution: 480x272
+          size: 4.30"
+        comms:
+          bluetooth: Built-in
+          gps: Built-in
+          usb: microUSB
+        os:
+          type: Windows
+          version: CE 5.0
+          ui: Stock
+        battery:
+          removable: no
+        story: Has stock OS with MioMap, but can be closed to exit to Windows CE desktop.
+
+      - brand: Mio
+        model: Moov 300
+        state: Dead screen, dead battery
+        cpu: Samsung S3C2442
+        screen:
+          resolution: 480x272
+          size: 4.30"
+        os:
+          type: Windows
+          version: CE 5.0
+        battery:
+          capacity: "0"
+          removable: no
+        story: Swollen battery caused the screen to crack. Device still functional but doesn't work without the battery.
+
+      - brand: Dell
+        model: Axim X5
+        mfg: 2002
+        state: OK
+        cpu: XScale PXA250 300 MHz
+        memory:
+          ram: 32 MiB
+          storage: 32 MiB
+        screen:
+          resolution: 240x320
+          size: 3.50"
+        comms:
+          bluetooth: CF Card adapter
+          infrared: Built-in
+        os:
+          type: Windows
+          version: Pocket PC 2003
+        battery:
+          capacity: 1440
+          removable: yes
+        story: Upgraded from Pocket PC 2002 (German version). No original charger, no sync cable. Battery still works.

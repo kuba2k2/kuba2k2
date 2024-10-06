@@ -1,0 +1,1559 @@
+sort: brand,model
+fields:
+  - key: story
+    tooltip: info-circle
+  - key: brand
+    title: Brand
+  - key: model
+    title: Model
+    url: url
+  - key: operator
+    title: Operator
+    format:
+      - key: name
+      - icon: simlock
+        title: SimLock
+        _yes: lock
+        prefix: " "
+  - key: color
+    tooltip: palette
+  - key: symbol
+    title: Symbol
+    cls: border-end
+    missing: "-"
+  - key: mfg
+    title: Mfg. date
+    missing: "?"
+  - key: date
+    title: Acq. date
+    missing: "?"
+  - key: state
+    title: Condition
+    cls: border-end
+    format:
+      - icon: score1
+        title: Terrible
+        _yes: x
+        suffix: " 1/5"
+      - icon: score2
+        title: Bad
+        _yes: star
+        suffix: " 2/5"
+      - icon: score3
+        title: Fair
+        _yes: star-half
+        suffix: " 3/5"
+      - icon: score4
+        title: Good
+        _yes: star-fill
+        suffix: " 4/5"
+      - icon: score5
+        title: Perfect
+        _yes: stars
+        suffix: " 5/5"
+      - icon: info
+        prefix: " "
+        _yes: info-circle
+  - key: screen
+    title: Screen
+    missing: "?"
+    format:
+      - key: type
+        missing: "Color"
+      - key: resolution
+        prefix: " "
+      - key: size
+        prefix: ", "
+  - key: comms
+    title: Connectivity
+    missing: "?"
+    format:
+      - icon: wifi
+        title: Wi-Fi
+        _yes: wifi
+        _no: dash
+        suffix: " "
+      - icon: bluetooth
+        title: Bluetooth
+        _yes: bluetooth
+        _no: dash
+        suffix: " "
+      - icon: infrared
+        title: Infrared
+        _yes: broadcast
+        _no: dash
+        suffix: " "
+      - icon: radio
+        title: FM Radio
+        _yes: speaker
+        _no: dash
+        suffix: " "
+      - icon: gps
+        title: GPS
+        _yes: geo-alt
+        _no: dash
+        suffix: " "
+      - icon: usb
+        title: USB
+        _yes: usb-symbol
+        _no: dash
+        suffix: " "
+  - key: os
+    title: OS
+    missing: "?"
+  - key: camera
+    title: Camera
+    missing: "-"
+    format:
+      - key: back
+        missing: "-"
+      - key: front
+        prefix: " + "
+  - key: battery
+    title: Battery
+    missing: "?"
+    format:
+      - key: capacity
+        missing: "?"
+      - text: " mAh"
+      - key: type
+        prefix: " "
+      - key: model
+        prefix: " ("
+        suffix: ")"
+      - text: " / "
+      - icon: removable
+        title: Removable
+        _yes: check
+        _no: x
+
+categories:
+  - list:
+      - brand: Nokia
+        model: E72
+        color: Zodium Black
+        symbol: RM-530
+        mfg: 10/2009
+        state:
+          score3: 3/5
+          info: Camera lens dirty with missing cover, LED torch broken.
+        screen:
+          resolution: 320x240
+          size: 2.36"
+        comms:
+          wifi: b/g
+          bluetooth: 2.0
+          radio: yes
+          gps: yes
+          usb: microUSB
+        os: S60v3.2 (Symbian 9.3)
+        camera:
+          back: 5 Mpx
+          front: VGA
+        battery:
+          capacity: 1500
+          model: BP-4L
+          removable: yes
+
+      - brand: BlackBerry
+        model: Bold 9700
+        operator:
+          name: Era
+        color: Black
+        symbol: RCM71UW
+        mfg: 11/2009
+        state:
+          score5: 5/5
+        screen:
+          resolution: 480x360
+          size: 2.44"
+        comms:
+          wifi: b/g
+          bluetooth: 2.1
+          gps: yes
+          usb: microUSB
+        os: BlackBerry OS 6.0
+        camera:
+          back: 3.15 Mpx
+        battery:
+          capacity: 1500
+          model: BAT-14392-001
+          removable: yes
+
+      - brand: BlackBerry
+        model: "7290"
+        operator:
+          name: T-Mobile
+        color: Satin Blue
+        symbol: RAP40GW
+        mfg: 09/2004
+        state:
+          score4: 4/5
+        screen:
+          type: CSTN
+          resolution: 240x160
+          size: 2.6"
+        comms:
+          bluetooth: yes
+          infrared: yes
+          usb: miniUSB
+        os: BlackBerry OS 4.0
+        battery:
+          model: BAT-03087-003
+          removable: yes
+
+      - brand: Nokia
+        model: N8
+        operator:
+          name: Orange
+          simlock: yes
+        color: Dark Grey
+        symbol: RM-596
+        mfg: 10/2010
+        state:
+          score4: 4/5
+        memory:
+          ram: 256 MiB
+          storage: 16 GiB
+        screen:
+          type: OLED
+          resolution: 360x640
+          size: 3.50"
+        comms:
+          wifi: b/g/n
+          bluetooth: 3.0
+          gps: yes
+          radio: "Receiver + Transmitter"
+          usb: microUSB
+        os: Symbian^3 Belle
+        camera:
+          back: 12 Mpx
+          front: VGA
+        battery:
+          capacity: 1200
+          removable: no
+
+      - brand: Samsung
+        model: Ch@t 335
+        color: Black
+        symbol: GT-S3350
+        mfg: 02/2012
+        state:
+          score4: 4/5
+        screen:
+          resolution: 320x240
+          size: 2.40"
+        comms:
+          wifi: b/g
+          bluetooth: 2.1
+          radio: yes
+          usb: microUSB
+        camera:
+          back: 2 Mpx
+        battery:
+          capacity: 1000
+          model: EB424255VU
+          removable: yes
+
+      - brand: Nokia
+        model: E52
+        operator:
+          name: Orange
+        color: Metal Grey Aluminium
+        symbol: RM-469
+        mfg: 07/2009
+        state:
+          score3: 3/5
+          info: Missing * key, screen scratched.
+        screen:
+          resolution: 240x320
+          size: 2.40"
+        comms:
+          wifi: b/g
+          bluetooth: 2.0
+          radio: yes
+          gps: yes
+          usb: microUSB
+        os: S60v3.2
+        camera:
+          back: 3.2 Mpx
+          front: QVGA
+        battery:
+          capacity: 1500
+          model: BP-4L
+          removable: yes
+
+      - brand: LG
+        model: S310
+        operator:
+          name: Plus
+        color: White
+        mfg: 11/2010
+        state:
+          score4: 4/5
+        screen:
+          resolution: 176x220
+          size: 2.20"
+        comms:
+          bluetooth: 2.1
+          radio: yes
+          usb: microUSB
+        camera:
+          back: 3.15 Mpx
+        battery:
+          capacity: 900
+          model: LGIP-550N
+          removable: yes
+
+      - brand: Nokia
+        model: "6280"
+        color: Carbon Black
+        symbol: RM-78
+        mfg: 06/2005
+        state:
+          score4: 4/5
+        screen:
+          resolution: 240x320
+          size: 2.20"
+        comms:
+          bluetooth: 2.0
+          infrared: yes
+          radio: yes
+          usb: Pop-Port
+        os: S40v3
+        camera:
+          back: 2 Mpx
+          front: VGA
+        battery:
+          capacity: 970
+          model: BP-6M
+          removable: yes
+
+      - brand: Nokia
+        model: "3310"
+        operator:
+          name: Plus
+        color: Blue
+        symbol: NHM-5NX
+        mfg: 09/2000
+        state:
+          score4: 4/5
+        screen:
+          type: Mono
+          resolution: 84x48
+          size: 1.50"
+        comms:
+        os: S20
+        battery:
+          capacity: 1000
+          model: BLC-2
+          removable: yes
+
+      - brand: Nokia
+        model: "3310"
+        operator:
+          name: Plus
+        color: Blue
+        symbol: NHM-5NX
+        mfg: 09/2000
+        state:
+          score3: 3/5
+          info: Missing power button and rubber, missing Nokia logo on front.
+        screen:
+          type: Mono
+          resolution: 84x48
+          size: 1.50"
+        comms:
+        os: S20
+        battery:
+          capacity: 1000
+          model: BLC-2
+          removable: yes
+
+      - brand: Nokia
+        model: "3410"
+        color: Cyan
+        symbol: NHM-5NX
+        mfg: 03/2002
+        state:
+          score4: 4/5
+          info: Missing Nokia logo on back.
+        screen:
+          type: Mono
+          resolution: 96x65
+          size: 1.40"
+        comms:
+        os: S20
+        battery:
+          capacity: 825
+          model: BLC-1
+          removable: yes
+
+      - brand: Motorola
+        model: M3888
+        color: Blue
+        symbol: MC2-41D34
+        mfg: 12/1999
+        state:
+          score3: 3/5
+          info: Battery contact corroded and broken.
+        screen:
+          type: Mono
+          resolution: 96x32
+          size: 1.40"
+        comms:
+        battery:
+          capacity: 700
+          model: SNN5363A
+          type: Ni-MH
+          removable: yes
+
+      - brand: Nokia
+        model: 3510i
+        operator:
+          name: Plus
+          simlock: yes
+        color: Gold
+        symbol: RH-9
+        mfg: 10/2002
+        state:
+          score4: 4/5
+        screen:
+          type: CSTN
+          resolution: 96x65
+          size: 1.40"
+        comms:
+        os: S40v1
+        battery:
+          capacity: 950
+          model: BLC-2
+          removable: yes
+
+      - brand: Nokia
+        model: "3210"
+        color: Blue
+        symbol: NSE-8
+        mfg: 03/1999
+        state:
+          score3: 3/5
+          info: Missing internal antenna.
+        screen:
+          type: Mono
+          resolution: 84x48
+          size: 1.50"
+        comms:
+        os: S20
+        battery:
+          capacity: 1250
+          model: BML-3
+          type: Ni-MH
+          removable: yes
+        story: Removed from an old in-car GPS tracker, that probably used the Nokia to send SMS messages - it was soldered directly to its MBUS connector, without a case, with an external antenna.
+
+      - brand: Nokia
+        model: "3210"
+        color: Grey
+        symbol: NSE-8
+        mfg: 03/1999
+        state:
+          score3: 3/5
+          info: Poor visual condition, back cover has cracked latches.
+        screen:
+          type: Mono
+          resolution: 84x48
+          size: 1.50"
+        comms:
+        os: S20
+        battery:
+          capacity: 1250
+          model: BML-3
+          type: Ni-MH
+          removable: yes
+
+      - brand: Motorola
+        model: cd160
+        color: Black
+        symbol: MC2-41C11S/L
+        mfg: ??/1998
+        state:
+          score2: 2/5
+          info: Many buttons missing, lots of bad pixels/segments on the LCD.
+        screen:
+          type: Mono
+        comms:
+        battery:
+          capacity: 700
+          model: SNN5363A
+          type: Ni-MH
+          removable: yes
+
+      - brand: Motorola
+        model: cd930
+        color: Blue
+        symbol: MC2-41B12
+        mfg: 01/1998
+        state:
+          score5: 5/5
+        screen:
+          type: Mono
+          resolution: 96x32
+          size: 1.50"
+        comms:
+        battery:
+          capacity: 1000
+          model: SNN5360A
+          removable: yes
+
+      - brand: Nokia
+        model: "6230"
+        color: Graphite
+        symbol: RH-12
+        mfg: 02/2004
+        state:
+          score3: 3/5
+          info: Bad pixels and scratches on the LCD.
+        screen:
+          resolution: 128x128
+          size: 1.50"
+        comms:
+          bluetooth: 1.1
+          infrared: yes
+          radio: yes
+          usb: Pop-Port
+        os: S40v2
+        camera:
+          back: VGA
+        battery:
+          capacity: 850
+          model: BL-4C
+          removable: yes
+
+      - brand: Nokia
+        model: "5110"
+        color: Red
+        symbol: NSE-1NX
+        mfg: 04/1998
+        state:
+          score4: 4/5
+          info: LCD losing contrast, missing screws/cracks.
+        screen:
+          type: Mono
+          resolution: 84x48
+          size: 1.50"
+        comms:
+        os: S20
+        battery:
+          capacity: 1100
+          model: BPS-2
+          removable: yes
+
+      - brand: Nokia
+        model: "5110"
+        color: Deep Blue
+        symbol: NSE-1NX
+        mfg: 04/1998
+        state:
+          score3: 3/5
+          info: Keyboard yellowed.
+        screen:
+          type: Mono
+          resolution: 84x48
+          size: 1.50"
+        comms:
+        os: S20
+        battery:
+          capacity: 1100
+          model: BPS-2
+          removable: yes
+
+      - brand: Nokia
+        model: "5110"
+        color: Deep Blue
+        symbol: NSE-1NX
+        mfg: 04/1998
+        state:
+          score4: 4/5
+          info: Shadows/marks on the LCD.
+        screen:
+          type: Mono
+          resolution: 84x48
+          size: 1.50"
+        comms:
+        os: S20
+        battery:
+          capacity: 1100
+          model: BPS-2
+          removable: yes
+
+      - brand: Nokia
+        model: "5110"
+        color: Deep Blue
+        symbol: NSE-1NX
+        mfg: 04/1998
+        state:
+          score2: 2/5
+          info: Crack on the LCD cover, yellowed keyboard with no markings, wires dangling from the speaker and microphone, missing screws.
+        screen:
+          type: Mono
+          resolution: 84x48
+          size: 1.50"
+        comms:
+        os: S20
+        battery:
+          capacity: 1100
+          model: BPS-2
+          removable: yes
+
+      - brand: Nokia
+        model: "5110"
+        color: Deep Blue
+        symbol: NSE-1NX
+        mfg: 04/1998
+        state:
+          score4: 4/5
+          info: Marks on the keyboard.
+        screen:
+          type: Mono
+          resolution: 84x48
+          size: 1.50"
+        comms:
+        os: S20
+        battery:
+          capacity: 1100
+          model: BPS-2
+          removable: yes
+
+      - brand: Nokia
+        model: 6310i
+        color: Jet Black
+        symbol: NPL-1
+        mfg: 03/2002
+        state:
+          score3: 3/5
+        screen:
+          type: Mono
+          resolution: 96x65
+          size: 1.50"
+        comms:
+          bluetooth: 1.1
+          infrared: yes
+        os: S30
+        battery:
+          capacity: 1100
+          model: BPS-2
+          removable: yes
+
+      - brand: Nokia
+        model: 6610i
+        color: Grey
+        symbol: RM-37
+        mfg: 11/2002
+        state:
+          score4: 4/5
+        screen:
+          resolution: 128x128
+          size: 1.50"
+        comms:
+          infrared: yes
+          radio: yes
+          usb: Pop-Port
+        os: S40v1
+        camera:
+          back: CIF
+        battery:
+          capacity: 780
+          model: BLD-3
+          removable: yes
+
+      - brand: Nokia
+        model: 6230i
+        operator:
+          name: Era
+        color: Silver Grey
+        symbol: RM-72
+        mfg: 02/2005
+        state:
+          score4: 4/5
+        screen:
+          resolution: 208x208
+          size: 1.70"
+        comms:
+          bluetooth: 1.1
+          infrared: yes
+          radio: yes
+          usb: Pop-Port
+        os: S40v2
+        camera:
+          back: 1.3 Mpx
+        battery:
+          capacity: 1020
+          model: BL-5C
+          removable: yes
+
+      - brand: Nokia
+        model: 6230i
+        operator:
+          name: Era
+        color: Silver Grey
+        symbol: RM-72
+        mfg: 02/2005
+        state:
+          score3: 3/5
+          info: Marks on the keyboard, screen cover missing.
+        screen:
+          resolution: 208x208
+          size: 1.70"
+        comms:
+          bluetooth: 1.1
+          infrared: yes
+          radio: yes
+          usb: Pop-Port
+        os: S40v2
+        camera:
+          back: 1.3 Mpx
+        battery:
+          capacity: 1020
+          model: BL-5C
+          removable: yes
+
+      - brand: Nokia
+        model: 6230i
+        color: Silver Grey
+        symbol: RM-72
+        mfg: 02/2005
+        state:
+          score5: 5/5
+        screen:
+          resolution: 208x208
+          size: 1.70"
+        comms:
+          bluetooth: 1.1
+          infrared: yes
+          radio: yes
+          usb: Pop-Port
+        os: S40v2
+        camera:
+          back: 1.3 Mpx
+        battery:
+          capacity: 1020
+          model: BL-5C
+          removable: yes
+
+      - brand: Nokia
+        model: "6610"
+        color: Black
+        symbol: NHL-4U
+        mfg: 10/2002
+        state:
+          score3: 3/5
+          info: Cuts in the case, missing charging port.
+        screen:
+          resolution: 128x128
+          size: 1.50"
+        comms:
+          infrared: yes
+          radio: yes
+          usb: Pop-Port
+        os: S40v1
+        battery:
+          capacity: 780
+          model: BLD-3
+          removable: yes
+
+      - brand: Nokia
+        model: "6230"
+        color: Pearl White
+        symbol: RH-12
+        mfg: 02/2004
+        state:
+          score1: 1/5
+          info: Doesn't power on. Visually 4/5.
+        screen:
+          resolution: 128x128
+          size: 1.50"
+        comms:
+          bluetooth: 1.1
+          infrared: yes
+          radio: yes
+          usb: Pop-Port
+        os: S40v2
+        camera:
+          back: VGA
+        battery:
+          capacity: 850
+          model: BL-4C
+          removable: yes
+
+      - brand: Nokia
+        model: "1600"
+        color: Black
+        symbol: RH-64
+        mfg: 06/2005
+        state:
+          score2: 2/5
+          info: Poor visual shape, lots of dust and scratches, cracks on the battery cover.
+        screen:
+          type: CSTN
+          resolution: 96x68
+          size: 1.40"
+        comms:
+        os: S30
+        battery:
+          capacity: 1020
+          model: BL-5C
+          removable: yes
+
+      - brand: Nokia
+        model: "2650"
+        color: Silver
+        symbol: RH-53
+        mfg: 06/2004
+        state:
+          score4: 4/5
+        screen:
+          resolution: 128x128
+          size: 1.50"
+        comms:
+        os: S40v1
+        battery:
+          capacity: 760
+          model: BL-4C
+          removable: yes
+
+      - brand: Nokia
+        model: Asha 302
+        operator:
+          name: T-Mobile
+        color: Dark Grey
+        symbol: RM-813
+        mfg: 03/2012
+        state:
+          score3: 3/5
+          info: Camera plastic cover cracked.
+        screen:
+          resolution: 320x240
+          size: 2.40"
+        comms:
+          wifi: b/g/n
+          bluetooth: 2.1
+          radio: yes
+          usb: microUSB, OTG
+        os: S40v7.1
+        camera:
+          back: 3.15 Mpx
+        battery:
+          capacity: 1430
+          model: BL-5J
+          removable: yes
+
+      - brand: Nokia
+        model: Asha 302
+        operator:
+          name: T-Mobile
+        color: Dark Grey
+        symbol: RM-813
+        mfg: 03/2012
+        state:
+          score4: 4/5
+        screen:
+          resolution: 320x240
+          size: 2.40"
+        comms:
+          wifi: b/g/n
+          bluetooth: 2.1
+          radio: yes
+          usb: microUSB, OTG
+        os: S40v7.1
+        camera:
+          back: 3.15 Mpx
+        battery:
+          capacity: 1430
+          model: BL-5J
+          removable: yes
+
+      - brand: Nokia
+        model: C5-00
+        operator:
+          name: Era
+        color: Black
+        symbol: RM-645
+        mfg: 04/2010
+        state:
+          score2: 2/5
+          info: Marks on the keyboard, severely cracked screen cover.
+        screen:
+          resolution: 240x320
+          size: 2.20"
+        comms:
+          bluetooth: 2.0
+          radio: yes
+          gps: yes
+          usb: microUSB
+        os: S60v3.2, Symbian 9.3
+        camera:
+          back: 3.15 Mpx
+          front: VGA
+        battery:
+          capacity: 1050
+          model: BL-5CT
+          removable: yes
+
+      - brand: Nokia
+        model: C5-00
+        color: Black
+        symbol: RM-645
+        mfg: 04/2010
+        state:
+          score3: 3/5
+          info: Missing upper keys, missing battery cover, small crack on the screen cover.
+        screen:
+          resolution: 240x320
+          size: 2.20"
+        comms:
+          bluetooth: 2.0
+          radio: yes
+          gps: yes
+          usb: microUSB
+        os: S60v3.2, Symbian 9.3
+        camera:
+          back: 3.15 Mpx
+          front: VGA
+        battery:
+          capacity: 1050
+          model: BL-5CT
+          removable: yes
+
+      - brand: Nokia
+        model: C5-00
+        operator:
+          name: T-Mobile
+        color: All Black
+        symbol: RM-745
+        mfg: 09/2011
+        state:
+          score4: 4/5
+        screen:
+          resolution: 240x320
+          size: 2.20"
+        comms:
+          bluetooth: 2.0
+          radio: yes
+          gps: yes
+          usb: microUSB
+        os: S60v3.2, Symbian 9.3
+        camera:
+          back: 5 Mpx
+          front: VGA
+        battery:
+          capacity: 1050
+          model: BL-5CT
+          removable: yes
+
+      - brand: Nokia
+        model: C5-00
+        operator:
+          name: T-Mobile
+        color: All Black
+        symbol: RM-745
+        mfg: 09/2011
+        state:
+          score3: 3/5
+          info: Crack on the screen cover.
+        screen:
+          resolution: 240x320
+          size: 2.20"
+        comms:
+          bluetooth: 2.0
+          radio: yes
+          gps: yes
+          usb: microUSB
+        os: S60v3.2, Symbian 9.3
+        camera:
+          back: 5 Mpx
+          front: VGA
+        battery:
+          capacity: 1050
+          model: BL-5CT
+          removable: yes
+
+      - brand: Nokia
+        model: E51
+        operator:
+          name: Era
+        color: Black
+        symbol: RM-244
+        mfg: 11/2007
+        state:
+          score4: 4/5
+          info: Missing power key rubber.
+        screen:
+          resolution: 240x320
+          size: 2.20"
+        comms:
+          wifi: b/g
+          bluetooth: 2.0
+          infrared: yes
+          radio: yes
+          usb: miniUSB
+        os: S60v3.1, Symbian 9.2
+        camera:
+          back: 2 Mpx
+        battery:
+          capacity: 1050
+          model: BL-5CT
+          removable: yes
+
+      - brand: Nokia
+        model: E51
+        operator:
+          name: Era
+        color: Black
+        symbol: RM-244
+        mfg: 11/2007
+        state:
+          score4: 4/5
+          info: Missing power key rubber.
+        screen:
+          resolution: 240x320
+          size: 2.20"
+        comms:
+          wifi: b/g
+          bluetooth: 2.0
+          infrared: yes
+          radio: yes
+          usb: miniUSB
+        os: S60v3.1, Symbian 9.2
+        camera:
+          back: 2 Mpx
+        battery:
+          capacity: 1050
+          model: BL-5CT
+          removable: yes
+
+      - brand: Nokia
+        model: E52
+        color: Black
+        symbol: RM-469
+        mfg: 07/2009
+        state:
+          score1: 1/5
+          info: Doesn't power on. Visually 4/5.
+        screen:
+          resolution: 240x320
+          size: 2.40"
+        comms:
+          wifi: b/g
+          bluetooth: 2.0
+          radio: yes
+          gps: yes
+          usb: microUSB
+        os: S60v3.2
+        camera:
+          back: 3.2 Mpx
+          front: QVGA
+        battery:
+          capacity: 1500
+          model: BP-4L
+          removable: yes
+
+      - brand: Nokia
+        model: 6700 classic
+        color: Silver Metallic
+        symbol: RM-470
+        mfg: 05/2009
+        state:
+          score3: 3/5
+          info: Cracked case, held by tape.
+        screen:
+          resolution: 240x320
+          size: 2.20"
+        comms:
+          bluetooth: 2.1
+          radio: yes
+          gps: yes
+          usb: microUSB
+        os: S40v6
+        camera:
+          back: 5 Mpx
+        battery:
+          capacity: 970
+          model: BL-6Q
+          removable: yes
+
+      - brand: Nokia
+        model: E50
+        operator:
+          name: Plus
+        color: Silver
+        symbol: RM-170
+        mfg: 05/2005
+        state:
+          score1: 1/5
+          info: Hard-bricked during key lock code unlock attempt. Doesn't power on. Visually 4/5. Missing power key rubber.
+        screen:
+          resolution: 240x320
+          size: 2.10"
+        comms:
+          bluetooth: 2.0
+          infrared: yes
+          usb: Pop-Port
+        os: S60v3
+        camera:
+          back: 1.3 Mpx
+        battery:
+          capacity: 1020
+          model: BP-5C
+          removable: yes
+
+      - brand: Nokia
+        model: Asha 300
+        color: Graphite
+        symbol: RM-781
+        mfg: 11/2011
+        state:
+          score1: 1/5
+          info: Dead touch screen despite replacing. Visually 4/5.
+        screen:
+          resolution: 240x320
+          size: 2.40"
+        comms:
+          bluetooth: 2.1
+          radio: yes
+          usb: microUSB, OTG
+        os: S40v6
+        camera:
+          back: 5 Mpx
+        battery:
+          capacity: 1110
+          model: BL-4U
+          removable: yes
+
+      - brand: Nokia
+        model: C1-01
+        operator:
+          name: Era
+        color: Dark Grey
+        symbol: RM-607
+        mfg: 12/2010
+        state:
+          score4: 4/5
+          info: Back cover yellowed.
+        screen:
+          resolution: 128x160
+          size: 1.80"
+        comms:
+          bluetooth: 2.1
+          radio: yes
+          usb: microUSB, OTG
+        os: S40v6
+        camera:
+          back: VGA
+        battery:
+          capacity: 800
+          model: BL-5CB
+          removable: yes
+
+      - brand: Nokia
+        model: "6800"
+        color: Silver
+        symbol: NHL-6
+        mfg: 11/2002
+        state:
+          score2: 2/5
+          info: Scratches and visible wear on screen. Fold-out keyboard falling apart. Battery cover latches cracked.
+        screen:
+          resolution: 128x128
+          size: 1.70"
+        comms:
+          infrared: yes
+          radio: yes
+        os: S40v1
+        battery:
+          capacity: 1000
+          model: BLC-2
+          removable: yes
+
+      - brand: Nokia
+        model: "6085"
+        color: Silver
+        symbol: RM-198
+        mfg: 09/2006
+        state:
+          score1: 1/5
+          info: Main screen ribbon broken, second screen functional. Visually 4/5.
+        screen:
+          resolution: 128x160
+          size: 1.80"
+        comms:
+          bluetooth: 2.0
+          radio: yes
+          usb: Pop-Port
+        os: S40v3
+        camera:
+          back: VGA
+        battery:
+          capacity: 1020
+          model: BL-5C
+          removable: yes
+
+      - brand: Nokia
+        model: "9210"
+        color: Grey
+        symbol: RAE-3N
+        mfg: 11/2000
+        state:
+          score3: 3/5
+          info: No built-in backlight, case with cracks, missing screws.
+        screen:
+          resolution: 640x200
+          size: 4.50"
+        comms:
+          infrared: yes
+        os: S80v1
+        battery:
+          capacity: 1300
+          model: BLL-3
+          removable: yes
+
+      - brand: Sony Ericsson
+        model: K750i
+        color: Black
+        mfg: 03/2005
+        state:
+          score1: 1/5
+          info: Dead LCD (likely ribbon cable, white screen).
+        screen:
+          resolution: 176x220
+          size: 1.80"
+        comms:
+          bluetooth: 2.0
+          infrared: yes
+          radio: yes
+          usb: Proprietary
+        camera:
+          back: 2 Mpx
+        battery:
+          capacity: 1000
+          model: BST-43
+          removable: yes
+
+      - brand: Sony Ericsson
+        model: Hazel
+        operator:
+          name: Plus
+        symbol: J20i
+        color: Superior Black
+        mfg: 05/2010
+        state:
+          score4: 4/5
+        screen:
+          resolution: 240x320
+          size: 2.60"
+        comms:
+          wifi: b/g
+          bluetooth: 2.1
+          radio: yes
+          gps: yes
+          usb: Proprietary
+        camera:
+          back: 5 Mpx
+          front: "Yes"
+        battery:
+          capacity: 1000
+          model: BST-43
+          removable: yes
+
+      - brand: Sony Ericsson
+        model: Hazel
+        operator:
+          name: T-Mobile
+        symbol: J20i
+        color: Superior Black
+        mfg: 05/2010
+        state:
+          score4: 4/5
+        screen:
+          resolution: 240x320
+          size: 2.60"
+        comms:
+          wifi: b/g
+          bluetooth: 2.1
+          radio: yes
+          gps: yes
+          usb: Proprietary
+        camera:
+          back: 5 Mpx
+          front: "Yes"
+        battery:
+          capacity: 1000
+          model: BST-43
+          removable: yes
+
+      - brand: Sony Ericsson
+        model: P1i
+        operator:
+          name: Orange
+          simlock: yes
+        color: Black
+        mfg: 07/2007
+        state:
+          score2: 2/5
+          info: Charging port broken. Bezel unglued. Back rubber sticky. Battery cover missing. Speaker bad quality.
+        screen:
+          resolution: 240x320
+          size: 2.60"
+        comms:
+          wifi: b
+          bluetooth: 2.0
+          radio: yes
+          infrared: yes
+          usb: Proprietary
+        os: UIQ 3.0, Symbian 9.1
+        camera:
+          back: 3.15 Mpx
+          front: VGA
+        battery:
+          capacity: 1120
+          model: BST-40
+          removable: yes
+
+      - brand: Sony Ericsson
+        model: P1i
+        color: Black
+        mfg: 07/2007
+        state:
+          score2: 2/5
+          info: Back rubber sticky. M2 port cover missing. Part of front bezel cracked. Scroll wheel broken.
+        screen:
+          resolution: 240x320
+          size: 2.60"
+        comms:
+          wifi: b
+          bluetooth: 2.0
+          radio: yes
+          infrared: yes
+          usb: Proprietary
+        os: UIQ 3.0, Symbian 9.1
+        camera:
+          back: 3.15 Mpx
+          front: VGA
+        battery:
+          capacity: 1120
+          model: BST-40
+          removable: yes
+
+      - brand: Sony Ericsson
+        model: W800
+        color: Smooth White
+        mfg: 08/2005
+        state:
+          score4: 4/5
+        screen:
+          resolution: 176x220
+          size: 1.80"
+        comms:
+          bluetooth: 2.0
+          radio: yes
+          infrared: yes
+          usb: Proprietary
+        camera:
+          back: 2 Mpx
+        battery:
+          capacity: 900
+          model: BST-36
+          removable: yes
+        story: idk I lost it somewhere, or maybe gave it away to someone.
+
+      - brand: Sony Ericsson
+        model: C902
+        color: Swift Black
+        mfg: 06/2008
+        state:
+          score5: 5/5
+        screen:
+          resolution: 240x320
+          size: 2.00"
+        comms:
+          bluetooth: 2.0
+          radio: yes
+          usb: Proprietary
+        camera:
+          back: 2 Mpx
+          front: QCIF
+        battery:
+          capacity: 930
+          model: BST-38
+          removable: yes
+
+      - brand: Motorola
+        model: C651
+        color: Blue
+        mfg: 08/2004
+        state:
+          score3: 3/5
+        screen:
+          type: CSTN
+          resolution: 128x128
+          size: 2.00"
+        comms:
+          usb: miniUSB
+        camera:
+          back: VGA
+        battery:
+          capacity: 860
+          removable: yes
+
+      - brand: Motorola
+        model: RAZR V3
+        color: Matte Black
+        mfg: 11/2004
+        state:
+          score1: 1/5
+          info: Doesn't power on, likely corrupted firmware. Visually 5/5.
+        screen:
+          resolution: 176x220
+          size: 2.20"
+        comms:
+          bluetooth: 1.2
+          usb: miniUSB
+        camera:
+          back: VGA
+        battery:
+          capacity: 710
+          model: BR50
+          removable: yes
+
+      - brand: Motorola
+        model: KRZR K1
+        color: Fire Red
+        mfg: 07/2006
+        state:
+          score1: 1/5
+          info: LCD doesn't work, white screen, likely broken ribbon cable. Visually 5/5.
+        screen:
+          resolution: 176x220
+          size: 1.9"
+        comms:
+          bluetooth: 1.2
+          usb: Proprietary
+        camera:
+          back: 2 Mpx
+        battery:
+          capacity: 700
+          model: BC50
+          removable: yes
+
+      - brand: Siemens
+        model: C45
+        color: Oriental Blue
+        mfg: 10/2001
+        state:
+          score3: 3/5
+          info: Battery dead, not original.
+        screen:
+          type: Mono
+          resolution: 101x64
+          size: 1.40"
+        comms:
+        battery:
+          capacity: 1500
+          removable: yes
+
+      - brand: Siemens
+        model: S35
+        color: Titanium/Black
+        mfg: 09/2001
+        state:
+          score1: 1/5
+          info: No battery. No LCD. No back cover. No charger.
+        screen:
+          type: Mono
+          resolution: 101x80
+          size: 1.50"
+        comms:
+          infrared: yes
+        battery:
+          capacity: 650
+          removable: yes
+
+      - brand: Siemens
+        model: S6 D
+        color: Black
+        mfg: ??/1996
+        state:
+          score1: 1/5
+          info: Doesn't power on. No charger.
+        screen:
+          type: Mono
+          resolution: 97x33
+          size: 1.60"
+        comms:
+        battery:
+          capacity: 1000
+          removable: yes
+
+      - brand: Samsung
+        model: Stratus
+        operator:
+          name: Orange
+        color: Black
+        symbol: C3050
+        mfg: 06/2009
+        state:
+          score1: 1/5
+          info: Doesn't power on. Visually 4/5.
+        screen:
+          resolution: 120x160
+          size: 2.00"
+        comms:
+          bluetooth: 2.0
+          radio: yes
+          usb: Proprietary
+        camera:
+          back: VGA
+        battery:
+          capacity: 800
+          removable: yes
+
+      - brand: Samsung
+        model: C3350
+        color: Steel Grey
+        symbol: GT-C3350
+        mfg: 10/2011
+        state:
+          score3: 3/5
+          info: Battery cover doesn't close.
+        screen:
+          resolution: 240x320
+          size: 2.20"
+        comms:
+          bluetooth: 3.0
+          radio: yes
+          usb: Proprietary
+        camera:
+          back: 2 Mpx
+        battery:
+          capacity: 1300
+          model: AB803443BU
+          removable: yes
+
+      - brand: myPhone
+        model: Halo 2
+        color: Red
+        symbol: "1075"
+        mfg: 11/2015
+        state:
+          score2: 2/5
+          info: Battery swollen. Severe usage marks and cracks.
+        screen:
+          resolution: "?"
+          size: 2.20"
+        comms:
+          bluetooth: "Yes"
+          usb: microUSB
+        camera:
+          back: VGA
+        battery:
+          capacity: 900
+          model: BS-02
+          removable: yes

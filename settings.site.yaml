@@ -46,8 +46,8 @@ identity:
             url: /posts/?year=2024
           - title: 2023
             url: /posts/?year=2023
-      - title: Projects
-        url: /projects/
+      # - title: Projects
+      #   url: /projects/
       - title: Collections
         url: /collections/
         menu:
@@ -61,5 +61,5 @@ identity:
             url: /collections/phones.html
           # - title: Computers
           #   url: /collections/computers.html
-      - title: About me
-        url: /about/
+      # - title: About me
+      #   url: /about/

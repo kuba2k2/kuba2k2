@@ -1,0 +1,9 @@
+{
+	"Reverse Engineering": "If it involves working out how things work under the hood - you will find it here.",
+	"Hardware Hacking": "Taking control over hardware and making it do things that it normally wouldn't or shouldn't.",
+	"Hardware Repair": "Diagnosing and repairing various kinds of hardware.",
+	"Mobile": "Everything related to mobile phones and other portables.",
+	"Embedded": "Embedded systems which are usually more powerful than a lightbulb.",
+	"Computers": "Working with the big calculators, both the hardware and software.",
+	"Software": "Projects strictly related to software development."
+}

@@ -6,5 +6,5 @@ services:
     volumes:
       - .:/data
     ports:
-      - 22582:8000
+      - 127.0.0.1:22582:8000
     restart: unless-stopped

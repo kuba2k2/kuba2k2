@@ -1,0 +1,65 @@
+page_template_map:
+  "/posts/": "posts-index"
+  "!/posts/.+": "posts-single"
+page_type_map:
+  "/posts/.+": "post"
+per_page: 10
+scan_paths:
+  - ./posts/
+identity:
+  default_author: kuba2k2
+  default_title: Untitled Page
+  default_theme: bootstrap
+  category_map:
+    reveng: Reverse Engineering
+    hwhacking: Hardware Hacking
+    hwrepair: Hardware Repair
+  # extras for theme
+  title: kuba2k2
+  brand: kuba2k2
+  footer: "&copy; Kuba Szczodrzyński 2024"
+  about: Hello, World!
+  navbar:
+    expand: md
+    search: /posts/
+  menu:
+    navbar:
+      - title: Home
+        url: /
+      - title: Blog
+        url: /posts/
+        menu:
+          - type: header
+            title: Categories
+          - title: Reverse Engineering
+            url: /posts/?category=Reverse+Engineering
+          - title: Hardware Hacking
+            url: /posts/?category=Hardware+Hacking
+          - title: Software
+            url: /posts/?category=Software
+          - title: Computers
+            url: /posts/?category=Computers
+          - type: divider
+          - type: header
+            title: Browse posts
+          - title: 2024
+            url: /posts/?year=2024
+          - title: 2023
+            url: /posts/?year=2023
+      - title: Projects
+        url: /projects/
+      - title: Collections
+        url: /collections/
+        menu:
+          # - title: Laptops
+          #   url: /collections/laptops.html
+          - title: Smartphones
+            url: /collections/smartphones.html
+          # - title: Tablets
+          #   url: /collections/tablets.html
+          - title: Phones
+            url: /collections/phones.html
+          # - title: Computers
+          #   url: /collections/computers.html
+      - title: About me
+        url: /about/

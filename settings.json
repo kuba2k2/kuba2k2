@@ -1,0 +1,35 @@
+{
+	"extensions": [
+		"markdown.extensions.tables",
+		"pymdownx.magiclink",
+		"pymdownx.betterem",
+		"pymdownx.tilde",
+		"pymdownx.emoji",
+		"pymdownx.keys",
+		"pymdownx.highlight",
+		"pymdownx.tasklist",
+		"pymdownx.superfences",
+		"pymdownx.saneheaders",
+		"pymdownx.details",
+		"md_in_html",
+		"attr_list",
+		"admonition"
+	],
+	"extension_configs": {
+		"pymdownx.tilde": {
+			"subscript": false
+		},
+		"pymdownx.emoji": {
+			"alt": "short",
+			"options": {
+				"attributes": {
+					"align": "absmiddle",
+					"height": "20px",
+					"width": "20px"
+				},
+				"image_path": "https://assets-cdn.github.com/images/icons/emoji/unicode/",
+				"non_standard_image_path": "https://assets-cdn.github.com/images/icons/emoji/"
+			}
+		}
+	}
+}

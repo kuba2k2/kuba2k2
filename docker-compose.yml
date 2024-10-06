@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  mdserver:
+    build: ./mdserver/
+    container_name: mdserver
+    volumes:
+      - .:/data
+    ports:
+      - 22582:8000
+    restart: unless-stopped

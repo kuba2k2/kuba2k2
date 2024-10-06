@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "mdserver"
+version = "0.1.0"
+description = ""
+authors = ["Kuba Szczodrzyński <kuba@szczodrzynski.pl>"]
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Markdown = "^3.4.3"
+pymdown-extensions = "^9.11"
+Jinja2 = "^3.1.2"
+python-frontmatter = "^1.0.0"
+uvicorn = "^0.22.0"
+Pygments = "^2.15.1"
+pyyaml = "^6.0.2"
+fastapi = "^0.115.0"
+pydantic = "2.7.1"
+
+[tool.poetry.group.dev.dependencies]
+autopep8 = "^2.0.2"
+black = "^23.3.0"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

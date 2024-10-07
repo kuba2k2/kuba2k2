@@ -50,9 +50,53 @@ article > p:first-of-type {
 }
 
 article blockquote {
-	padding-left: 1rem;
+	padding: 1rem 1rem 0.25rem 1rem;
 	border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
 	font-style: italic;
+	background: rgba(127, 127, 127, 0.05);
+}
+
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6 {
+	border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+	padding-bottom: 0.5rem !important;
+}
+
+article h2::before,
+article h3::before,
+article h4::before {
+	font-size: 2.5rem;
+	padding-right: 0.5rem;
+	color: #6faf32;
+}
+
+article h2::before {
+	content: "#";
+}
+
+article h3::before {
+	content: "##";
+}
+
+article h4::before {
+	content: "###";
+}
+
+article .heading-link {
+	display: none;
+}
+
+article h1:hover .heading-link,
+article h2:hover .heading-link,
+article h3:hover .heading-link,
+article h4:hover .heading-link,
+article h5:hover .heading-link,
+article h6:hover .heading-link {
+	display: inline;
 }
 
 div.highlight {

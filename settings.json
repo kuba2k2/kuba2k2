@@ -13,7 +13,8 @@
 		"pymdownx.details",
 		"md_in_html",
 		"attr_list",
-		"admonition"
+		"admonition",
+		"mdserver.extensions.headinglink"
 	],
 	"extension_configs": {
 		"pymdownx.tilde": {

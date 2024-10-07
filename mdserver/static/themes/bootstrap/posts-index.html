@@ -35,14 +35,14 @@
 {% endif %}
 
 {# POSTS LIST LOOP #}
-<article>
+<div>
 	{% for item in util.paged(posts, query) %}
 	{{ page_boxes.extended(item, util, query) }}
 	{% if loop.revindex0 %}
 	<hr>
 	{% endif %}
 	{% endfor %}
-</article>
+</div>
 
 {# PAGINATION #}
 <ul class="pagination justify-content-center mb-0">

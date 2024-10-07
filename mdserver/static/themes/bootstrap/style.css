@@ -1,3 +1,32 @@
+/* CUSTOM FONTS */
+/* @font-face {
+	font-family: "Perfect DOS VGA 437 Win";
+	src: url(/static/fonts/perfect-dos-vga-437-win.ttf);
+} */
+
+@font-face {
+	font-family: "Video Terminal Screen";
+	src: url(/static/fonts/vtsr.ttf);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Playfair Display", Georgia, "Times New Roman", serif /*rtl:Amiri, Georgia, "Times New Roman", serif*/;
+}
+
+div.navbar .navbar-brand {
+	font-family: "Video Terminal Screen", "Courier New", serif;
+	font-size: 2.25rem;
+}
+
+.font-brand {
+	font-family: "Video Terminal Screen", "Courier New", serif;
+}
+
 /* FOR STICKY FOOTER */
 html,
 body {
@@ -10,15 +39,6 @@ body {
 }
 
 /* PAGE CONTENT / ARTICLE */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-family: "Playfair Display", Georgia, "Times New Roman", serif /*rtl:Amiri, Georgia, "Times New Roman", serif*/;
-}
-
 article .table {
 	width: unset !important;
 }
@@ -69,6 +89,7 @@ article h6 {
 article h2::before,
 article h3::before,
 article h4::before {
+	font-family: "Video Terminal Screen";
 	font-size: 2.5rem;
 	padding-right: 0.5rem;
 	color: #6faf32;
@@ -159,11 +180,6 @@ nav.navbar .dropdown:focus-within > .dropdown-item {
 		color: var(--bs-dropdown-link-hover-color);
 		background-color: var(--bs-dropdown-link-hover-bg);
 	}
-}
-
-div.navbar .navbar-brand {
-	font-family: "Playfair Display", Georgia, "Times New Roman", serif /*rtl:Amiri, Georgia, "Times New Roman", serif*/;
-	font-size: 2.25rem;
 }
 
 div.navbar > div {

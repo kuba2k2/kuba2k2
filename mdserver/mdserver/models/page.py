@@ -16,6 +16,7 @@ class Page(BaseModel):
     html: str | None = Field(default=None, exclude=True)
     mtime: datetime | None = None
     excerpt: str | None = None
+    contents: list[tuple[int, str]] = []
 
     # metadata from frontmatter
     template: str

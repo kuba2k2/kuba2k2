@@ -1,13 +1,53 @@
 {% import "bootstrap/macros/page-boxes.html" as page_boxes %}
 {% set posts = util.filtered(database.pages.values(), None, "post") %}
 
+{% macro contents(items) %}
+{% for level, text in items %}
+<span>{{ "#" * (level-1) }}</span>
+<a href="#{{ util.slugify(text) }}" class="text-decoration-hover">{{ text }}</a><br>
+{% endfor %}
+{% endmacro %}
+
 <div class="position-sticky" style="top: 2rem;">
-	{# ABOUT #}
+	{# ABOUT/CONTENTS #}
+	{% if page.contents %}
+	<div class="p-4 mb-3 bg-body-tertiary rounded">
+		<h4 class="font-brand">Contents</h4>
+		<p class="mb-0 page-contents">
+			{{ contents(page.contents[0:5]) }}
+		</p>
+		{% if page.contents|length > 5 %}
+		<details class="page-contents">
+			<summary class="icon-link gap-1 icon-link-hover pt-2 text-decoration-underline link-primary-subtle">
+				Expand
+				<i class="bi bi-chevron-right"></i>
+			</summary>
+			<div class="clear-both pt-2"></div>
+			{{ contents(page.contents[5:]) }}
+		</details>
+		{% endif %}
+	</div>
+	{% else %}
 	<div class="p-4 mb-3 bg-body-tertiary rounded">
 		<h4 class="font-brand">About</h4>
 		<p class="mb-0">
 			{{ identity.about }}
 		</p>
+	</div>
+	{% endif %}
+
+	{# TAG CLOUD #}
+	<div class="pt-2 tag-cloud">
+		<h4 class="font-brand border-bottom pb-2">Popular tags</h4>
+		<ol class="list-unstyled d-flex flex-wrap align-items-center justify-content-center">
+			{% for tag, count in util.group_by_tag(posts, 15) %}
+			<li>
+				<a class="text-decoration-hover font-brand" href="/posts/?tag={{ tag }}" style="--size: {{ count }};">
+					{{ tag }}
+				</a>
+			</li>
+			{% endfor %}
+		</ol>
 	</div>
 
 	{# RECENT POSTS #}
@@ -26,18 +66,6 @@
 		See more
 		<i class="bi bi-chevron-right"></i>
 	</a>
-
-	{# TAG CLOUD #}
-	<div class="pt-2 tag-cloud">
-		<h4 class="font-brand border-bottom pb-2">Popular tags</h4>
-		<ol class="list-unstyled d-flex flex-wrap align-items-center justify-content-center">
-			{% for tag, count in util.group_by_tag(posts, 15) %}
-			<li>
-				<a class="text-decoration-hover font-brand" href="/posts/?tag={{ tag }}" style="--size: {{ count }};">{{ tag }}</a>
-			</li>
-			{% endfor %}
-		</ol>
-	</div>
 
 	{# BROWSE POSTS #}
 	<div class="pt-2">

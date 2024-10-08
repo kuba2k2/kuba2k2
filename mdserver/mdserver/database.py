@@ -134,6 +134,11 @@ class Database(BaseModel):
         if "image" in meta:
             meta["image"] = make_url(relpath.parent / meta["image"])
 
+        # extract the table of contents
+        contents = []
+        for match in re.finditer(r"<h(\d).*?>(.+?)<", html, re.DOTALL):
+            contents.append((int(match.group(1)), match.group(2)))
+
         # fill in missing metadata
         if not meta.get("template"):
             meta["template"] = get_page_template(url)
@@ -151,6 +156,7 @@ class Database(BaseModel):
             html=html,
             mtime=mtime,
             excerpt=excerpt,
+            contents=contents,
             sxs=sxs,
             **meta,
         )

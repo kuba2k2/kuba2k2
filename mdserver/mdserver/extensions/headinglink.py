@@ -5,13 +5,12 @@ import re
 from markdown import Extension, Markdown
 from markdown.postprocessors import Postprocessor
 
+from mdserver.util import slugify
+
 RE_TAG_HEADING = re.compile(
     r"<h(\d)>(.+?)<\/h(\d)>",
     re.DOTALL | re.UNICODE,
 )
-
-RE_SLUG_1 = re.compile(r"[^a-z0-9-]")
-RE_SLUG_2 = re.compile(r"-+")
 
 
 class HeadingLinkPostprocessor(Postprocessor):
@@ -19,10 +18,8 @@ class HeadingLinkPostprocessor(Postprocessor):
         super().__init__(md)
 
     def repl(self, m: re.Match):
-        slug: str = m.group(2).lower()
-        slug = RE_SLUG_1.sub("-", slug)
-        slug = RE_SLUG_2.sub("-", slug)
-        return f'<h{m.group(1)}>{m.group(2)}<a class="heading-link" href="#{slug}" id="{slug}"></a></h{m.group(3)}>'
+        slug = slugify(m.group(2))
+        return f'<h{m.group(1)} id="{slug}">{m.group(2)}<a class="heading-link" href="#{slug}"></a></h{m.group(3)}>'
 
     def run(self, text: str):
         return RE_TAG_HEADING.sub(self.repl, text)

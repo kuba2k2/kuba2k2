@@ -13,6 +13,9 @@ import yaml
 
 from .models import Page
 
+RE_SLUG_1 = re.compile(r"[^a-z0-9-]")
+RE_SLUG_2 = re.compile(r"-+")
+
 
 def load(path: Path) -> dict | list | str:
     json_path = path.with_suffix(".json")
@@ -131,6 +134,13 @@ def monthfmt(dt: datetime) -> str:
     if not dt:
         return ""
     return dt.strftime("%B %Y")
+
+
+def slugify(text: str) -> str:
+    text = text.lower().strip()
+    text = RE_SLUG_1.sub("-", text)
+    text = RE_SLUG_2.sub("-", text)
+    return text.strip("-")
 
 
 def hashchoice(value, choices: list):

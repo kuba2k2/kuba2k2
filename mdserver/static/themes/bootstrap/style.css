@@ -200,9 +200,23 @@ nav.navbar .input-group {
 	margin: 0 auto;
 }
 
-/* TAG CLOUD */
-/* https://dev.to/alvaromontoro/create-a-tag-cloud-with-html-and-css-1e90 */
+/* BLOG SIDEBAR - CONTENTS */
+.page-contents span {
+	font-family: "Video Terminal Screen";
+	padding-right: 0.5rem;
+	color: #6faf32;
+}
 
+details.page-contents summary {
+	color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+}
+
+details.page-contents summary:hover {
+	--bs-link-color-rgb: var(--bs-link-hover-color-rgb);
+}
+
+/* BLOG SIDEBAR - TAG CLOUD */
+/* https://dev.to/alvaromontoro/create-a-tag-cloud-with-html-and-css-1e90 */
 .tag-cloud ol {
 	line-height: 2.5rem;
 }

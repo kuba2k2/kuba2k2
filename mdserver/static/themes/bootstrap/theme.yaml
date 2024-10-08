@@ -1,10 +1,10 @@
 replacements:
-  - ['<div class="admonition ', '<div class="alert alert-']
+  - ['<div class="admonition ', '<div class="alert pb-0 alert-']
   - ['"alert alert-tip', '"alert alert-info']
   - ['"alert alert-important', '"alert alert-danger']
   - ['"alert alert-note', '"alert alert-primary']
   - ['"alert alert-abstract', '"alert alert-secondary']
-  - ['<p class="admonition-title">(.+?)</p>', '<b class="alert-heading fs-5">\1</b>']
+  - ['<p class="admonition-title">(.+?)</p>', '<p class="alert-heading fs-5 fw-bold mb-2">\1</p>']
   - ['<a class="md-button"', '<a class="btn btn-primary"']
   - ['<table>', '<table class="table">']
   - ['<div class="highlight">', '<div class="highlight p-2 rounded-3 text-body" data-bs-theme="dark">']

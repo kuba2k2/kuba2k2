@@ -70,10 +70,7 @@ article > p:first-of-type {
 }
 
 article blockquote {
-	padding: 1rem 1rem 0.25rem 1rem;
-	border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
-	font-style: italic;
-	background: rgba(127, 127, 127, 0.05);
+	border-left: 3px var(--bs-border-style) var(--bs-border-color);
 }
 
 article h1,

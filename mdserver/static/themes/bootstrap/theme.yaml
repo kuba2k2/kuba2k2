@@ -13,3 +13,4 @@ replacements:
   - ['<details>', '<details class="mb-2">']
   - ['<details class="', '<details class="mb-2 ']
   - ['<a class="heading-link', '<a class="heading-link bi bi-link-45deg ps-2 ']
+  - ['<blockquote>', '<blockquote class="fst-italic bg-body-tertiary rounded p-3 pb-1">']

@@ -264,3 +264,22 @@ div.page-lead > div {
 .text-decoration-hover:hover {
 	text-decoration: underline;
 }
+
+/* MONOSPACE CODE STYLES FROM GITHUB */
+code {
+	padding: 0.2em 0.4em;
+	margin: 0;
+	font-size: 85%;
+	white-space: break-spaces;
+	background-color: var(--bs-secondary-bg);
+	border-radius: 6px;
+}
+
+pre code {
+	padding: unset;
+	margin: unset;
+	font-size: unset;
+	white-space: unset;
+	background-color: unset;
+	border-radius: unset;
+}

@@ -30,6 +30,7 @@ class Page(BaseModel):
     lastmod: datetime | None = None
     draft: bool = False
     jinja: bool = False
+    series: str | None = None
     categories: list[str] = []
     tags: list[str] = []
 

@@ -199,6 +199,7 @@ def filtered(pages: list[Page], query: dict | None, *types: str) -> list[Page]:
     year = intsafe(query.get("year"))
     month = intsafe(query.get("month"))
     author = query.get("author")
+    series = query.get("series")
     category = query.get("category")
     tag = query.get("tag")
     query.get("q")
@@ -208,6 +209,8 @@ def filtered(pages: list[Page], query: dict | None, *types: str) -> list[Page]:
         pages = [page for page in pages if page.date and page.date.month == month]
     if author:
         pages = [page for page in pages if page.author == author]
+    if series:
+        pages = [page for page in pages if page.series == series]
     if category:
         pages = [page for page in pages if category in page.categories]
     if tag:

@@ -22,11 +22,31 @@
 {% for tag in page.tags|sort %}
 <a href="/posts/?tag={{ tag }}" class="text-decoration-none">
 	{% set color = util.hashchoice(tag, tag_colors) %}
-	<span class="mb-1 badge rounded-pill bg-{{ color }}-subtle border border-{{ color }}-subtle text-{{ color }}-emphasis">{{ tag }}</span>
+	<span
+		class="mb-1 badge rounded-pill bg-{{ color }}-subtle border border-{{ color }}-subtle text-{{ color }}-emphasis">
+		{{ tag }}
+	</span>
 </a>
 {% endfor %}
 
 <hr>
+
+{# POST SERIES #}
+{% if page.series %}
+<div class="p-4 mb-3 bg-body-tertiary rounded page-contents">
+	<h4 class="font-brand">In this series</h4>
+	{% for item in util.filtered(database.pages.values(), {"series": page.series}, "post")[::-1] %}
+	<span>#</span>
+	<a href="{{ item.url }}" class="text-decoration-hover">{{ item.title }}</a>
+	<small class="text-muted">- {{ util.datefmt(item.date) }}</small>
+	<br>
+	<span class="opacity-0">#</span>
+	<small class="text-muted">{{ item.description or item.excerpt }}</small>
+	<br>
+	{% endfor %}
+</div>
+<hr>
+{% endif %}
 
 {# DRAFT POST INFO #}
 {% if page.draft %}

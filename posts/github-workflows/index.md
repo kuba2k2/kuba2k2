@@ -3,6 +3,7 @@ title: GitHub Workflows
 slug: github-workflows
 image: unsplash.jpg
 date: 2023-08-28
+lastmod: 2024-10-12
 categories:
   - software
 ---
@@ -230,6 +231,28 @@ jobs:
     uses: kuba2k2/kuba2k2/.github/workflows/lint-python.yml@master
 ```
 
+#### push-dev.yml (with tests)
+
+```yaml
+name: Push (dev), Pull Request
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+jobs:
+  lint-python:
+    name: Run Python lint
+    uses: kuba2k2/kuba2k2/.github/workflows/lint-python.yml@master
+  test-python:
+    name: Run Python tests
+    uses: kuba2k2/kuba2k2/.github/workflows/test-python.yml@master
+    with:
+      # extra arguments to "poetry install", defaults to:
+      install-args: --with dev --with test
+      # extra arguments to "pytest", defaults to empty
+      args: ""
+```
+
 ### release.yml
 
 ```yaml
@@ -245,6 +268,30 @@ jobs:
     name: Publish PyPI package
     needs:
       - lint-python
+    uses: kuba2k2/kuba2k2/.github/workflows/publish-pypi.yml@master
+    secrets:
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+```
+
+#### release.yml (with tests)
+
+```yaml
+name: Release
+on:
+  push:
+    tags: ["v*.*.*"]
+jobs:
+  lint-python:
+    name: Run Python lint
+    uses: kuba2k2/kuba2k2/.github/workflows/lint-python.yml@master
+  test-python:
+    name: Run Python tests
+    uses: kuba2k2/kuba2k2/.github/workflows/test-python.yml@master
+  publish-pypi:
+    name: Publish PyPI package
+    needs:
+      - lint-python
+      - test-python
     uses: kuba2k2/kuba2k2/.github/workflows/publish-pypi.yml@master
     secrets:
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}

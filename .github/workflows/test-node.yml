@@ -23,7 +23,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.node-version }}
+
       - name: Install project
-        run: npm ci
+        run: |
+          npm ci
       - name: Run tests
-        run: npm run ${{ inputs.task-test }}
+        run: |
+          npm run ${{ inputs.task-test }}

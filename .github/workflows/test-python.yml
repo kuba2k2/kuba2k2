@@ -1,0 +1,37 @@
+name: "[reusable] test-python"
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: false
+        type: string
+        default: "3.10"
+      install-args:
+        required: false
+        type: string
+        default: --with dev --with test
+      args:
+        required: false
+        type: string
+
+jobs:
+  test-python:
+    name: pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ inputs.python-version }}
+      - name: Install poetry
+        uses: Gr1N/setup-poetry@v8
+
+      - name: Install project
+        run: |
+          poetry install ${{ inputs.install-args }}
+      - name: Run tests
+        run: |
+          poetry run python -m pytest ${{ inputs.args }}

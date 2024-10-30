@@ -3,7 +3,7 @@
 from pathlib import Path
 
 from fastapi import FastAPI, Request
-from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from .globals import database, settings
@@ -25,6 +25,14 @@ async def root(
 
     relpath = Path(path_str)
     path = Path(settings.data_path, relpath)
+
+    if not path.is_relative_to(settings.data_path):
+        # prevent path traversal
+        return Response(status_code=400)
+    if any(p.startswith(".") for p in path.parts):
+        # prevent access to hidden files/directories
+        return Response(status_code=400)
+
     url = make_url(relpath, index=index_suffix)
     query = "?" + str(request.query_params) if request.query_params else ""
 

@@ -303,9 +303,9 @@ categories:
           type: OLED
         os:
           type: Android
-          version: "?"
+          version: 5.1.1
           ui: TouchWiz
-          kernel: "?"
+          kernel: 3.10.65
         bootloader: Unlocked
         camera:
           back: 8 Mpx

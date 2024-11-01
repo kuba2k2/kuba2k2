@@ -23,12 +23,11 @@ tags:
   - firmware
   - uart
   - programming
-  - backlog
 ---
 
 This series of posts will (hopefully) cover a reverse-engineering attempt of a set-top box from a local ISP/TV provider.
 
-This (first) part is a backlog of things that I found out back in 2022/2023. Almost a year has passed since then and I have taken up the "project" once again, to hopefully approach things from a different angle - but more on that later.
+This (first) part is a backstory of things that I found out back in 2022/2023. Almost a year has passed since then and I have taken up the "project" once again, to hopefully approach things from a different angle - but more on that later.
 
 !!! warning	 "Note"
 	This article is written for informational and educational purposes only.
@@ -234,4 +233,6 @@ There was no going back.
 
 ## The next part
 
-Another backlog of things I found after dumping the firmware (and how I got there in the first place). It will be here at some point.
+The story continues in:
+
+- [IPTV Reverse-Engineering - Part 2](../part-2/)

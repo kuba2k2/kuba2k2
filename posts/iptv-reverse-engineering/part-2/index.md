@@ -3,8 +3,7 @@ title: Reverse-engineering an IPTV set-top box - Part 2
 short: IPTV Reverse-Engineering - Part 2
 description: Chip-off firmware extraction, U-Boot nonsense, and funny cats.
 image: nand-soldered.jpg
-date: 2024-10-29
-lastmod: 2024-11-01
+date: 2024-11-01
 series: iptv-reverse-engineering
 categories:
   - embedded
@@ -26,7 +25,7 @@ tags:
   - programming
 ---
 
-This is a continuation of [**IPTV Reverse-Engineering - Part 1**](../part-1/index.md), right from where I left off.
+This is a continuation of [**IPTV Reverse-Engineering - Part 1**](../part-1/), right from where I left off.
 
 And where exactly was that?
 

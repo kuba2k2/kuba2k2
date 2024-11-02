@@ -4,8 +4,7 @@ short: IPTV Reverse-Engineering - Part 1
 description: Trying to find security flaws and hacking into a set-top-box from a local ISP/TV provider.
 headline: I really do NOT want to desolder the NAND chip...
 image: board3.jpg
-date: 2024-06-11
-lastmod: 2024-10-08
+date: 2024-10-08
 series: iptv-reverse-engineering
 categories:
   - embedded

@@ -89,7 +89,7 @@ article h4::before {
 	font-family: "Video Terminal Screen";
 	font-size: 2.5rem;
 	padding-right: 0.5rem;
-	color: #6faf32;
+	color: #50FA7B;
 }
 
 article h2::before {
@@ -201,7 +201,7 @@ nav.navbar .input-group {
 .page-contents span {
 	font-family: "Video Terminal Screen";
 	padding-right: 0.5rem;
-	color: #6faf32;
+	color: #50FA7B;
 }
 
 details.page-contents summary {

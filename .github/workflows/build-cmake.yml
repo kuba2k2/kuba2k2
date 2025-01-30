@@ -1,0 +1,95 @@
+name: "[reusable] build-cmake"
+
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
+      input-artifact:
+        required: false
+        type: string
+      input-path:
+        required: false
+        type: string
+        default: "artifact/"
+      project-directory:
+        required: false
+        type: string
+        default: "."
+      cmake-directory:
+        required: false
+        type: string
+        default: "cmake-build"
+      args:
+        required: false
+        type: string
+      args-build:
+        required: false
+        type: string
+      cache-key:
+        required: false
+        type: string
+      pre-build:
+        required: false
+        type: string
+      post-build:
+        required: false
+        type: string
+      files:
+        required: false
+        type: string
+      output-artifact:
+        required: false
+        type: string
+        default: "cmake-build"
+    outputs:
+      artifact:
+        value: ${{ inputs.output-artifact }}
+
+jobs:
+  build-cmake:
+    name: cmake --build
+    runs-on: ${{ inputs.runs-on }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        if: ${{ inputs.input-artifact != '' }}
+        with:
+          name: ${{ inputs.input-artifact }}
+          path: ${{ inputs.input-path }}
+
+      - name: Cache CMake
+        uses: actions/cache@v4
+        with:
+          path: ${{ inputs.cmake-directory }}
+          key: ${{ runner.os }}-cmake-${{ inputs.cache-key }}-${{ hashFiles('**/CMakeCache.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-cmake-${{ inputs.cache-key }}-
+
+      - name: Run pre-build step
+        if: ${{ inputs.pre-build != '' }}
+        working-directory: ${{ inputs.project-directory }}
+        run: ${{ inputs.pre-build }}
+
+      - name: Build CMake project
+        working-directory: ${{ inputs.project-directory }}
+        run: |
+          cmake ${{ inputs.args }} -S . -B ${{ inputs.cmake-directory }}
+          cmake --build ${{ inputs.cmake-directory }} ${{ inputs.args-build }}
+
+      - name: Run post-build step
+        if: ${{ inputs.post-build != '' }}
+        working-directory: ${{ inputs.project-directory }}
+        run: ${{ inputs.post-build }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        if: ${{ inputs.files != '' }}
+        with:
+          name: ${{ inputs.output-artifact }}
+          path: ${{ inputs.files }}

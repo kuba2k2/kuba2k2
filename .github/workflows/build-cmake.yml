@@ -44,6 +44,16 @@ on:
         required: false
         type: string
         default: "cmake-build"
+      runs-on-alpine:
+        required: false
+        type: boolean
+      alpine-packages:
+        required: false
+        type: string
+      alpine-arch:
+        required: false
+        type: string
+        default: "x86_64"
     outputs:
       artifact:
         value: ${{ inputs.output-artifact }}
@@ -52,6 +62,9 @@ jobs:
   build-cmake:
     name: cmake --build
     runs-on: ${{ inputs.runs-on }}
+    defaults:
+      run:
+        shell: ${{ inputs.runs-on-alpine && 'alpine.sh {0}' || 'bash' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -70,6 +83,13 @@ jobs:
           key: ${{ runner.os }}-cmake-${{ inputs.cache-key }}-${{ hashFiles('**/CMakeCache.txt') }}
           restore-keys: |
             ${{ runner.os }}-cmake-${{ inputs.cache-key }}-
+
+      - name: Setup Alpine Linux
+        if: ${{ inputs.runs-on-alpine }}
+        uses: jirutka/setup-alpine@v1
+        with:
+          arch: ${{ inputs.alpine-arch }}
+          packages: ${{ inputs.alpine-packages }}
 
       - name: Run pre-build step
         if: ${{ inputs.pre-build != '' }}

@@ -19,8 +19,9 @@ jobs:
         uses: actions/download-artifact@v4
         if: ${{ inputs.artifact != '' }}
         with:
-          name: ${{ inputs.artifact }}
+          pattern: ${{ inputs.artifact }}
           path: artifact/
+          merge-multiple: true
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v1

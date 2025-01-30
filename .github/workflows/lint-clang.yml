@@ -2,6 +2,11 @@ name: "[reusable] lint-clang"
 
 on:
   workflow_call:
+    inputs:
+      version:
+        required: false
+        type: string
+        default: "19"
 
 jobs:
   lint-clang:
@@ -11,6 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Check code with clang-format
-        uses: jidicula/clang-format-action@v4.5.0
+        uses: jidicula/clang-format-action@v4.14.0
         with:
-          clang-format-version: "14"
+          clang-format-version: ${{ inputs.version }}

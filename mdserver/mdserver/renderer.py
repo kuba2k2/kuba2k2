@@ -79,11 +79,17 @@ def render_content(path: Path) -> Page:
         template = Template(md)
         md = template.render(context)
 
+    extension_configs = {
+        "pymdownx.snippets": {
+            "base_path": [str(path.parent)],
+        }
+    }
+
     # render the page to HTML
     html = markdown.markdown(
         text=md,
         extensions=settings.extensions,
-        extension_configs=settings.extension_configs,
+        extension_configs=settings.extension_configs | extension_configs,
     )
 
     # cache the result and store in database

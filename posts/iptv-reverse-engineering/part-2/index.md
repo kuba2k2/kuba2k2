@@ -42,7 +42,7 @@ Let's recap:
 - the box was running the Linux kernel with U-Boot,
 - there was no datasheet for the particular MStar MSO9380 chip,
 - there were two pin headers on the PCB, with no signs of life on them,
-- I [found sources of U-Boot](https://github.com/jockyw2001/mboot) and MStar's `mboot` on GitHub,
+- I [**found sources of U-Boot**](https://github.com/jockyw2001/mboot) and **MStar's `mboot`** on GitHub,
 - Roku provided [GPL sources](https://www.roku.com/ossfiles/v9.4.0/OSS-RokuPremiere_RokuUltra_2016/sources) of Linux and U-Boot on their website,
 - I desoldered the NAND chip from the device using a hot air gun.
 
@@ -55,7 +55,7 @@ Anyway - having a raw NAND chip desoldered from the set-top-box, I needed to fig
 - What am I going to connect it to? How am I going to connect it?
 - How am I going to dump the firmware from the flash?
 
-The obvious idea was... soldering it to a Raspberry Pi Pico with really tiny wires. Unfortunately BGA sockets cost more than I was willing to spend on this project.
+Unfortunately BGA sockets cost more than I was willing to spend on this project, so the obvious idea was... soldering it to a Raspberry Pi Pico with really tiny wires.
 
 I started by looking at the pinout from the datasheet:
 
@@ -63,23 +63,31 @@ I started by looking at the pinout from the datasheet:
 
 The bare minimum should be 4 Vss wires, 4 Vcc wires, 8 data signals, RE#, WE#, R/B#, CE#, WP#, ALE, CLE.
 
-![A not-so-quick soldering session later](nand-soldered.jpg)
+*A not-so-quick soldering session later:*
+
+![NAND chip soldered to a ribbon cable](nand-soldered.jpg)
 
 I used a ribbon from an old Enhanced-IDE cable, since the wires had a single core and were pretty thin.
 
-For connecting to the Pi Pico, I added the female ending from the IDE cable and some male-to-male wires, since my Pi has female headers. It sounds just as complicated as it looks. It is a mess of wires. But it is not supposed to *look pretty*, it is supposed to *work*.
+For connecting to the Pi Pico, I added the female ending from the IDE cable and some male-to-male wires, since my Pi had female headers.
+
+It sounds just as complicated as it looks. It is a mess of wires. But it was not supposed to *look pretty*, it was supposed to *work*.
 
 ![A mess of wires](nand-pico.jpg)
 
+*(Yes, I didn't care enough to use anything else than a breadboard. Sorry for that.)*
+
 ## Writing a NAND programmer
 
-With the hardware part pretty much ready, it was time to write some software for the Pi Pico. My first attempt was, obviously, reading the chip ID and printing it over UART (or, virtual USB serial port). I just needed to understand the diagram from the datasheet:
+With the hardware part pretty much ready, it was time to write some software for the Pi Pico. My first attempt was, obviously, **reading the chip ID** and printing it over UART (or, virtual USB serial port). I just needed to understand the diagram from the datasheet:
 
 ![ID Read waveforms from the datasheet](nand-id-read-waveform.png)
 
 On the Pico, I prepared a few GPIO macros, some busy loops for timing, as well as some helper functions:
 
 <details>
+
+<summary>Macros and some helper code</summary>
 
 ```c
 #define nand_enable()  gpio_put(PIN_CE, 0)
@@ -151,12 +159,12 @@ uint8_t nand_read() {
 
 </details>
 
-Then I could read the chip ID:
+With this, I could try to read the chip ID:
 
 ```c
 uint8_t id[5];
 nand_enable();
-nand_write_command(CMD_ID_READ);
+nand_write_command(CMD_ID_READ); // 0x90
 nand_write_address(0x00);
 id[0] = nand_read();
 id[1] = nand_read();
@@ -167,17 +175,17 @@ nand_disable();
 printf("ID1=%02x %02x %02x %02x\n", id[0], id[1], id[2], id[3]);
 ```
 
-After a few attempts, it worked! Sort of...
+After a few attempts, it worked! *Sort of...*
 
 ![A couple of ID readouts](nand-id-read-bad.png)
 
 The correct ID should be `c2 dc 90 95`, so the first readout was fine. After that, it seemed to drop the 2 least-significant bits. I suspected loose wires or timing issues - I haven't added any delays, I assumed the Pico was slow enough.
 
-I was too lazy to connect a logic analyzer (no, it's totally not that the only "logic analyzer" I had was the very same Pi Pico...), so I just added a few 1 microsecond delays. And it worked!
+I was too lazy to connect a logic analyzer (*no, it's totally not that the only "logic analyzer" I had was the very same Pi Pico...*), so I just added a few 1 microsecond delays. **And it worked!**
 
 ![More ID readouts](nand-id-read-good.png)
 
-The following day, I wrote a simple page reading snippet - it reads 2112 bytes (2048 + OOB data) from the specified address:
+The following day, I wrote a simple page reading snippet - it reads 2112 bytes (2048 + OOB data) from a specified address:
 
 ```c
 uint32_t buf_addr = 0;
@@ -228,13 +236,13 @@ With this, I was able to retrieve the first page of the NAND:
 [...]
 ```
 
-...which seemed to represent the Chip Info Structure (CIS) - I found [a page about that](https://linux-chenxing.org/blobs/cis.html) on `linux-chenxing`.
+...**which seemed to represent the Chip Info Structure** (CIS) - I found [a page about that](https://linux-chenxing.org/blobs/cis.html) on `linux-chenxing`.
 
 The readouts weren't perfect at first - it was dropping some bytes at the end of each block. Sometimes it took more than 10 tries to read a single page correctly. Since it seemed to depend on the page's contents, I suspected some interference on the (relatively) very long, unshielded wires (duh!).
 
-Then I added a 5.6 pF capacitor on the RE# line - Read Enable, which fetches the next byte to read, which could explain it causing dropped bytes. *It was all perfect after that.* Then I removed the capacitor, and it was still perfect. I will never know what was wrong there.
+Then I **added a 5.6 pF capacitor** on the RE# line - Read Enable, which fetches the next byte to read, which could explain it causing dropped bytes. *It was all perfect after that.* Then I removed the capacitor, and it was still perfect. I never found out what was wrong before that.
 
-I poked around the flash manually to find anything interesting, and at least I found strings and ARM code - that meant the NAND flash wasn't scrambled! I kind of expected that, since it was an SLC chip, but the fear of having to battle NAND scrambling was still somewhere in me.
+With a serial terminal, I poked around the flash manually to find anything interesting, and at least I found strings and ARM code - that meant the **NAND flash wasn't scrambled**! I kind of expected that, since it was an SLC chip, but the fear of having to battle NAND scrambling was still somewhere in me.
 
 ![Strings visible in an UART terminal](nand-strings.png)
 
@@ -242,7 +250,7 @@ I poked around the flash manually to find anything interesting, and at least I f
 
 ![Automated reading of all pages](nand-reading.png)
 
-Of course, there were still bitflips on some of the pages - I couldn't fix that issue. I ended up reading the image a few times, then trying to eliminate the differences. It was all *painfully slow* - after even more added `delay()`s, it was reading at a whopping 46 KiB/s.
+Of course, there were still bitflips on some of the pages - I couldn't fix that issue. I ended up reading the image a few times, then trying to eliminate the differences. It was all *painfully slow* - after even more added `delay()`s, it was **reading at a whopping 46 KiB/s**.
 
 I was inspecting the resulting file as it was reading, and found the U-Boot banner:
 
@@ -259,8 +267,8 @@ Sadly, I also noticed a lot of TEE references and some PlayReady certificates - 
 With the complete image, I started exploring it in a hex editor. That, as well as searching for strings revealed a couple of interesting things:
 
 - U-Boot environment variables (and the U-Boot itself)
-- a firmware upgrade file URL (which I downloaded, obviously), ![](upgrade-dl.png)
-- no obvious signs of the Linux kernel in its usual form,
+- a **firmware upgrade file URL** (which I downloaded, obviously), ![](upgrade-dl.png)
+- **no obvious signs of the Linux kernel** in its usual form,
 - UBI volumes and UBIFS filesystems,
 - SQLite databases for Chromium local storage,
 - more certificates,
@@ -293,17 +301,17 @@ I was able to label the following partitions/images in the firmware - these were
 14E00000_ubi.bin
 ```
 
-(the `1` and `2` bins are just byte-exact copies, possibly for backup purposes - it's NAND after all).
+(the `1` and `2` bins were just byte-exact copies, possibly for backup purposes - it's a NAND after all).
 
-- `cis` is the NAND info block, with partition offsets, block sizes etc,
-- `ubild` is the uboot .env (although referred to as "bootlogo" partition; there's no logo there anyway),
-- `optee` and `armfw` are probably some TEE things,
-- `param` has the model name, serial number, MAC address of the box and some unknown data,
-- `tee` has a .tar image of some widevine stuff
-- `loader` is nearly 40 MiB big, it's probably the kernel and ramdisk, I presume,
-- `download` seems to have some unknown data (in a format similar to `loader`), a "high level download" string at the beginning, a copy of mboot it seems, and it's around 140 MiB in size,
-- `splash` has a boot logo (in JPG format) along with some U-Boot commands that display it,
-- `ubi` is the rest of the NAND, which has userdata storage only.
+- `cis` was the NAND info block, with partition offsets, block sizes etc,
+- `ubild` was the uboot .env (although referred to as "bootlogo" partition; there's no logo there anyway),
+- `optee` and `armfw` were probably some TEE things,
+- `param` had the model name, serial number, MAC address of the box and some unknown data,
+- `tee` had a .TAR file with some widevine stuff,
+- `loader` was nearly 40 MiB in size, probably the kernel and ramdisk, I assumed,
+- `download` seemed to have some unknown data (in a format similar to `loader`), a "high level download" string at the beginning, a copy of mboot, and was around 140 MiB in size,
+- `splash` had a boot logo (in JPG format) along with some U-Boot commands that display it,
+- `ubi` was spanning the rest of the NAND, which had userdata storage only.
 
 The `loader` and `download` images were probably the most interesting. Here's a hexdump of one of them:
 
@@ -311,13 +319,13 @@ The `loader` and `download` images were probably the most interesting. Here's a 
 
 The blank 0x00-filled spaces in the middle suggested that it wasn't encrypted (however, it could just be an image made of several encrypted parts). The 3 bytes before the blank spaces *looked like* zlib headers, but I couldn't get a good match (from a quick "magic byte" lookups on the net).
 
-One thing worth noting is, I have checked the `mboot` sources that I found online and found absolutely no mention of that image format.
+One thing worth noting is, I have checked the `mboot` sources that I got online, and **found absolutely no mention of that image format**.
 
-I was able to extract the UBIFS partition with something called `ubireader` (a Python script). Previously, I tried `nandsim` in Linux, but that didn't work - presumably because of bad blocks or other issues alike. The UBIFS was only user data - Wi-Fi config, Widevine certificates, Chromium cookies and local storage - no binaries or applications.
+I was able to extract the UBIFS partition with something called [`ubireader`](https://github.com/onekey-sec/ubi_reader) (a Python script). Previously, I tried `nandsim` in Linux, but that didn't work - presumably because of bad blocks or other issues alike. The UBIFS only contained user data - Wi-Fi config, Widevine certificates, Chromium cookies and local storage - no binaries or applications.
 
 I have also tried `binwalk` (it was the first thing I did) but it could only identify the UBI volumes.
 
-It was time to disassemble the U-Boot binary. No surprise, it was heavily modified by MStar, but thankfully some parts matched the `mboot` sources perfectly. I was able to find functions in IDA and name them according to the sources, which made the disassembly much more pleasant.
+It was time to disassemble the U-Boot binary. No surprise, it was heavily modified by MStar, but thankfully some parts **matched the `mboot` sources** perfectly. I was able to find functions in IDA and name them according to the sources, which made the disassembly much more bearable.
 
 Based on that, I wrote down all commands that were executed by the bootloader, to create a "boot flow", like this:
 
@@ -360,9 +368,11 @@ board_init_r()
 			- absent -> command console
 ```
 
-And that's where things got really weird. Can you tell what loads the kernel here? I couldn't, especially that the `readKL` and `bootKL` commands **didn't exist**. Likewise, the `bootcmd` didn't make sense, because there is no UBI partition named `UBI` and there is no volume named `KL`.
+And that's where things got really weird. Can you tell what loads and boots the kernel here? I couldn't, especially that the `readKL` and `bootKL` commands **didn't exist**.
 
-The `readArmFw` and `readOptee` commands do exist, though. But what do they even do...?
+Likewise, the `bootcmd` didn't make sense, because there was no UBI partition named `UBI` and there was no volume named `KL`.
+
+The `readArmFw` and `readOptee` commands did exist, though. But what do they even do...?
 
 ```c
 signed int do_read_optee()
@@ -376,25 +386,27 @@ signed int do_read_optee()
 
 And that was it. Nothing seemed to locate or read the kernel from the NAND. Could the `optee_real_va_addr` be a call to some other bootloader?
 
-Unfortunately, I never got to figure it out (at the time of writing).
+Unfortunately, I never got to figure that out (at the time of writing).
 
 ## Exploring non-code parts
 
-Among other things I found in the firmware were:
+Among other things I found in the firmware, there were:
 
 - API URLs of the STB's services (though just the base URLs, not very useful),
 - live TV stream URLs, some of which I could play with `ffplay`, without DRM (but these were public TV channels anyway),
-- working credentials for the SSO service (`user`:`user`, yes, really).
+- working credentials for the SSO service (`user`:`user` - *yes, really*).
 
-...and that's it, really. I kept exploring the disassembly for some more time, hoping to make sense out of it. To no avail.
+...and that was it, really. I kept exploring the disassembly for some more time, hoping to make sense out of it. To no avail.
 
-So there you go - another failed attempt. Just like before, I needed a better plan.
+So there you go - another failed attempt. Just like before, **I needed a better plan**.
 
 ## How about... modifying the NAND?
 
-About a month later, I had the new plan. The idea was to design and build a PCB, to which the NAND chip would be soldered (on wires, of course - I'm not soldering BGA packages.. just yet..). Then, more wires would connect the chip back to its original PCB - the STB with the MStar chip.
+About a month later, I had *the better plan*. The idea was to design and build a PCB, to which the NAND chip would be soldered (on IDE cable wires, of course - I'm not soldering BGA packages.. just yet..). Then, more wires would connect the chip back to its original PCB - the STB with the MStar chip.
 
-On the same PCB, there would be the Raspberry Pi Pico installed. I wanted to design the board so that all three possible connections could be made - `NAND<->MStar`, `NAND<->Pico`, as well as `Pico<->MStar` (who knows, maybe I'll write an emulator someday? ~~*(probably not)*~~). This would allow reading and programming the NAND, *as well as* (hopefully) **booting up the STB from the chip**.
+The purpose of that "adapter" PCB would be to allow reading and programming the NAND flash, *as well as* (hopefully) **booting up the STB from the chip**.
+
+To accomplish that, I wanted to install the Raspberry Pi Pico on the board. I wanted to design it so that all three possible connections could be made - `NAND<->MStar`, `NAND<->Pico`, as well as `Pico<->MStar` (who knows, maybe I'll write an emulator someday? ~~*(probably not)*~~).
 
 Around this idea, I designed a simple schematic and mapped it out onto a PCB:
 
@@ -402,16 +414,20 @@ Around this idea, I designed a simple schematic and mapped it out onto a PCB:
 ![](pcb-layout.png)
 
 - `JP1` was mostly for experimenting, to disable access to the NAND by pulling its CE# line high.
-- `JP2` was normally supposed to be shorted - it provided the NAND<->MStar connection. By removing the 15-line jumper I could connect the NAND for programming by the Pico.
+- `JP2` was normally supposed to be shorted - it provided the `NAND<->MStar` connection. By removing the 15-line jumper I could connect the NAND for programming by the Pico.
 - `JP3` was for providing 3.3V from the Pico to the NAND. Otherwise, I could remove it and power the NAND right from the STB.
-- `S1` was just a reset button for the Pico.
+- `S1` was just a reset button for the Pico (*because they forgot to include it on the Pico's board...*).
 
 The PCB was single-sided, so the top layer (visible in red) was supposed to be populated with jumper wires. The rectangular pads on the bottom side were where the tiny wires would connect - to the NAND and to the STB.
 
-Having the design ready, I printed it out for etching using a toner transfer method (sending it to a JLCPCB for a single piece would be pointless). And then... I kind of never got around to etching it, at least not in 2023.
+Having the design ready, I printed it out for etching using a toner transfer method (sending it to JLCPCB for a single piece would be pointless).
+
+And then... I kind of never got around to etching it, at least not in that year (2023).
 
 ## The next part
 
-Nearly one year later, in June 2024, it was time for part 3. I was about to finally build the PCB, solder it all together and wait for the moment of truth - would the device boot up after over a year of having its NAND desoldered?
+Nearly one year later, in June 2024, it was time for part 3. I was about to finally build the adapter PCB, solder it all together and wait for the moment of truth - **would the device boot up** after over a year of having its NAND desoldered?
 
-Part 3 will be here at some point (hopefully soon).
+The story continues in:
+
+- [IPTV Reverse-Engineering - Part 3](../part-3/)

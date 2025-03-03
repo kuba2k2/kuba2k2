@@ -28,41 +28,41 @@ tags:
 
 You're reading the next part of [**IPTV Reverse-Engineering - Part 2**](../part-2/).
 
-This time, however, I'm writing this post as I'm making various attempts to break into the device. The last part ended on having the "adapter PCB" designed and printed, ready for etching with the toner transfer method.
+This time, however, I was writing this post along with making various attempts to break into the device. The last part ended on having the "adapter PCB" designed and printed, ready for etching with the toner transfer method.
 
 --8<-- "../disclaimer.md"
 
 ## Testing the adapter PCB
 
-I don't have any photos of the etching and soldering process, but I can show the finished product:
+I didn't take any photos of the etching and soldering process, but at least you'll get to see the finished product:
 
 ![NAND adapter - PCB with soldered wires](adapter.jpg)
 
-The PCB is attached to the STB with 3 screws in its original mounting holes. The NAND chip is on the left side, soldered to the adapter. The right side shows wires going from the adapter to the STB's board, right where the NAND would normally reside. There is also a Raspberry Pi Pico mounted on top.
+The PCB was attached to the STB with 3 screws in its original mounting holes. The NAND chip was on the left side, soldered to the adapter. The right side shows wires going from the adapter to the STB's board, right where the NAND would normally reside. There was also a Raspberry Pi Pico mounted on top.
 
-It's not pretty - in fact, it looks horrible. But I don't care, I only need it to work.
+*It wasn't pretty* - in fact, it looked horrible. But I don't care, I only need it to work.
 
-In the process of soldering the two boards together, I ripped off 3 of the BGA NAND's pads. As you'd expect, these are critical signal connections, not just some extra Vcc lines... Thankfully, I managed to scrape off a little bit of the tiny traces on the PCB and install some (even thinner) wires. Testing for continuity with my multimeter confirmed that the bodge wires are indeed soldered properly! *(although still hanging by a thread)*
+In the process of soldering the two boards together, I **ripped off 3 of the BGA NAND's pads** on the original PCB. As you'd expect, these were critical signal connections, not just some extra Vcc lines... Thankfully, I managed to scrape off a little bit of the tiny traces on the PCB and install some (even thinner) wires. Testing for continuity with my multimeter confirmed that the bodge wires were indeed soldered properly! *(although still hanging by a thread)*
 
 ![](adapter-bodge.jpg)
 
-I am eager to test it out, see if the device boots up. But first, I will remove the black jumper connector - I have to make sure the NAND<->Pico connection still works fine. I connected the Pico to my computer and fired up the dumping software, that I used in 2023. Fortunately, it still reads data just fine, which means the cable connections are good.
+I was eager to test it out, see if the device boots up. But first, I removed the black jumper connector - I needed to make sure the `NAND<->Pico` connection still worked fine. I connected the Pico to my computer and fired up the dumping software, that I used in 2023. Fortunately, it **still read data just fine**, which proved the cable connections were good.
 
-That means it's time for the moment of truth - booting up the STB from NAND, nearly a year after desoldering it from the PCB. So, I removed the Pi Pico, connected 3.3V power to the NAND and then 12V to the STB's power jack...
+That meant it was time for the moment of truth - booting up the STB from NAND, nearly a year after desoldering it from the PCB. I removed the Pi Pico, connected 3.3V power to the NAND, then 12V to the STB's power jack, and...
 
 ![](bootup.jpg)
 
-**It works.** It boots up as if nothing ever happened. That means I can read AND write to the flash chip and boot the STB to see what happens - a perfect hacking setup (or is it?).
+**It worked.** It booted up as if nothing ever happened. That meant I could read AND write to the flash chip and boot the STB to see what happens - a perfect hacking setup (or is it?).
 
 ## Acquiring a good firmware dump
 
-Knowing the device still boots up, I have to prepare the NAND writing software. But first, since the dumps were not 100% reliable (a couple of bits reading out incorrectly), I made like 20 dumps of the flash. Each of them was slightly different - I couldn't work out how to improve the reliability.
+Knowing the device could still boot up, I had to prepare the NAND writing software. But first, since the dumps were not 100% reliable (a couple of bits were reading out incorrectly), I made like 20 dumps of the flash. Each of them was slightly different - I couldn't work out how to improve the reliability.
 
-With a simple Python script I am able to combine all the dumps to get a valid one (setting each "flipped" bit to the most frequently observed value). Even though I can't possibly catch all bit read errors, it should be fine - after all, ECC will correct most bad readouts by the MStar chip - even if it's not due to interference, but an incorrect value being actually stored on the NAND.
+With a simple Python script, I was able to combine all the dumps to get a valid one (setting each "flipped" bit to the most frequently observed value). Even though I couldn't possibly catch all bit read errors, it shouldn't be a problem - after all, ECC in the MStar chip will correct most bad readouts - even if it's not due to interference, but an incorrect value actually being stored on the NAND.
 
 ---
 
-From the NAND dumps I made, I can (roughly) determine the layout of the flash. This is an updated partition layout from the one I initially created in 2023.
+From the NAND dumps I made, I could (roughly) determine the layout of the flash. Here is an updated partition layout from the one I initially created in 2023.
 
 Name     | Offset     | Info
 ---------|------------|------------------------------------------
@@ -89,21 +89,21 @@ ubi      | 0x14E00000 | Application data storage (UBIFS)
 
 ## Testing the NAND programmer
 
-I updated my Pi Pico NAND dumper program to support "block erase". To test if it works, I decided to erase the `ubild` partition (environment). Indeed, the pages are now erased and empty.
+First, I updated my Pi Pico NAND dumper program to support "block erase". To test if it works, I decided to erase the `ubild` partition (environment). Indeed, the pages were now erased and empty.
 
-Surprisingly, *it doesn't brick the device*. It can still boot up just fine - U-Boot simply recreates the environment and writes it back to the NAND.
+Surprisingly, *it didn't brick the device*. It could still boot up just fine - U-Boot simply recreated the environment and wrote it back to the NAND.
 
-Okay, so I can now erase blocks, but how about writing data? After all, I'm not able to "guess" the correct ECC code that goes in the OOB area - will the device accept pages without ECC?
+Okay, so now that I could erase blocks, how about writing data? Remember that the NAND uses ECC (Error Correction Code) - I wasn't able to "guess" the correct ECC code - will the device accept pages without ECC?
 
-To verify that, I want to erase both of the `splash` partitions, then write them back, but without ECC. A simple interactive Python script allows me to run different NAND operations, like reading, erasing, writing and verifying.
+To verify that, I wanted to erase both of the `splash` partitions, then write them back, but without ECC. A simple interactive Python script allowed me to run different NAND operations, like reading, erasing, writing and verifying.
 
-Of course, I erased `cis1` by accident. I was able to restore it back, but even without CIS1 the device booted just fine - after all, the backup `cis2` partition is still there.
+Of course, I erased `cis1` by accident. I was able to restore it back, but even without CIS1 the device booted up just fine - after all, the backup `cis2` partition was still there.
 
-Okay, both `splash` partitions are erased... I'm booting the device now. The result is... nothing interesting - it booted up fine, just without the splash screen; the display remained blank until the GUI started up.
+After erasing both `splash` partitions, the result was... nothing interesting - it booted up fine, just without the splash screen; the display remained blank until the GUI started up.
 
 ---
 
-Now, can I write the `splash` partition back *without* ECC code? Let's find out:
+How about writing the `splash` partition back *without* ECC?
 
 ```
 Enter partition name: splash1
@@ -163,35 +163,45 @@ Notice a few things:
 
 - a simple JPEG image (at 0x330) with some kind of headers
 - U-Boot commands before the JPEG - it could be useful to modify these!
-- no OOB data at 0x800 - ECC is not stored - will it still boot?
+- **no OOB data at 0x800** - ECC is not stored - will it still boot?
 
-Let's disconnect the Pi Pico (I added a command to "deinitialize" the GPIOs and free the flash chip) and boot the STB.
+By the way, to boot the device after modifying the NAND, disconnecting the Pi Pico wasn't needed - I added a command which would "deinitialize" the GPIOs to free the flash chip.
 
-YES! It shows the splash logo even without the ECC! That most likely means the NAND flash controller doesn't check the ECC if it's not present (or, at all?). This is finally some good news - I can now write whatever I want to the NAND without ever worrying about the ECC.
+After powering on the device, it showed the splash logo - **even without the ECC**! That most likely meant the NAND flash controller didn't check the ECC if wasn't present (or, perhaps didn't check at all?). This was finally some good news - I could now write whatever I wanted to the NAND, **without ever worrying about the ECC**. *(again, this later turned out not to be entirely true)*
 
 ## Finding out the data format
 
-There's just one problem - the splash image has a complicated format - some odd headers, possibly CRC values and/or signatures. I need to find out how it's encoded first.
+There was just one problem - the splash image had a complicated format - some odd headers, possibly CRC values and/or signatures. I needed to find out how it was encoded first.
 
-A search of the entire NAND for `ILDS` - a magic string in the splash image that "stands out" - gave me nothing. Then I searched for the `splash1`'s offset (0x076E0000) - after all, U-Boot must know where it is, right?
+A search of the entire NAND for `ILDS` - a magic string in the splash image that "stands out" - gave me nothing. Then, **I searched for the `splash1`'s offset** (0x076E0000) - after all, U-Boot must know where it was located, right?
 
-Exactly! I found a partition table in the area I named `nvram`. This is how it looks like:
+Exactly! I **found a partition table** in the area I named `nvram`. This is how it looked like:
 
 ```
-0100BC80   -- -- -- -- -- -- -- --  40 DB BA AD 0F 00 00 00  01 00 00 00 00 00 00 00  00 00 F4 00 05 E8 F6 F1
-0100BCA0   E4 F7 FF FF 01 00 00 00  00 00 00 01 00 00 02 00  06 F6 E0 F7 EC E4 E9 FF  01 00 00 00 00 00 02 01
-0100BCC0   00 00 18 03 07 E9 EA E4  E1 E0 F7 95 01 00 00 00  00 00 1A 04 00 00 18 03  07 E9 EA E4 E1 E0 F7 94
-0100BCE0   01 00 00 00 00 00 32 07  00 00 0C 00 08 E7 F1 F7  E3 E9 E4 E2 F6 FF FF FF  01 00 00 00 00 00 3E 07
-0100BD00   00 00 30 00 08 E8 E7 E7  95 C6 D0 D6 D1 FF FF FF  01 00 00 00 00 00 6E 07  00 00 42 00 07 F6 F5 E9
-0100BD20   E4 F6 ED 95 01 00 00 00  00 00 B0 07 00 00 42 00  07 F6 F5 E9 E4 F6 ED 94  01 00 00 00 00 00 F2 07
-0100BD40   00 00 E6 0C 06 ED E9 E6  EA E1 E0 FF 01 00 00 00  00 00 D8 14 00 00 08 00  06 E1 E8 EC EB E3 EA FF
-0100BD60   01 00 00 00 00 00 E0 14  00 00 40 01 09 D6 D1 C7  C1 C4 D1 C4 C3 D6 FF FF  01 00 00 00 00 00 20 16
-0100BD80   00 00 40 01 04 C6 C4 C3  D6 FF FF FF 01 00 00 00  00 00 60 17 00 00 42 01  0B C6 C0 D7 D1 CC C3 CC
-0100BDA0   C6 C4 D1 C0 01 00 00 00  00 00 A2 18 00 00 04 00  0A F5 F7 EA E1 F0 E6 F1  EC EA EB FF 01 00 00 00
-0100BDC0   00 00 A6 18 00 00 1A 07  07 C3 C9 C4 D6 CD C3 D6  -- -- -- -- -- -- -- --  -- -- -- -- -- -- -- --
+0100BC80  -- -- -- -- -- -- -- -- 40 DB BA AD 0F 00 00 00  |--------@Ûº.....|
+0100BC90  01 00 00 00 00 00 00 00 00 00 F4 00 05 E8 F6 F1  |..........ô..èöñ|
+0100BCA0  E4 F7 FF FF 01 00 00 00 00 00 00 01 00 00 02 00  |ä÷ÿÿ............|
+0100BCB0  06 F6 E0 F7 EC E4 E9 FF 01 00 00 00 00 00 02 01  |.öà÷ìäéÿ........|
+0100BCC0  00 00 18 03 07 E9 EA E4 E1 E0 F7 95 01 00 00 00  |.....éêäáà÷.....|
+0100BCD0  00 00 1A 04 00 00 18 03 07 E9 EA E4 E1 E0 F7 94  |.........éêäáà÷.|
+0100BCE0  01 00 00 00 00 00 32 07 00 00 0C 00 08 E7 F1 F7  |......2......çñ÷|
+0100BCF0  E3 E9 E4 E2 F6 FF FF FF 01 00 00 00 00 00 3E 07  |ãéäâöÿÿÿ......>.|
+0100BD00  00 00 30 00 08 E8 E7 E7 95 C6 D0 D6 D1 FF FF FF  |..0..èçç.ÆÐÖÑÿÿÿ|
+0100BD10  01 00 00 00 00 00 6E 07 00 00 42 00 07 F6 F5 E9  |......n...B..öõé|
+0100BD20  E4 F6 ED 95 01 00 00 00 00 00 B0 07 00 00 42 00  |äöí.......°...B.|
+0100BD30  07 F6 F5 E9 E4 F6 ED 94 01 00 00 00 00 00 F2 07  |.öõéäöí.......ò.|
+0100BD40  00 00 E6 0C 06 ED E9 E6 EA E1 E0 FF 01 00 00 00  |..æ..íéæêáàÿ....|
+0100BD50  00 00 D8 14 00 00 08 00 06 E1 E8 EC EB E3 EA FF  |..Ø......áèìëãêÿ|
+0100BD60  01 00 00 00 00 00 E0 14 00 00 40 01 09 D6 D1 C7  |......à...@..ÖÑÇ|
+0100BD70  C1 C4 D1 C4 C3 D6 FF FF 01 00 00 00 00 00 20 16  |ÁÄÑÄÃÖÿÿ...... .|
+0100BD80  00 00 40 01 04 C6 C4 C3 D6 FF FF FF 01 00 00 00  |..@..ÆÄÃÖÿÿÿ....|
+0100BD90  00 00 60 17 00 00 42 01 0B C6 C0 D7 D1 CC C3 CC  |..`...B..ÆÀ×ÑÌÃÌ|
+0100BDA0  C6 C4 D1 C0 01 00 00 00 00 00 A2 18 00 00 04 00  |ÆÄÑÀ......¢.....|
+0100BDB0  0A F5 F7 EA E1 F0 E6 F1 EC EA EB FF 01 00 00 00  |.õ÷êáðæñìêëÿ....|
+0100BDC0  00 00 A6 18 00 00 1A 07 07 C3 C9 C4 D6 CD C3 D6  |..¦......ÃÉÄÖÍÃÖ|
 ```
 
-The interesting part starts at 0x0100BC88 (with `40 DB BA AD` -> `ADBADB40`) and I can work out how it is built. The first value (0x0F / 15) defines the number of partitions. Then, there are partition offsets, lengths, and some other bytes in the structure (yet unknown). I wrote a simple definition using DataStruct:
+The interesting part starts at 0x0100BC88 (with `40 DB BA AD` -> `ADB ADB 40`) and I could easily work out how it was built. The first value (0x0F / 15) defined the number of partitions. Then, there were partition offsets, lengths, and some other bytes in the structure (yet unknown). I wrote a simple definition using [DataStruct](https://github.com/kuba2k2/datastruct) (my Python library for parsing binary formats and protocols):
 
 ```py
 @dataclass
@@ -207,36 +217,36 @@ class Partition(DataStruct):
 and got the following results:
 
 ```
-+-------------------------+------------------------+----------------------------------+
-| Bounds                  | Length                 | Param                            |
-+-------------------------+------------------------+----------------------------------+
-| 0x00000000 - 0x00F40000 | 0x00F40000 / 15.2 MiB  | e8 f6 f1 e4 f7                   |
-| 0x01000000 - 0x01020000 | 0x00020000 / 128 KiB   | f6 e0 f7 ec e4 e9                |
-| 0x01020000 - 0x041A0000 | 0x03180000 / 49.5 MiB  | e9 ea e4 e1 e0 f7 95             |
-| 0x041A0000 - 0x07320000 | 0x03180000 / 49.5 MiB  | e9 ea e4 e1 e0 f7 94             |
-| 0x07320000 - 0x073E0000 | 0x000C0000 / 768 KiB   | e7 f1 f7 e3 e9 e4 e2 f6          |
-| 0x073E0000 - 0x076E0000 | 0x00300000 / 3 MiB     | e8 e7 e7 95 c6 d0 d6 d1          |
-| 0x076E0000 - 0x07B00000 | 0x00420000 / 4.1 MiB   | f6 f5 e9 e4 f6 ed 95             |
-| 0x07B00000 - 0x07F20000 | 0x00420000 / 4.1 MiB   | f6 f5 e9 e4 f6 ed 94             |
-| 0x07F20000 - 0x14D80000 | 0x0CE60000 / 206.4 MiB | ed e9 e6 ea e1 e0                |
-| 0x14D80000 - 0x14E00000 | 0x00080000 / 512 KiB   | e1 e8 ec eb e3 ea                |
-| 0x14E00000 - 0x16200000 | 0x01400000 / 20 MiB    | d6 d1 c7 c1 c4 d1 c4 c3 d6       |
-| 0x16200000 - 0x17600000 | 0x01400000 / 20 MiB    | c6 c4 c3 d6                      |
-| 0x17600000 - 0x18A20000 | 0x01420000 / 20.1 MiB  | c6 c0 d7 d1 cc c3 cc c6 c4 d1 c0 |
-| 0x18A20000 - 0x18A60000 | 0x00040000 / 256 KiB   | f5 f7 ea e1 f0 e6 f1 ec ea eb    |
-| 0x18A60000 - 0x1FC00000 | 0x071A0000 / 113.6 MiB | c3 c9 c4 d6 cd c3 d6             |
-+-------------------------+------------------------+----------------------------------+
++-------------------------+------------------------+----------------------------------+--------------+
+| Bounds                  | Length                 | Param                            | Guessed name |
++-------------------------+------------------------+----------------------------------+--------------+
+| 0x00000000 - 0x00F40000 | 0x00F40000 / 15.2 MiB  | e8 f6 f1 e4 f7                   | (multiple)   |
+| 0x01000000 - 0x01020000 | 0x00020000 / 128 KiB   | f6 e0 f7 ec e4 e9                | nvram        |
+| 0x01020000 - 0x041A0000 | 0x03180000 / 49.5 MiB  | e9 ea e4 e1 e0 f7 95             | loader1      |
+| 0x041A0000 - 0x07320000 | 0x03180000 / 49.5 MiB  | e9 ea e4 e1 e0 f7 94             | loader2      |
+| 0x07320000 - 0x073E0000 | 0x000C0000 / 768 KiB   | e7 f1 f7 e3 e9 e4 e2 f6          | -            |
+| 0x073E0000 - 0x076E0000 | 0x00300000 / 3 MiB     | e8 e7 e7 95 c6 d0 d6 d1          | -            |
+| 0x076E0000 - 0x07B00000 | 0x00420000 / 4.1 MiB   | f6 f5 e9 e4 f6 ed 95             | splash1      |
+| 0x07B00000 - 0x07F20000 | 0x00420000 / 4.1 MiB   | f6 f5 e9 e4 f6 ed 94             | splash2      |
+| 0x07F20000 - 0x14D80000 | 0x0CE60000 / 206.4 MiB | ed e9 e6 ea e1 e0                | download     |
+| 0x14D80000 - 0x14E00000 | 0x00080000 / 512 KiB   | e1 e8 ec eb e3 ea                | -            |
+| 0x14E00000 - 0x16200000 | 0x01400000 / 20 MiB    | d6 d1 c7 c1 c4 d1 c4 c3 d6       | ubi          |
+| 0x16200000 - 0x17600000 | 0x01400000 / 20 MiB    | c6 c4 c3 d6                      | ubi          |
+| 0x17600000 - 0x18A20000 | 0x01420000 / 20.1 MiB  | c6 c0 d7 d1 cc c3 cc c6 c4 d1 c0 | ubi          |
+| 0x18A20000 - 0x18A60000 | 0x00040000 / 256 KiB   | f5 f7 ea e1 f0 e6 f1 ec ea eb    | ubi          |
+| 0x18A60000 - 0x1FC00000 | 0x071A0000 / 113.6 MiB | c3 c9 c4 d6 cd c3 d6             | ubi          |
++-------------------------+------------------------+----------------------------------+--------------+
 ```
 
-Most of the offsets match my original partition table perfectly! I can see that the `UBI` partition at `0x14E00000` is actually made up of *5* separate partitions. Other than this, there are not many surprises. But what does the "Param" mean?
+Most of the offsets matched my original partition table perfectly! I could see that the `UBI` partition at `0x14E00000` was actually made of **5 separate partitions**. Other than this, there were not many surprises. But what about the unknown "Param"?
 
-Well, to me it looks just like the partition's name... Different lengths, repeating patterns... Notice how the `loader1` and `loader2` partitions are named `e9 ea e4 e1 e0 f7 95` and `e9 ea e4 e1 e0 f7 94` - exactly one byte differs by one.
+Well, to me it looked just like the partition's name... Different lengths, repeating patterns... Notice how the `loader1`/`loader2` and `splash1`/`splash2` partitions had params which differed by exactly one byte.
 
-My first guess is XOR - it looks too simple for any advanced crypto algorithm. Guess what results from XOR'ing `splash1` and `f6 f5 e9 e4 f6 ed 95`...
+My first guess was XOR - it looked too simple for any advanced crypto algorithm. Guess what results from XOR'ing `splash1` and `f6 f5 e9 e4 f6 ed 95`...
 
-`85 85 85 85 85 85 a4`. Yes. The key is just 0x85. The last digit of `loader`/`splash` is wrong, though, so maybe it's not `1` and `2`.
+`85 85 85 85 85 85 a4`. Yes. **The key was just 0x85**.
 
-A quick update of the DataStruct definition gives:
+A quick update of the DataStruct definition gave me this:
 
 ```
 +-------------------------+------------------------+-------------+
@@ -260,32 +270,32 @@ A quick update of the DataStruct definition gives:
 +-------------------------+------------------------+-------------+
 ```
 
-Woah, that's a lot of weird names... I'll update my partition table, for simplicity I'll call these `loader1` and `loader2` instead of the binary bytes.
+That was a lot of weird names... Also, the last digit of `loader`/`splash` was wrong, so maybe it wasn't just `1` and `2`. I updated my partition table, for simplicity I called these two `loader1` and `loader2` instead of the binary bytes.
 
 ## Actually breaking something
 
-So now I know where is what - can I change the splash image now? Sadly - no. The `splash` partition has a 256-byte chunk of data at the end - possibly a signature. Erasing it makes the device ignore the splash image. Trying to modify/corrupt the JPEG inside also makes it ignored, so there has to be a CRC somewhere too.
+So now I knew what was where - what about changing the splash image now? Sadly - no. The `splash` partition had a 256-byte chunk of data at the end - possibly a signature. Erasing it made the device ignore the splash image. Trying to modify/corrupt the JPEG inside also resulted in it being ignored.
 
-Let's erase some data now... Trying `optee` and `armfw` first - even with the two partitions erased, the device boots up, restoring their contents in the meantime. This means it has a copy of these two somewhere.
+I decided to erase some of the partitions. Trying `optee` and `armfw` first - even with the two partitions erased, the device booted up, restoring their contents in the meantime. This meant it had to have a copy of these two somewhere.
 
 How about `btrflags`, the one with a repeating byte pattern?
 
 ![Device booting up in loader mode](loader.jpg)
 
-Right! Erasing it makes the device enter the "loader" - a graphical firmware upgrade interface shows up. It then connects to my Wi-Fi to download a firmware upgrade - my device is running an older firmware version, which results in an upgrade prompt at every startup.
+Right! Erasing it caused the device to enter **the "loader" - a graphical firmware upgrade interface**. It then connected to my Wi-Fi to download a firmware upgrade - at the time, my device was running an older firmware version, which resulted in an upgrade prompt at every startup.
 
 ## Upgrading the firmware
 
-But how does the loader know what file to download?
+But how did the loader know what file to download?
 
-To check that, I booted it up normally and accepted the FW upgrade prompt. Right after pressing OK, I dumped the NAND chip again before it got a chance to update.
+To check that, I booted it up normally and accepted the FW upgrade prompt. Right after pressing OK, I dumped the NAND chip again - before the loader got a chance to download the firmware.
 
-When comparing the firmware dump before and after accepting the upgrade, mostly two things differ:
+After comparing the firmware dump - before and after accepting the upgrade - mostly two things were different:
 
-- the `stbdatafs` partition, a file called `loader.props.v1` in the UBIFS;
-- the `btrflags` - possibly what tells the loader to enter upgrade mode.
+- the `stbdatafs` partition, there was a file called `loader.props.v1` in the UBIFS;
+- the `btrflags` - possibly what told the loader to enter upgrade mode.
 
-The `loader.props.v1` looks like this:
+The `loader.props.v1` looked like this:
 
 ```
 00000000  C1 CA D2 CB C9 CA C4 C1 FA D5 D7 CC CA D7 CC D1  |ÁÊÒËÉÊÄÁúÕ×ÌÊ×ÌÑ|
@@ -317,13 +327,15 @@ The `loader.props.v1` looks like this:
 [...]
 ```
 
-Hmm, odd patterns and all characters from a similar binary range? No, it can't be...
+Hmm, odd patterns and all characters from a similar binary range? No, it couldn't be...
 
-A quick [XOR brute force](https://www.dcode.fr/xor-cipher) reveals a key of 0xA5.
+**A quick [XOR brute force](https://www.dcode.fr/xor-cipher) revealed a key of 0xA5.**
 
 ![XOR brute force on dcode.fr](xor.png)
 
 <details>
+
+<summary>Partial hexdump of the loader.props.v1 file</summary>
 
 ```
 00000000  64 6F 77 6E 6C 6F 61 64 5F 70 72 69 6F 72 69 74  |download_priorit|
@@ -356,7 +368,7 @@ A quick [XOR brute force](https://www.dcode.fr/xor-cipher) reveals a key of 0xA5
 
 </details>
 
-Right! That makes me realize - the partition table's key was also 0xA5, not 0x85. The mistake made the names lowercase and messed up the `splash\x01` names. Here's the correct partition table:
+Right! That made me realize - the partition table's key was also 0xA5, not 0x85. The mistake made the names lowercase and messed up the `splash\x01` names. Here's the correct partition table:
 
 ```
 +-------------------------+------------------------+-------------+
@@ -380,39 +392,41 @@ Right! That makes me realize - the partition table's key was also 0xA5, not 0x85
 +-------------------------+------------------------+-------------+
 ```
 
-Much better. Back to the `loader.props.v1` - it contains the Wi-Fi SSID/password, IP configuration and the firmware download URL - the same one that I was able to extract from UBIFS a year ago.
+Much better. Back to the `loader.props.v1` - it contained the Wi-Fi SSID/password, IP configuration and the firmware download URL - the same one that I was able to extract from UBIFS a year ago.
 
-Let's upgrade the firmware now. Only one more thing - I want to sniff/capture the network traffic of the STB, just for fun. Who knows, maybe there will be some unencrypted traffic (aside from the `go.microsoft.com` "secure" clock sync).
+With the device ready to upgrade the firmware, there was one more thing - I wanted to sniff/capture the network traffic of the STB, just for fun. Who knows, maybe there would be some unencrypted traffic (aside from the `go.microsoft.com` "secure" clock sync).
 
 ## Capturing the network traffic
 
-For this, I will use a [work-in-progress rewrite of Tuya Cloudcutter](https://github.com/tuya-cloudcutter/cloudcutter-universal/tree/master/cloudcutter/modules) - a Python module that can create a Wi-Fi access point, start a DHCP & DNS server, spoof DNS requests and run an HTTP(S) server. Since most of the STB's traffic runs over HTTPS, I need to redirect it to the destination server.
+For this, I used a [work-in-progress rewrite of Tuya Cloudcutter](https://github.com/tuya-cloudcutter/cloudcutter-universal/tree/master/cloudcutter/modules) - a Python module that could create a Wi-Fi access point, start a DHCP & DNS server, spoof DNS requests and run an HTTP(S) server. Since most of the STB's traffic ran over HTTPS, I needed to redirect it to the destination server.
 
-I ended up adding another module - a simple TCP proxy. It can transparently proxy any HTTP/HTTPS traffic (without altering/decrypting it) to any external (or local) IP address. It extracts the destination hostname from the TLS handshake packet. **I can also attach an external HTTPS proxy** (which I did). It won't let me see HTTPS decrypted traffic, but at least it will nicely show which hosts are requested.
+I ended up adding another module - **a simple TCP proxy**. It could transparently proxy any HTTP/HTTPS traffic (without altering/decrypting it) to any external (or local) IP address. It extracted the destination hostname from the TLS handshake packet. **I could also attach an external HTTPS proxy** (which I did). It wouldn't let me see HTTPS decrypted traffic, but at least it would nicely show which hostnames were contacted.
 
-Okay, all is set up - the AP is running, Wireshark sniffing, Charles Proxy recording - starting the firmware upgrade.
+Having everything set up - the AP running, Wireshark sniffing, Charles Proxy recording - I started the firmware upgrade.
 
 ![A capture from Charles Proxy](charles-upgrade.png)
 
-Erm, okay, why do I see the full request path in Charles? Oh, right, I forgot to disable SSL proxying...
+Erm, okay, why did I see the full request path in Charles? *Oh, right, I forgot to disable SSL proxying*...
 
-*Wait, what? The loader doesn't verify SSL certificates?* Uhh, okay, sure...
+Wait, what? **The loader doesn't verify SSL certificates**? Uhh, okay, sure...
 
-Yeah, as it turns out, the loader doesn't care about SSL certificate validity - it can even be self signed. There's more - the STB's GUI also doesn't validate certificates in some cases - namely, to the `video-lb` domain and the `sso` domain (yes, the one used for authentication).
+Yeah, as it turned out, the loader didn't care about SSL certificate validity - it could even be self signed. There's more - the STB's GUI also didn't validate certificates in some cases - namely, to the `video-lb` domain and the `sso` domain (**yes, the one used for authentication**).
 
-This lets me sniff (and modify!) the Bearer access tokens used to authenticate to the API. As a result, I can authenticate the old, unauthorized device using my actual (ISP-owned) STB's token. Cool, but not very useful.
+This let me sniff (and modify!) the `Bearer` access tokens used to authenticate to the API. As a result, I could **authenticate the old, unauthorized device** using my actual (ISP-owned) STB's token (I still had two of them, remember?). It indeed let me watch TV on both of the devices - cool, but not very useful.
+
+![Authentication without verifying SSL certificates](charles-sso.png)
 
 The firmware upgrade succeeded, but I didn't notice any changes in the UI.
 
-## Back to breaking stuff
-
-Sure, let's erase some more. `stbdatafs` holds the `loader.props.v1`, erasing it makes the FW upgrade impossible (no Wi-Fi credentials, no upgrade URL). It gets rewritten after reconnecting the STB to Wi-Fi (requires a manual reconfiguration, though). `hlcode` probably holds the application GUI - erasing it jumps back to the loader and performs a firmware upgrade. I haven't tried erasing the entire `flashfs`, as I doubt it would give any useful results.
-
-At this point I started wondering again - how the heck does it run the loader? Is that started by the `optee`? How is the `optee` started, then? It's encrypted, so what decrypts it? *How* is it encrypted? What boot stages are there?
-
 ## U-Boot environment
 
-Let's find out if I can mess with U-Boot's environment to make it do something else. Here's how it looks right now:
+At this point I started wondering again - how the heck did the STB run the loader? Was that started by `optee`? How was the `optee` started, then? It was encrypted, so what decrypted it? ***How*** was it encrypted? What boot stages were even there?
+
+I wanted to find out if I could mess with U-Boot's environment to make it do something else. Here's the entire stored environment:
+
+<details>
+
+<summary>U-Boot environment</summary>
 
 ```
 51OnRam=0
@@ -457,7 +471,7 @@ info_exchange=ubifile
 loadaddr=0x82000000
 loadbootscript=fatload mmc ${mmcdev} ${loadaddr} boot.scr
 loaduimage=fatload mmc ${mmcdev} ${loadaddr} uImage
-macaddr=C4:77:AF:2C:65:F1
+macaddr=C4:77:AF:XX:XX:XX
 mmcargs=setenv bootargs console=${console} vram=${vram} root=${mmcroot} rootfstype=${mmcrootfstype}
 mmcboot=echo Booting from mmc${mmcdev} ...; run mmcargs; bootm ${loadaddr}
 mmcdev=0
@@ -482,88 +496,23 @@ verify=y
 vram=16M
 ```
 
-It's worth noting that some vars (like `MS_MEM` or `bootargs`) have changed during the FW upgrade process but eventually were set back to the original values.
-
-Also, this environment is recreated even after wiping the `ubild` partition, which means that every value seen here has to be written somewhere else. Yet, I was unable to find some of them, e.g. `CORE_DUMP_PATH`. Here's the environment right after recreating - more values get added during a subsequent bootup.
-
-<details>
-
-```
-51OnRam=0
-MstarUpgrade_complete=0
-UARTOnOff=on
-baudrate=115200
-bootargs=BOOTLOGO_IN_MBOOT ENV_VAR_OFFSET=0x7C000 ENV_VAR_SIZE=0x10000 ENV=NAND SECURITY=OFF
-bootcmd=if mmc rescan ${mmcdev}; then if run loadbootscript; then run bootscript; else if run loaduimage; then run mmcboot; fi; fi; fi
-bootdelay=0
-bootscript=echo Running bootscript from mmc${mmcdev} ...; source ${loadaddr}
-burnmode_poweron=false
-console=ttyS2,115200n8
-dc_poweroff=0
-factory_poweron_mode=direct
-info_exchange=ubifile
-loadaddr=0x82000000
-loadbootscript=fatload mmc ${mmcdev} ${loadaddr} boot.scr
-loaduimage=fatload mmc ${mmcdev} ${loadaddr} uImage
-mmcargs=setenv bootargs console=${console} vram=${vram} root=${mmcroot} rootfstype=${mmcrootfstype}
-mmcboot=echo Booting from mmc${mmcdev} ...; run mmcargs; bootm ${loadaddr}
-mmcdev=0
-mmcroot=/dev/mmcblk0p2 rw
-mmcrootfstype=ext3 rootwait
-mtddevname=MBOOT
-mtddevnum=0
-mtdids=nand0=edb64M-nand
-mtdparts=mtdparts=edb64M-nand:2432k@1792k(MBOOT),2560k(MBOOTBAK),1664k(UBILD),6144k(OPTEE),1024k(ARMFW)
-osd_language=English
-partition=nand0,0
-stderr=serial
-stdin=serial
-stdout=serial
-ubispeedup=UBI
-upgrade_mode=null
-usbtty=cdc_acm
-vram=16M
-```
-
 </details>
 
-And here's the environment that is stored in the `mboot` binary:
+It's worth noting that some vars (like `MS_MEM` or `bootargs`) have changed during the FW upgrade process but eventually were set back to their original values.
 
-<details>
+Also, this environment was always recreated, even after wiping the `ubild` partition, which meant that *every value seen here had to be written somewhere else*. Yet, I was unable to find some of them, e.g. `CORE_DUMP_PATH`.
 
-```
-bootcmd=if mmc rescan ${mmcdev}; then if run loadbootscript; then run bootscript; else if run loaduimage; then run mmcboot; fi; fi; fi
-bootdelay=0
-baudrate=115200
-loadaddr=0x82000000
-console=ttyS2,115200n8
-usbtty=cdc_acm
-vram=16M
-mmcdev=0
-mmcroot=/dev/mmcblk0p2 rw
-mmcrootfstype=ext3 rootwait
-mmcargs=setenv bootargs console=${console} vram=${vram} root=${mmcroot} rootfstype=${mmcrootfstype}
-loadbootscript=fatload mmc ${mmcdev} ${loadaddr} boot.scr
-bootscript=echo Running bootscript from mmc${mmcdev} ...; source ${loadaddr}
-loaduimage=fatload mmc ${mmcdev} ${loadaddr} uImage
-mmcboot=echo Booting from mmc${mmcdev} ...; run mmcargs; bootm ${loadaddr}
-ubispeedup=UBI
-osd_language=English
-```
+Then I found myself diving into the U-Boot source code and disassembly (again) - to find something, that would hopefully let me run U-Boot commands after modyfing the environment. **It wasn't as simple as changing `bootcmd`** - this one was not even used during the boot process.
 
-</details>
+*And I found something* - it seemed like the `custar` command could be used to read an `MstarUpgrade.bin` file from USB. It contained U-Boot commands to execute, but **the file wasn't encrypted or signed** - was it the perfect candidate?
 
-So now, I'm diving into the U-Boot source code and disassembly (again) to find something, that will hopefully let me run U-Boot commands after modyfing the environment. It's not as simple as changing `bootcmd` - as it's not even used during the boot process.
-
-And I found something - it seems like the `custar` command (which reads an `MstarUpgrade.bin` file from USB) doesn't check any signatures or encryption of the binary - seems like the perfect candidate?
-
-Well, it only runs if the `upgrade_mode` in the environment is set to `usb`. Unfortunately, no matter what I try, I cannot get my modifed UBI environment to actually persist in the NAND. The bootloader seems to overwrite it with the defaults and ignore what is in the NAND. Why use environment at all, if it's always ignored anyway...?
+Okay, not exactly... `custar` was only called if the environment variable `upgrade_mode` was set to `usb`. Unfortunately, no matter what I tried, I couldn't get my modifed UBI environment to actually persist on the NAND. The bootloader would always overwrite it with the defaults and ignore what was on the NAND. *Why use environment at all, if it's always ignored anyway...*?
 
 ## Erasing even more
 
-Since I can't really make progress with the U-Boot, I want to try erasing everything that I can. Here's what I could find out:
+Since I couldn't really make progress with U-Boot, I wanted to try erasing everything that I could (mostly for fun). Here's what I found out:
 
-Partition           | Behavior
+Erased partition    | Behavior
 --------------------|---------------------------------------------------------------
 `parm1`+`parm2`     | No boot at all; also doesn't boot without ECC
 `uboot1`+`uboot2`   | No boot at all; also doesn't boot without ECC
@@ -578,101 +527,21 @@ Partition           | Behavior
 `hlcode`            | Enters loader, forces a firmware download (no version check)
 `stbdatafs`         | Makes loader unable to download new firmware (has Wi-Fi creds)
 
-Oddly - the device can still boot with all of `optee`, `armfw`, `loader1` and `loader2` erased (it will restore the first two from somewhere, presumably `hlcode`). When `hlcode` is also cleared, it enters a quick bootloop; no splash image is then observed.
+Oddly - the device could still boot with all of `optee`, `armfw`, `loader1` and `loader2` erased (it would restore the first two from somewhere, presumably `hlcode`). When `hlcode` was also cleared, it entered a quick bootloop; no splash image was then observed.
 
-(*) The `serial` partition with everything erased, except for the partition table, will allow the device to boot. It will, however, show an HDCP error message.
+(*) The `serial` partition with everything erased, except for the partition table, would allow the device to boot. It would, however, show an **HDCP error message**.
 
 ## Understanding the loader image format
 
-Lastly, I want to take a closer look at the `loader`/`hlcode` images (their structure looks nearly identical). In 2023, I only managed to write a barely-working extractor, but couldn't understand the full structure.
+Lastly, I wanted to take a closer look at the `loader`/`hlcode` images (their structure looked nearly identical). In 2023, I only managed to write a barely-working extractor, but couldn't understand the full structure. As it later turned out, the `splash` image also had a similar format, at least in its first layer.
 
-Here are the relevant DataStruct classes:
+While writing a DataStruct class (which, again, made the task a lot easier), I could easily guess some integer fields (such as lengths, offsets, addresses or image types), but there were still many unknown values.
+
+I noticed that the binaries were split into sub-images. Here is the `loader` image with unknown fields stripped out, for brevity:
 
 <details>
 
-```py
-@dataclass
-@datastruct(endianness=BIG, padding_pattern=b"\x00")
-class AdbFirmwareBoot(DataStruct):
-    @dataclass
-    @datastruct(endianness=BIG, padding_pattern=b"\x00")
-    class Image(DataStruct):
-        offset: int = tell()
-        unk1: int = field("I")
-        type: int = field("I")
-        unk2: int = field("I")
-        size1: int = field("I")
-        unk3: int = field("I")
-        size2: int = field("I")
-        # data: bytes = field(lambda ctx: ctx.size2)
-        _1: ... = skip(lambda ctx: ctx.size2)
-        _2: ... = align(4)
-
-    size1: int = field("I")
-    unk1: int = field("I")
-    param_size: int = field("I")
-    param_data: bytes = field(lambda ctx: ctx.param_size)
-    image_count: int = field("I")
-    images: list[Image] = repeat(lambda ctx: ctx.image_count)(subfield())
-    unk2: int = field("I")
-    unk3: int = field("I")
-    magic2: bytes = field(4)
-    unk4: bytes = field(512)
-
-@dataclass
-@datastruct(endianness=BIG, padding_pattern=b"\x00")
-class AdbFirmwareIlds(DataStruct):
-    @dataclass
-    @datastruct(endianness=BIG, padding_pattern=b"\x00")
-    class Image(DataStruct):
-        offset: int = tell()
-        index: int = field("I")
-        size1: int = field("I")
-        _1: ... = skip(lambda ctx: ctx.size1)
-
-    size1: int = field("I")
-    unk1: int = field("I")
-    image_count: int = field("I")
-    images: list[Image] = repeat(lambda ctx: ctx.image_count)(subfield())
-    unk2: int = field("I")
-    magic2: bytes = field(4)
-    unk3: bytes = field(256)
-
-@dataclass
-@datastruct(endianness=BIG, padding_pattern=b"\x00")
-class AdbFirmwareImage(DataStruct):
-    unk1: bytes = field(5)
-    version: int = field("H")
-    unk2: bytes = field(8)
-    type: int = field("B")
-    unk3: bytes = field(4)
-    text: str = text(0x4C)
-    unk4: int = field("I")
-    unk5: int = field("H")
-    size1: int = field("I")
-    unk6: int = field("B")
-    _1: ... = align(0x100)
-    size2: int = field("I")
-    size3: int = field("I")
-    unk7: int = field("I")
-    unk8: int = field("I")
-    magic1: bytes = field(4)
-    unk9: int = field("I")
-    _2: ... = padding(16)
-    magic2: bytes = field(4)
-    data: Any = switch(lambda ctx: ctx.magic2)(
-        {
-            b"BOOT": (AdbFirmwareBoot, subfield()),
-            b"ILDS": (AdbFirmwareIlds, subfield()),
-        }
-    )
-```
-
-</details>
-
-As it turned out, the `splash` image also had a similar format, at least in its first layer. There are a lot of unknown fields, but in general, one can notice that the binaries are split into sub-images.
-
-The `loader` image with unknown fields stripped out, for brevity:
+<summary>DataStruct dump of the loader image structure</summary>
 
 ```
 AdbFirmwareImage(version=29655,
@@ -726,7 +595,9 @@ AdbFirmwareImage(version=29655,
                                       magic2=b'.END'))
 ```
 
-After decoding all three binaries, I have the following info:
+</details>
+
+After decoding all three binaries, I got the following info:
 
 ```
 +------------+--------------+
@@ -753,17 +624,23 @@ After decoding all three binaries, I have the following info:
 +------------+--------------+
 ```
 
-Oh, and by the way, this is the entropy of `loader` and `hlcode`...
+I could notice some small sub-images (perhaps text parameters, such as U-Boot commands or bootargs?), as well as larger parts (38 MiB or 90 MiB - perhaps the ramdisk?). The 2 MiB partition looked interesting as well, as it could potentially contain `optee` or `armfw` backup images.
+
+Oh, and by the way, here's the entropy of `loader` and `hlcode`...
 
 ![`loader` entropy](entropy-loader.png)
 ![`hlcode` entropy](entropy-hlcode.png)
 
-The sharp drop is just the end of the image (where it becomes all 0xFF). The `hlcode`, however, has some actual non-encrypted data by the end - a full copy of `mboot`.
+Yeah, it was all encrypted. Even if I could guess which sub-image had what kind of data, it would be pointless without knowing the encryption scheme being used.
 
-This does not look good.
+The sharp drop (at the end of the 1st picture) was just where the actual data ended (where it became all 0xFF). The `hlcode`, however, had some actual non-encrypted data by the end - a full copy of `mboot`.
+
+*This did not look good.*
 
 ## To be continued
 
-I don't want to keep these posts too long. Also, I will be focusing on some other things (as I've mostly ran out of ideas now), so I will probably get back to this topic in a few months.
+As I've mostly ran out of ideas by now, I will probably be focusing on some other things for the time being.
+
+Also, I don't want to keep these posts too long, so I will probably get back to this topic in a few months.
 
 Come back for part 4 :)

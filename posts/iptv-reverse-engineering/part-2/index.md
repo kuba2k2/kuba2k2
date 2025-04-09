@@ -325,7 +325,9 @@ I was able to extract the UBIFS partition with something called [`ubireader`](ht
 
 I have also tried `binwalk` (it was the first thing I did) but it could only identify the UBI volumes.
 
-It was time to disassemble the U-Boot binary. No surprise, it was heavily modified by MStar, but thankfully some parts **matched the `mboot` sources** perfectly. I was able to find functions in IDA and name them according to the sources, which made the disassembly much more bearable.
+## Disassembling the bootloader
+
+It was time to disassemble the U-Boot binary. To no surprise, it turned out to be heavily modified by MStar, but thankfully some parts **matched the `mboot` sources** perfectly. I was able to find functions in IDA and name them according to the sources, which made the disassembly much more bearable.
 
 Based on that, I wrote down all commands that were executed by the bootloader, to create a "boot flow", like this:
 

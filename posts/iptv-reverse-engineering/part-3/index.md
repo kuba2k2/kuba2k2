@@ -50,7 +50,7 @@ I was eager to test it out, see if the device boots up. But first, I removed the
 
 That meant it was time for the moment of truth - booting up the STB from NAND, nearly a year after desoldering it from the PCB. I removed the Pi Pico, connected 3.3V power to the NAND, then 12V to the STB's power jack, and...
 
-![](bootup.jpg)
+![](bootup.png)
 
 **It worked.** It booted up as if nothing ever happened. That meant I could read AND write to the flash chip and boot the STB to see what happens - a perfect hacking setup (or is it?).
 
@@ -280,7 +280,37 @@ I decided to erase some of the partitions. Trying `optee` and `armfw` first - ev
 
 How about `btrflags`, the one with a repeating byte pattern?
 
-![Device booting up in loader mode](loader.jpg)
+<details>
+
+<summary>Contents of btrflags</summary>
+
+```
+λ hexdump -C 07320000_btrflags.img  | head -n 50
+00000000  00 00 b0 9f 00 03 02 fe  00 ab ff 0c 00 04 01 00  |................|
+00000010  00 00 00 10 00 00 01 01  00 ff ff ff ff ff ff ff  |................|
+00000020  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+00000800  e3 7b b0 9f 00 03 02 ff  00 ab ff 0c 00 04 01 00  |.{..............|
+00000810  00 00 00 10 00 00 01 01  00 ff ff ff ff ff ff ff  |................|
+00000820  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+00001000  00 00 b0 9f 00 03 03 00  00 ab ff 0c 00 04 01 00  |................|
+00001010  00 00 00 10 00 00 01 01  00 ff ff ff ff ff ff ff  |................|
+00001020  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+00001800  e3 7b b0 9f 00 03 03 01  00 ab ff 0c 00 04 01 00  |.{..............|
+00001810  00 00 00 10 00 00 01 01  00 ff ff ff ff ff ff ff  |................|
+00001820  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+00002000  00 00 b0 9f 00 03 03 02  00 ab ff 0c 00 04 01 00  |................|
+00002010  00 00 00 10 00 00 01 01  00 ff ff ff ff ff ff ff  |................|
+00002020  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+```
+
+</details>
+
+![Device booting up in loader mode](loader.png)
 
 Right! Erasing it caused the device to enter **the "loader" - a graphical firmware upgrade interface**. It then connected to my Wi-Fi to download a firmware upgrade - at the time, my device was running an older firmware version, which resulted in an upgrade prompt at every startup.
 
@@ -327,7 +357,7 @@ The `loader.props.v1` looked like this:
 [...]
 ```
 
-Hmm, odd patterns and all characters from a similar binary range? No, it couldn't be...
+Hmm, odd patterns and all characters from a similar binary range? No, it can't be...
 
 **A quick [XOR brute force](https://www.dcode.fr/xor-cipher) revealed a key of 0xA5.**
 
@@ -530,6 +560,9 @@ Erased partition    | Behavior
 Oddly - the device could still boot with all of `optee`, `armfw`, `loader1` and `loader2` erased (it would restore the first two from somewhere, presumably `hlcode`). When `hlcode` was also cleared, it entered a quick bootloop; no splash image was then observed.
 
 (*) The `serial` partition with everything erased, except for the partition table, would allow the device to boot. It would, however, show an **HDCP error message**.
+
+!!! info "EDIT (2025-04-09)"
+	While erasing random data might seem like a pretty pointless thing to do, it was actually really helpful. Knowing that the device can boot with a certain partition removed lets me know that it's not crucial for the process, which narrows down possible locations of certain binaries/images.*
 
 ## Understanding the loader image format
 

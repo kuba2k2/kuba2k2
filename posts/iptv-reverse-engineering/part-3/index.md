@@ -30,7 +30,7 @@ You're reading the next part of [**IPTV Reverse-Engineering - Part 2**](../part-
 
 This time, however, I was writing this post along with making various attempts to break into the device. The last part ended on having the "adapter PCB" designed and printed, ready for etching with the toner transfer method.
 
---8<-- "../disclaimer.md"
+--8<-- "../disclaimer.md.inc"
 
 ## Testing the adapter PCB
 

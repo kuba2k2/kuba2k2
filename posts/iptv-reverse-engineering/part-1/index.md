@@ -28,7 +28,7 @@ This series of posts will (hopefully) cover a reverse-engineering attempt of a s
 
 This (first) part is a backstory of things that I found out back in 2022/2023. Almost a year has passed since then and I have taken up the "project" once again, to hopefully approach things from a different angle - but more on that later.
 
---8<-- "../disclaimer.md"
+--8<-- "../disclaimer.md.inc"
 
 ## Introduction
 

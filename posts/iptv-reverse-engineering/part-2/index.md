@@ -46,7 +46,7 @@ Let's recap:
 - Roku provided [GPL sources](https://www.roku.com/ossfiles/v9.4.0/OSS-RokuPremiere_RokuUltra_2016/sources) of Linux and U-Boot on their website,
 - I desoldered the NAND chip from the device using a hot air gun.
 
---8<-- "../disclaimer.md"
+--8<-- "../disclaimer.md.inc"
 
 ## Building a NAND programmer
 

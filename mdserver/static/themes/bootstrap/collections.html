@@ -86,6 +86,10 @@
 {% block sidebar %}
 {% endblock %}
 
+{% block contentend %}
+{% include "bootstrap/parts/base-comments.html" %}
+{% endblock %}
+
 {% block bodyend %}
 {{ super() }}
 <script>

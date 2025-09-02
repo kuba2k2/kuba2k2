@@ -42,8 +42,9 @@ jobs:
         uses: actions/download-artifact@v4
         if: ${{ inputs.input-artifact != '' }}
         with:
-          name: ${{ inputs.input-artifact }}
+          pattern: ${{ inputs.input-artifact }}
           path: ${{ inputs.input-path }}
+          merge-multiple: true
 
       - name: Run pre-build step
         if: ${{ inputs.pre-build != '' }}

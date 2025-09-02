@@ -63,7 +63,7 @@ jobs:
         with:
           python-version: ${{ inputs.python-version }}
       - name: Install poetry
-        uses: Gr1N/setup-poetry@v8
+        run: python -m pip install --upgrade poetry
 
       - name: Run pre-build step
         if: ${{ inputs.pre-build != '' }}

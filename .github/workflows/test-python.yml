@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: ${{ inputs.python-version }}
       - name: Install poetry
-        uses: Gr1N/setup-poetry@v8
+        run: python -m pip install --upgrade poetry
 
       - name: Install project
         run: |

@@ -122,6 +122,7 @@ jobs:
           echo "UNAME=`uname -a`"
           echo ""
           set -e
+          apk add bash
           adduser actions -D
           addgroup actions abuild
           mkdir -p /var/cache/distfiles

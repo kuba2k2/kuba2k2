@@ -81,7 +81,9 @@ jobs:
         run: |
           mkdir /home/runner/repo
           mkdir /home/runner/apks
-      - name: Setup Alpine ${{ inputs.arch }}
+
+      - id: setup-alpine
+        name: Setup Alpine ${{ inputs.arch }} (${{ inputs.branch }})
         uses: jirutka/setup-alpine@v1
         with:
           arch: ${{ inputs.arch }}
@@ -93,6 +95,15 @@ jobs:
           volumes: |
             /home/runner/repo:/repo
             /home/runner/apks:/apks
+
+      - name: Fetch Alpine version
+        id: alpine-version
+        run: |
+          cd ${{ steps.setup-alpine.outputs.root-path }}
+          RELEASE=$(cat etc/alpine-release)
+          BRANCH=${RELEASE%.*}
+          echo release=${RELEASE} >> $GITHUB_OUTPUT
+          echo branch=${BRANCH} >> $GITHUB_OUTPUT
 
       - name: Run pre-build step
         if: ${{ inputs.pre-build != '' }}
@@ -164,6 +175,6 @@ jobs:
         if: ${{ inputs.deploy }}
         with:
           folder: /home/runner/repo/${{ inputs.arch }}/
-          target-folder: ${{ inputs.arch }}/
+          target-folder: v${{ steps.alpine-version.outputs.branch }}/${{ inputs.arch }}/
           clean: false
           force: false

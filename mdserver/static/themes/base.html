@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	{#
+	{% if query.debug %}
 	<ul class="container">
 		{% for key, value in identity %}
 		<li><code>identity.{{ key }}: {{ value|string|truncate(72) }}</code></li>
@@ -30,7 +30,7 @@
 		<li><code>sxs.{{ key }}: {{ value|string|truncate(72) }}</code></li>
 		{% endfor %}
 	</ul>
-	#}
+	{% endif %}
 
 	{% block body %}{% endblock %}
 

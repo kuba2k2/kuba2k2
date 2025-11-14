@@ -9,7 +9,7 @@ replacements:
   - ['<table>', '<table class="table">']
   - ['<div class="highlight">', '<div class="highlight p-2 rounded-3 text-body" data-bs-theme="dark">']
   - ['<span class="filename">', '<span class="filename text-body text-center d-block">']
-  - ['<img alt="(.*?)" src="(.+?)" />', '<div class="image"><a href="\2" target="_blank"><img alt="\1" src="\2"></a><small>\1</small></div>']
+  - ['<img alt="(.*?)" src="(.+?)" />', '<div class="image"><a href="\2" target="_blank"><img alt="\1" src="\2" onerror="this.src=''/static/missing.png''"></a><small>\1</small></div>']
   - ['<details>', '<details class="mb-2">']
   - ['<details class="', '<details class="mb-2 ']
   - ['<a class="heading-link', '<a class="heading-link bi bi-link-45deg ps-2 ']

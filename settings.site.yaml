@@ -17,7 +17,7 @@ identity:
   # extras for theme
   title: kuba2k2
   brand: kuba2k2
-  footer: "&copy; Kuba Szczodrzyński 2024"
+  footer: "&copy; Kuba Szczodrzyński 2025"
   about: Hello, World!
   navbar:
     expand: md
@@ -42,6 +42,8 @@ identity:
           - type: divider
           - type: header
             title: Browse posts
+          - title: 2025
+            url: /posts/?year=2025
           - title: 2024
             url: /posts/?year=2024
           - title: 2023

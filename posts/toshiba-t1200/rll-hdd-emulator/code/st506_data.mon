@@ -1,0 +1,32 @@
+reset
+
+assemble -i d:/Dev/_T1200/mfm-hdd/src/st506_data.pio -o d:/Dev/_T1200/mfm-hdd/src/st506_data.hex +l
+
+unassemble --pio=0 --sm=0 --address=0
+
+gpio --pio=0 --gpio=0 --init
+gpio --pio=0 --gpio=0 --enable
+gpio --pio=0 --gpio=1 --init
+gpio --pio=0 --gpio=1 --enable
+gpio --pio=0 --gpio=2 --init
+gpio --pio=0 --gpio=2 --enable
+
+pin --pio=0 --sm=0 --out-base=2
+pin --pio=0 --sm=0 --out-count=1
+pin --pio=0 --sm=0 --set-base=2
+pin --pio=0 --sm=0 --set-count=1
+side-set --pio=0 --sm=0 --base=0
+side-set --pio=0 --sm=0 --count=2
+
+fifo --tx --join
+fifo --tx --threshold=32
+fifo --tx --shift-left
+fifo --tx --auto=true
+sm --pio=0 --sm=0 --enable=true
+
+fifo --tx --enqueue --value=0x8010001F
+fifo --tx --enqueue --value=0x55AA55AA
+fifo --tx --enqueue --value=0x0010001F
+fifo --tx --enqueue --value=0x55AA55AA
+
+quit

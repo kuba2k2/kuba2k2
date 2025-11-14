@@ -1,0 +1,57 @@
+.program mfm_dump
+.in 32 left auto 32
+.fifo rx
+
+	//set x, 1
+//loop:
+	//in null, 1
+	//in x, 1
+	//jmp loop
+
+setup:
+	// wait for +INDEX
+	wait 1 pin 1
+	// wait for -INDEX
+	wait 0 pin 1
+
+.wrap_target
+start:
+	// loop iterations (set + 3*(jmp+jmp) + 4*jmp + in = 12)
+	set x, 2
+
+wait_loop:
+	// if pin becomes 1, push immediately
+	jmp pin got_high
+	// otherwise wait with a timeout
+	jmp x-- wait_loop
+	// the loop runs less iterations; check input manually a few times
+	jmp pin got_high
+	jmp pin got_high
+	jmp pin got_high
+    jmp pin got_high
+	// after 100 ns, input the pin value anyway (should be 0)
+zero_in:
+	in null, 1
+	// restart the timing loop from here
+.wrap
+
+got_high:
+	// input the pin value (1)
+	// delay 100 ns in total
+	// (-1 cycle for 'in')
+	// (-1 cycle for 'jmp')
+	in pins, 1 [8]
+	// (jump to) input the pin value after delay (should be 0)
+	jmp zero_in
+
+% c-sdk {
+#include <hardware/clocks.h>
+
+static inline void mfm_dump_program_init(PIO pio, uint sm, uint offset, uint pin, uint freq) {
+	pio_sm_config c = mfm_dump_program_get_default_config(offset);
+	sm_config_set_in_pin_base(&c, pin);
+	sm_config_set_clkdiv_int_frac8(&c, 1, 0);
+	sm_config_set_jmp_pin(&c, pin);
+	pio_sm_init(pio, sm, offset, &c);
+}
+%}

@@ -1,0 +1,31 @@
+reset
+
+assemble -i d:/Dev/_T1200/mfm-hdd/src/st506_step.pio -o d:/Dev/_T1200/mfm-hdd/src/st506_step.hex +l
+
+unassemble --pio=0 --sm=0 --address=0
+
+gpio --pio=0 --gpio=0 --disable
+gpio --pio=0 --gpio=1 --disable
+
+gpio --gpio=0 --clear
+gpio --gpio=1 --clear
+
+pin --pio=0 --sm=0 --in-base=0
+pin --pio=0 --sm=0 --jmp-pin=1
+
+fifo --rx --threshold=32
+fifo --rx --auto=true
+sm --pio=0 --sm=0 --enable=true
+
+# set x, 0
+exec --force=0xe020
+trace --cycles=1
+# pull block
+exec --force=0x80a0
+fifo --tx --enqueue --value=2
+trace --cycles=1
+# out y, 32
+exec --force=0x6040
+trace --cycles=1
+
+quit

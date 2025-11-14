@@ -1,0 +1,20 @@
+reset
+
+assemble -i d:/Dev/_T1200/mfm-hdd/src/rll_2of7.pio -o d:/Dev/_T1200/mfm-hdd/src/rll_2of7.hex +l
+
+unassemble --pio=0 --sm=0 --address=0
+
+fifo --tx --threshold=32
+fifo --tx --shift-left
+fifo --tx --auto=true
+fifo --rx --threshold=32
+fifo --rx --shift-left
+fifo --rx --auto=true
+sm --pio=0 --sm=0 --enable=true
+
+fifo --tx --enqueue --value=0x3333FFFF
+fifo --tx --enqueue --value=0x62FE0000
+fifo --tx --enqueue --value=0x00065358
+fifo --tx --enqueue --value=0x333333FF
+
+quit

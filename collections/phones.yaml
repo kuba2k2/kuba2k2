@@ -821,6 +821,25 @@ categories:
           removable: yes
 
       - brand: Nokia
+        model: "2610"
+        color: Black
+        symbol: RH-86
+        mfg: 03/2006
+        state:
+          score3: 3/5
+          info: Back cover sticky.
+        screen:
+          resolution: 128x128
+          size: 1.60"
+        comms:
+          usb: Proprietary
+        os: S40v1
+        battery:
+          capacity: 970
+          model: BL-5C
+          removable: yes
+
+      - brand: Nokia
         model: Asha 302
         operator:
           name: T-Mobile
@@ -1343,26 +1362,24 @@ categories:
           removable: yes
 
       - brand: Sony Ericsson
-        model: W800
-        color: Smooth White
-        mfg: 08/2005
+        model: W200i
+        color: Pulse White
+        mfg: 01/2007
         state:
           score4: 4/5
         screen:
-          resolution: 176x220
+          resolution: 128x160
           size: 1.80"
         comms:
-          bluetooth: 2.0
           radio: yes
           infrared: yes
           usb: Proprietary
         camera:
-          back: 2 Mpx
+          back: VGA
         battery:
-          capacity: 900
+          capacity: 780
           model: BST-36
           removable: yes
-        story: idk I lost it somewhere, or maybe gave it away to someone.
 
       - brand: Sony Ericsson
         model: C902
@@ -1493,11 +1510,10 @@ categories:
           removable: yes
 
       - brand: Samsung
-        model: Stratus
+        model: C3050 (Stratus)
         operator:
           name: Orange
         color: Black
-        symbol: C3050
         mfg: 06/2009
         state:
           score1: 1/5
@@ -1513,6 +1529,25 @@ categories:
           back: VGA
         battery:
           capacity: 800
+          removable: yes
+
+      - brand: Samsung
+        model: C300
+        operator:
+          name: Orange
+        color: Silver
+        symbol: SGH-C300
+        mfg: 10/2006
+        state:
+          score3: 3/5
+        screen:
+          resolution: 120x160
+          size: 1.80"
+        comms:
+          usb: Proprietary
+        battery:
+          capacity: 800
+          model: AB043446LE
           removable: yes
 
       - brand: Samsung

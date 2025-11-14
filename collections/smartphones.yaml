@@ -24,9 +24,6 @@ fields:
   - key: mfg
     title: Mfg. date
     missing: "?"
-  - key: date
-    title: Acq. date
-    missing: "?"
   - key: state
     title: Condition
     cls: border-end
@@ -94,8 +91,6 @@ fields:
       - key: version
       - prefix: " / "
         key: ui
-      - prefix: " / Linux "
-        key: kernel
   - key: bootloader
     title: Bootloader
     missing: "?"
@@ -1014,6 +1009,176 @@ categories:
           front: 5 Mpx
         battery:
           capacity: 3120
+          removable: no
+
+      - brand: Microsoft
+        model: Lumia 735 LTE
+        symbol: RM-1038
+        mfg: 09/2014
+        date: 11/2025
+        state: OK
+        cpu: Snapdragon 400
+        memory:
+          ram: 1 GiB
+          storage: 8 GiB
+        screen:
+          resolution: 720x1280
+          size: 4.70"
+          type: OLED
+        os:
+          type: Windows
+          version: 10 Mobile + Astoria
+        bootloader: Unlocked
+        camera:
+          back: 6.7 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 2220
+          removable: yes
+
+      - brand: Microsoft
+        model: Lumia 530
+        symbol: RM-1017
+        mfg: 08/2014
+        date: 11/2025
+        state: OK
+        cpu: Snapdragon 200
+        memory:
+          ram: 512 MiB
+          storage: 4 GiB
+        screen:
+          resolution: 480x854
+          size: 4.00"
+        os:
+          type: Windows
+          version: Phone 8.1
+        bootloader: Locked
+        camera:
+          back: 5 Mpx
+        battery:
+          capacity: 1430
+          removable: yes
+
+      - brand: Samsung
+        model: Galaxy Y (Young)
+        symbol: GT-S5360
+        mfg: 10/2011
+        date: 11/2025
+        state: OK
+        cpu: BCM21553
+        memory:
+          ram: 384 MiB
+          storage: 512 MiB
+        screen:
+          resolution: 240x320
+          size: 3.00"
+        os:
+          type: Android
+          version: 2.3.6
+          ui: TouchWiz
+          kernel: 2.6.35.7
+        bootloader: Unlocked
+        camera:
+          back: 2 Mpx
+        battery:
+          capacity: 1200
+          removable: no
+
+      - brand: Sony
+        model: Xperia J
+        symbol: ST26i
+        mfg: 10/2012
+        date: 11/2025
+        state: OK
+        cpu: Snapdragon S1
+        memory:
+          ram: 512 MiB
+          storage: 4 GiB
+        screen:
+          resolution: 480x854
+          size: 4.00"
+        os:
+          type: Android
+          version: 4.1.2
+          ui: Xperia UI
+          kernel: 3.4.0
+        bootloader: Locked
+        camera:
+          back: 5 Mpx
+          front: 0.3 Mpx
+        battery:
+          capacity: 1750
+          removable: yes
+
+      - brand: LG
+        model: X power2
+        symbol: M320N
+        mfg: 06/2017
+        date: 11/2025
+        state: Screen dead, boots
+        cpu: MT6750
+        memory:
+          ram: "? GiB"
+          storage: 16 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.50"
+        os:
+          type: Android
+          version: "?"
+        bootloader: Locked
+        camera:
+          back: 13 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 4500
+          removable: no
+
+      - brand: LG
+        model: X power2
+        symbol: M320N
+        mfg: 06/2017
+        date: 11/2025
+        state: Screen dead, boots
+        cpu: MT6750
+        memory:
+          ram: "? GiB"
+          storage: 16 GiB
+        screen:
+          resolution: 720x1280
+          size: 5.50"
+        os:
+          type: Android
+          version: "?"
+        bootloader: Locked
+        camera:
+          back: 13 Mpx
+          front: 5 Mpx
+        battery:
+          capacity: 4500
+          removable: no
+
+      - brand: Apple
+        model: iPhone 7
+        symbol: A1778
+        mfg: 09/2016
+        state: OK
+        cpu: A10 Fusion
+        memory:
+          ram: 2 GiB
+          storage: 32 GiB
+        screen:
+          resolution: 750x1334
+          size: 4.70"
+        os:
+          type: Apple
+          version: iOS
+        bootloader: Locked
+        camera:
+          back: 12 Mpx
+          front: 7 Mpx
+        battery:
+          capacity: 1960
           removable: no
 
   - title: PDAs / Navigation

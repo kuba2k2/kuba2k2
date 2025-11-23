@@ -2,6 +2,8 @@
 
 from pathlib import Path
 
+import yaml
+import yaml_include
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
@@ -14,6 +16,11 @@ app = FastAPI()
 app.mount(settings.static_url, StaticFiles(directory=settings.static_path), "static")
 app.mount(settings.themes_url, StaticFiles(directory=settings.themes_path), "themes")
 database.scan_all()
+yaml.add_constructor(
+    tag="!include",
+    constructor=yaml_include.Constructor(base_dir=settings.data_path),
+    Loader=yaml.SafeLoader,
+)
 
 
 @app.get("/{path_str:path}")
@@ -71,7 +78,7 @@ async def root(
         if path.suffix != ".html" or path_str and path_str.endswith("/"):
             return RedirectResponse(make_url(relpath.with_suffix(".html")) + query)
         path = path.with_suffix(".md")
-        page = render_content(path)
+        page = render_content(request, path)
         database.save()
         return render_page(request, page)
 

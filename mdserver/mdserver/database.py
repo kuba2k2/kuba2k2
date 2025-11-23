@@ -48,7 +48,7 @@ class Database(BaseModel):
         from .renderer import render_content
 
         for path in scan_path.glob("**/*.md"):
-            render_content(path)
+            render_content(None, path)
         for key, page in list(self.pages.items()):
             if not (settings.data_path / page.relpath).is_file():
                 self.pages.pop(key)

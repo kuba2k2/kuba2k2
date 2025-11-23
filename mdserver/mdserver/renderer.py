@@ -37,14 +37,15 @@ def render_context(
     )
 
 
-def render_content(path: Path) -> Page:
+def render_content(request: Request, path: Path) -> Page:
     # make side-by-side data paths
     sxs_json = path.with_suffix(".json")
     sxs_yaml = path.with_suffix(".yaml")
 
     # return if page already rendered and loaded/cached
     page = database.page_get(path, sxs_json, sxs_yaml)
-    if page:
+    force_render = request and request.query_params.get("force")
+    if page and not force_render:
         return page
 
     print("Rendering", path)

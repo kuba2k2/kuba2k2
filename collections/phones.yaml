@@ -1,131 +1,6 @@
+fields: !include collections/common.yaml
+show: story,brand,model,operator,color,symbol,mfg,state,screen,comms,os,camera,battery
 sort: brand,model
-fields:
-  - key: story
-    tooltip: info-circle
-  - key: brand
-    title: Brand
-  - key: model
-    title: Model
-    url: url
-  - key: operator
-    title: Operator
-    format:
-      - key: name
-      - icon: simlock
-        title: SimLock
-        _yes: lock
-        prefix: " "
-  - key: color
-    tooltip: palette
-  - key: symbol
-    title: Symbol
-    cls: border-end
-    missing: "-"
-  - key: mfg
-    title: Mfg. date
-    missing: "?"
-  - key: date
-    title: Acq. date
-    missing: "?"
-  - key: state
-    title: Condition
-    cls: border-end
-    format:
-      - icon: score1
-        title: Terrible
-        _yes: x
-        suffix: " 1/5"
-      - icon: score2
-        title: Bad
-        _yes: star
-        suffix: " 2/5"
-      - icon: score3
-        title: Fair
-        _yes: star-half
-        suffix: " 3/5"
-      - icon: score4
-        title: Good
-        _yes: star-fill
-        suffix: " 4/5"
-      - icon: score5
-        title: Perfect
-        _yes: stars
-        suffix: " 5/5"
-      - icon: info
-        prefix: " "
-        _yes: info-circle
-  - key: screen
-    title: Screen
-    missing: "?"
-    format:
-      - key: type
-        missing: "Color"
-      - key: resolution
-        prefix: " "
-      - key: size
-        prefix: ", "
-  - key: comms
-    title: Connectivity
-    missing: "?"
-    format:
-      - icon: wifi
-        title: Wi-Fi
-        _yes: wifi
-        _no: dash
-        suffix: " "
-      - icon: bluetooth
-        title: Bluetooth
-        _yes: bluetooth
-        _no: dash
-        suffix: " "
-      - icon: infrared
-        title: Infrared
-        _yes: broadcast
-        _no: dash
-        suffix: " "
-      - icon: radio
-        title: FM Radio
-        _yes: speaker
-        _no: dash
-        suffix: " "
-      - icon: gps
-        title: GPS
-        _yes: geo-alt
-        _no: dash
-        suffix: " "
-      - icon: usb
-        title: USB
-        _yes: usb-symbol
-        _no: dash
-        suffix: " "
-  - key: os
-    title: OS
-    missing: "?"
-  - key: camera
-    title: Camera
-    missing: "-"
-    format:
-      - key: back
-        missing: "-"
-      - key: front
-        prefix: " + "
-  - key: battery
-    title: Battery
-    missing: "?"
-    format:
-      - key: capacity
-        missing: "?"
-      - text: " mAh"
-      - key: type
-        prefix: " "
-      - key: model
-        prefix: " ("
-        suffix: ")"
-      - text: " / "
-      - icon: removable
-        title: Removable
-        _yes: check
-        _no: x
 
 categories:
   - list:
@@ -140,13 +15,15 @@ categories:
         screen:
           resolution: 320x240
           size: 2.36"
+          type: TFT
         comms:
           wifi: b/g
           bluetooth: 2.0
           radio: yes
           gps: yes
           usb: microUSB
-        os: S60v3.2 (Symbian 9.3)
+        os:
+          version: S60v3.2
         camera:
           back: 5 Mpx
           front: VGA
@@ -167,12 +44,14 @@ categories:
         screen:
           resolution: 480x360
           size: 2.44"
+          type: TFT
         comms:
           wifi: b/g
           bluetooth: 2.1
           gps: yes
           usb: microUSB
-        os: BlackBerry OS 6.0
+        os:
+          version: BlackBerry OS 6.0
         camera:
           back: 3.15 Mpx
         battery:
@@ -190,20 +69,21 @@ categories:
         state:
           score4: 4/5
         screen:
-          type: CSTN
           resolution: 240x160
           size: 2.6"
+          type: CSTN
         comms:
           bluetooth: yes
           infrared: yes
           usb: miniUSB
-        os: BlackBerry OS 4.0
+        os:
+          version: BlackBerry OS 4.0
         battery:
           model: BAT-03087-003
           removable: yes
 
       - brand: Nokia
-        model: N8
+        model: N8-00
         operator:
           name: Orange
           simlock: yes
@@ -216,16 +96,17 @@ categories:
           ram: 256 MiB
           storage: 16 GiB
         screen:
-          type: OLED
           resolution: 360x640
           size: 3.50"
+          type: OLED
         comms:
           wifi: b/g/n
           bluetooth: 3.0
           gps: yes
           radio: "Receiver + Transmitter"
           usb: microUSB
-        os: Symbian^3 Belle
+        os:
+          version: S^3 Belle
         camera:
           back: 12 Mpx
           front: VGA
@@ -234,7 +115,7 @@ categories:
           removable: no
 
       - brand: Samsung
-        model: Ch@t 335
+        model: S3350 (Ch@t 335)
         color: Black
         symbol: GT-S3350
         mfg: 02/2012
@@ -243,6 +124,7 @@ categories:
         screen:
           resolution: 320x240
           size: 2.40"
+          type: TFT
         comms:
           wifi: b/g
           bluetooth: 2.1
@@ -268,13 +150,15 @@ categories:
         screen:
           resolution: 240x320
           size: 2.40"
+          type: TFT
         comms:
           wifi: b/g
           bluetooth: 2.0
           radio: yes
           gps: yes
           usb: microUSB
-        os: S60v3.2
+        os:
+          version: S60v3.2
         camera:
           back: 3.2 Mpx
           front: QVGA
@@ -294,6 +178,7 @@ categories:
         screen:
           resolution: 176x220
           size: 2.20"
+          type: Color
         comms:
           bluetooth: 2.1
           radio: yes
@@ -315,12 +200,14 @@ categories:
         screen:
           resolution: 240x320
           size: 2.20"
+          type: Color
         comms:
           bluetooth: 2.0
           infrared: yes
           radio: yes
           usb: Pop-Port
-        os: S40v3
+        os:
+          version: S40v3
         camera:
           back: 2 Mpx
           front: VGA
@@ -339,11 +226,12 @@ categories:
         state:
           score4: 4/5
         screen:
-          type: Mono
           resolution: 84x48
           size: 1.50"
+          type: Mono
         comms:
-        os: S20
+        os:
+          version: S20
         battery:
           capacity: 1000
           model: BLC-2
@@ -360,11 +248,12 @@ categories:
           score3: 3/5
           info: Missing power button and rubber, missing Nokia logo on front.
         screen:
-          type: Mono
           resolution: 84x48
           size: 1.50"
+          type: Mono
         comms:
-        os: S20
+        os:
+          version: S20
         battery:
           capacity: 1000
           model: BLC-2
@@ -379,11 +268,12 @@ categories:
           score4: 4/5
           info: Missing Nokia logo on back.
         screen:
-          type: Mono
           resolution: 96x65
           size: 1.40"
+          type: Mono
         comms:
-        os: S20
+        os:
+          version: S20
         battery:
           capacity: 825
           model: BLC-1
@@ -398,9 +288,9 @@ categories:
           score3: 3/5
           info: Battery contact corroded and broken.
         screen:
-          type: Mono
           resolution: 96x32
           size: 1.40"
+          type: Mono
         comms:
         battery:
           capacity: 700
@@ -419,11 +309,12 @@ categories:
         state:
           score4: 4/5
         screen:
-          type: CSTN
           resolution: 96x65
           size: 1.40"
+          type: CSTN
         comms:
-        os: S40v1
+        os:
+          version: S40v1
         battery:
           capacity: 950
           model: BLC-2
@@ -438,11 +329,12 @@ categories:
           score3: 3/5
           info: Missing internal antenna.
         screen:
-          type: Mono
           resolution: 84x48
           size: 1.50"
+          type: Mono
         comms:
-        os: S20
+        os:
+          version: S20
         battery:
           capacity: 1250
           model: BML-3
@@ -459,11 +351,12 @@ categories:
           score3: 3/5
           info: Poor visual condition, back cover has cracked latches.
         screen:
-          type: Mono
           resolution: 84x48
           size: 1.50"
+          type: Mono
         comms:
-        os: S20
+        os:
+          version: S20
         battery:
           capacity: 1250
           model: BML-3
@@ -495,9 +388,9 @@ categories:
         state:
           score5: 5/5
         screen:
-          type: Mono
           resolution: 96x32
           size: 1.50"
+          type: Mono
         comms:
         battery:
           capacity: 1000
@@ -515,12 +408,14 @@ categories:
         screen:
           resolution: 128x128
           size: 1.50"
+          type: TFT
         comms:
           bluetooth: 1.1
           infrared: yes
           radio: yes
           usb: Pop-Port
-        os: S40v2
+        os:
+          version: S40v2
         camera:
           back: VGA
         battery:
@@ -537,11 +432,12 @@ categories:
           score4: 4/5
           info: LCD losing contrast, missing screws/cracks.
         screen:
-          type: Mono
           resolution: 84x48
           size: 1.50"
+          type: Mono
         comms:
-        os: S20
+        os:
+          version: S20
         battery:
           capacity: 1100
           model: BPS-2
@@ -556,11 +452,12 @@ categories:
           score3: 3/5
           info: Keyboard yellowed.
         screen:
-          type: Mono
           resolution: 84x48
           size: 1.50"
+          type: Mono
         comms:
-        os: S20
+        os:
+          version: S20
         battery:
           capacity: 1100
           model: BPS-2
@@ -575,11 +472,12 @@ categories:
           score4: 4/5
           info: Shadows/marks on the LCD.
         screen:
-          type: Mono
           resolution: 84x48
           size: 1.50"
+          type: Mono
         comms:
-        os: S20
+        os:
+          version: S20
         battery:
           capacity: 1100
           model: BPS-2
@@ -594,11 +492,12 @@ categories:
           score2: 2/5
           info: Crack on the LCD cover, yellowed keyboard with no markings, wires dangling from the speaker and microphone, missing screws.
         screen:
-          type: Mono
           resolution: 84x48
           size: 1.50"
+          type: Mono
         comms:
-        os: S20
+        os:
+          version: S20
         battery:
           capacity: 1100
           model: BPS-2
@@ -613,11 +512,12 @@ categories:
           score4: 4/5
           info: Marks on the keyboard.
         screen:
-          type: Mono
           resolution: 84x48
           size: 1.50"
+          type: Mono
         comms:
-        os: S20
+        os:
+          version: S20
         battery:
           capacity: 1100
           model: BPS-2
@@ -631,13 +531,14 @@ categories:
         state:
           score3: 3/5
         screen:
-          type: Mono
           resolution: 96x65
           size: 1.50"
+          type: Mono
         comms:
           bluetooth: 1.1
           infrared: yes
-        os: S30
+        os:
+          version: S30
         battery:
           capacity: 1100
           model: BPS-2
@@ -653,11 +554,13 @@ categories:
         screen:
           resolution: 128x128
           size: 1.50"
+          type: CSTN
         comms:
           infrared: yes
           radio: yes
           usb: Pop-Port
-        os: S40v1
+        os:
+          version: S40v1
         camera:
           back: CIF
         battery:
@@ -677,12 +580,14 @@ categories:
         screen:
           resolution: 208x208
           size: 1.70"
+          type: TFT
         comms:
           bluetooth: 1.1
           infrared: yes
           radio: yes
           usb: Pop-Port
-        os: S40v2
+        os:
+          version: S40v2
         camera:
           back: 1.3 Mpx
         battery:
@@ -703,12 +608,14 @@ categories:
         screen:
           resolution: 208x208
           size: 1.70"
+          type: TFT
         comms:
           bluetooth: 1.1
           infrared: yes
           radio: yes
           usb: Pop-Port
-        os: S40v2
+        os:
+          version: S40v2
         camera:
           back: 1.3 Mpx
         battery:
@@ -726,12 +633,14 @@ categories:
         screen:
           resolution: 208x208
           size: 1.70"
+          type: TFT
         comms:
           bluetooth: 1.1
           infrared: yes
           radio: yes
           usb: Pop-Port
-        os: S40v2
+        os:
+          version: S40v2
         camera:
           back: 1.3 Mpx
         battery:
@@ -750,11 +659,13 @@ categories:
         screen:
           resolution: 128x128
           size: 1.50"
+          type: CSTN
         comms:
           infrared: yes
           radio: yes
           usb: Pop-Port
-        os: S40v1
+        os:
+          version: S40v1
         battery:
           capacity: 780
           model: BLD-3
@@ -771,12 +682,14 @@ categories:
         screen:
           resolution: 128x128
           size: 1.50"
+          type: TFT
         comms:
           bluetooth: 1.1
           infrared: yes
           radio: yes
           usb: Pop-Port
-        os: S40v2
+        os:
+          version: S40v2
         camera:
           back: VGA
         battery:
@@ -793,11 +706,12 @@ categories:
           score2: 2/5
           info: Poor visual shape, lots of dust and scratches, cracks on the battery cover.
         screen:
-          type: CSTN
           resolution: 96x68
           size: 1.40"
+          type: CSTN
         comms:
-        os: S30
+        os:
+          version: S30
         battery:
           capacity: 1020
           model: BL-5C
@@ -813,8 +727,10 @@ categories:
         screen:
           resolution: 128x128
           size: 1.50"
+          type: CSTN
         comms:
-        os: S40v1
+        os:
+          version: S40v1
         battery:
           capacity: 760
           model: BL-4C
@@ -831,9 +747,11 @@ categories:
         screen:
           resolution: 128x128
           size: 1.60"
+          type: CSTN
         comms:
           usb: Proprietary
-        os: S40v1
+        os:
+          version: S40v2
         battery:
           capacity: 970
           model: BL-5C
@@ -852,12 +770,14 @@ categories:
         screen:
           resolution: 320x240
           size: 2.40"
+          type: TFT
         comms:
           wifi: b/g/n
           bluetooth: 2.1
           radio: yes
           usb: microUSB, OTG
-        os: S40v7.1
+        os:
+          version: S40v6
         camera:
           back: 3.15 Mpx
         battery:
@@ -877,12 +797,14 @@ categories:
         screen:
           resolution: 320x240
           size: 2.40"
+          type: TFT
         comms:
           wifi: b/g/n
           bluetooth: 2.1
           radio: yes
           usb: microUSB, OTG
-        os: S40v7.1
+        os:
+          version: S40v6
         camera:
           back: 3.15 Mpx
         battery:
@@ -903,12 +825,14 @@ categories:
         screen:
           resolution: 240x320
           size: 2.20"
+          type: TFT
         comms:
           bluetooth: 2.0
           radio: yes
           gps: yes
           usb: microUSB
-        os: S60v3.2, Symbian 9.3
+        os:
+          version: S60v3.2
         camera:
           back: 3.15 Mpx
           front: VGA
@@ -928,12 +852,14 @@ categories:
         screen:
           resolution: 240x320
           size: 2.20"
+          type: TFT
         comms:
           bluetooth: 2.0
           radio: yes
           gps: yes
           usb: microUSB
-        os: S60v3.2, Symbian 9.3
+        os:
+          version: S60v3.2
         camera:
           back: 3.15 Mpx
           front: VGA
@@ -943,7 +869,7 @@ categories:
           removable: yes
 
       - brand: Nokia
-        model: C5-00
+        model: C5-00.2
         operator:
           name: T-Mobile
         color: All Black
@@ -954,12 +880,14 @@ categories:
         screen:
           resolution: 240x320
           size: 2.20"
+          type: TFT
         comms:
           bluetooth: 2.0
           radio: yes
           gps: yes
           usb: microUSB
-        os: S60v3.2, Symbian 9.3
+        os:
+          version: S60v3.2
         camera:
           back: 5 Mpx
           front: VGA
@@ -969,7 +897,7 @@ categories:
           removable: yes
 
       - brand: Nokia
-        model: C5-00
+        model: C5-00.2
         operator:
           name: T-Mobile
         color: All Black
@@ -981,12 +909,14 @@ categories:
         screen:
           resolution: 240x320
           size: 2.20"
+          type: TFT
         comms:
           bluetooth: 2.0
           radio: yes
           gps: yes
           usb: microUSB
-        os: S60v3.2, Symbian 9.3
+        os:
+          version: S60v3.2
         camera:
           back: 5 Mpx
           front: VGA
@@ -999,7 +929,7 @@ categories:
         model: E51
         operator:
           name: Era
-        color: Black
+        color: Black Steel
         symbol: RM-244
         mfg: 11/2007
         state:
@@ -1008,13 +938,15 @@ categories:
         screen:
           resolution: 240x320
           size: 2.20"
+          type: TFT
         comms:
           wifi: b/g
           bluetooth: 2.0
           infrared: yes
           radio: yes
           usb: miniUSB
-        os: S60v3.1, Symbian 9.2
+        os:
+          version: S60v3.1
         camera:
           back: 2 Mpx
         battery:
@@ -1026,7 +958,7 @@ categories:
         model: E51
         operator:
           name: Era
-        color: Black
+        color: Black Steel
         symbol: RM-244
         mfg: 11/2007
         state:
@@ -1035,13 +967,15 @@ categories:
         screen:
           resolution: 240x320
           size: 2.20"
+          type: TFT
         comms:
           wifi: b/g
           bluetooth: 2.0
           infrared: yes
           radio: yes
           usb: miniUSB
-        os: S60v3.1, Symbian 9.2
+        os:
+          version: S60v3.1
         camera:
           back: 2 Mpx
         battery:
@@ -1051,7 +985,7 @@ categories:
 
       - brand: Nokia
         model: E52
-        color: Black
+        color: Black Aluminium
         symbol: RM-469
         mfg: 07/2009
         state:
@@ -1060,13 +994,15 @@ categories:
         screen:
           resolution: 240x320
           size: 2.40"
+          type: TFT
         comms:
           wifi: b/g
           bluetooth: 2.0
           radio: yes
           gps: yes
           usb: microUSB
-        os: S60v3.2
+        os:
+          version: S60v3.2
         camera:
           back: 3.2 Mpx
           front: QVGA
@@ -1086,12 +1022,14 @@ categories:
         screen:
           resolution: 240x320
           size: 2.20"
+          type: TFT
         comms:
           bluetooth: 2.1
           radio: yes
           gps: yes
           usb: microUSB
-        os: S40v6
+        os:
+          version: S40v6
         camera:
           back: 5 Mpx
         battery:
@@ -1112,11 +1050,13 @@ categories:
         screen:
           resolution: 240x320
           size: 2.10"
+          type: TFT
         comms:
           bluetooth: 2.0
           infrared: yes
           usb: Pop-Port
-        os: S60v3
+        os:
+          version: S60v3
         camera:
           back: 1.3 Mpx
         battery:
@@ -1131,15 +1071,17 @@ categories:
         mfg: 11/2011
         state:
           score1: 1/5
-          info: Dead touch screen despite replacing. Visually 4/5.
+          info: Dead touch panel despite replacing. Visually 4/5.
         screen:
           resolution: 240x320
           size: 2.40"
+          type: TFT
         comms:
           bluetooth: 2.1
           radio: yes
           usb: microUSB, OTG
-        os: S40v6
+        os:
+          version: S40v6.1
         camera:
           back: 5 Mpx
         battery:
@@ -1160,11 +1102,13 @@ categories:
         screen:
           resolution: 128x160
           size: 1.80"
+          type: TFT
         comms:
           bluetooth: 2.1
           radio: yes
           usb: microUSB, OTG
-        os: S40v6
+        os:
+          version: S40v6 Lite
         camera:
           back: VGA
         battery:
@@ -1183,10 +1127,12 @@ categories:
         screen:
           resolution: 128x128
           size: 1.70"
+          type: CSTN
         comms:
           infrared: yes
           radio: yes
-        os: S40v1
+        os:
+          version: S40v1
         battery:
           capacity: 1000
           model: BLC-2
@@ -1194,7 +1140,7 @@ categories:
 
       - brand: Nokia
         model: "6085"
-        color: Silver
+        color: Sand Gold
         symbol: RM-198
         mfg: 09/2006
         state:
@@ -1203,11 +1149,13 @@ categories:
         screen:
           resolution: 128x160
           size: 1.80"
+          type: CSTN
         comms:
           bluetooth: 2.0
           radio: yes
           usb: Pop-Port
-        os: S40v3
+        os:
+          version: S40v3.2
         camera:
           back: VGA
         battery:
@@ -1226,9 +1174,11 @@ categories:
         screen:
           resolution: 640x200
           size: 4.50"
+          type: TN-TFT
         comms:
           infrared: yes
-        os: S80v1
+        os:
+          version: S80v1 + S20
         battery:
           capacity: 1300
           model: BLL-3
@@ -1236,7 +1186,7 @@ categories:
 
       - brand: Sony Ericsson
         model: K750i
-        color: Black
+        color: Oxidized Black
         mfg: 03/2005
         state:
           score1: 1/5
@@ -1244,11 +1194,14 @@ categories:
         screen:
           resolution: 176x220
           size: 1.80"
+          type: TFT
         comms:
           bluetooth: 2.0
           infrared: yes
           radio: yes
-          usb: Proprietary
+          usb: FastPort
+        os:
+          version: A100
         camera:
           back: 2 Mpx
         battery:
@@ -1257,10 +1210,9 @@ categories:
           removable: yes
 
       - brand: Sony Ericsson
-        model: Hazel
+        model: J20i (Hazel)
         operator:
           name: Plus
-        symbol: J20i
         color: Superior Black
         mfg: 05/2010
         state:
@@ -1268,12 +1220,15 @@ categories:
         screen:
           resolution: 240x320
           size: 2.60"
+          type: TFT
         comms:
           wifi: b/g
           bluetooth: 2.1
           radio: yes
           gps: yes
-          usb: Proprietary
+          usb: FastPort
+        os:
+          version: A200
         camera:
           back: 5 Mpx
           front: "Yes"
@@ -1283,10 +1238,9 @@ categories:
           removable: yes
 
       - brand: Sony Ericsson
-        model: Hazel
+        model: J20i (Hazel)
         operator:
           name: T-Mobile
-        symbol: J20i
         color: Superior Black
         mfg: 05/2010
         state:
@@ -1294,12 +1248,15 @@ categories:
         screen:
           resolution: 240x320
           size: 2.60"
+          type: TFT
         comms:
           wifi: b/g
           bluetooth: 2.1
           radio: yes
           gps: yes
-          usb: Proprietary
+          usb: FastPort
+        os:
+          version: A200
         camera:
           back: 5 Mpx
           front: "Yes"
@@ -1321,13 +1278,15 @@ categories:
         screen:
           resolution: 240x320
           size: 2.60"
+          type: TFT
         comms:
           wifi: b
           bluetooth: 2.0
           radio: yes
           infrared: yes
-          usb: Proprietary
-        os: UIQ 3.0, Symbian 9.1
+          usb: FastPort
+        os:
+          version: UIQ 3.0
         camera:
           back: 3.15 Mpx
           front: VGA
@@ -1346,13 +1305,15 @@ categories:
         screen:
           resolution: 240x320
           size: 2.60"
+          type: TFT
         comms:
           wifi: b
           bluetooth: 2.0
           radio: yes
           infrared: yes
-          usb: Proprietary
-        os: UIQ 3.0, Symbian 9.1
+          usb: FastPort
+        os:
+          version: UIQ 3.0
         camera:
           back: 3.15 Mpx
           front: VGA
@@ -1370,10 +1331,13 @@ categories:
         screen:
           resolution: 128x160
           size: 1.80"
+          type: UBC
         comms:
           radio: yes
           infrared: yes
-          usb: Proprietary
+          usb: FastPort
+        os:
+          version: A100
         camera:
           back: VGA
         battery:
@@ -1390,10 +1354,13 @@ categories:
         screen:
           resolution: 240x320
           size: 2.00"
+          type: TFT
         comms:
           bluetooth: 2.0
           radio: yes
-          usb: Proprietary
+          usb: FastPort
+        os:
+          version: A200
         camera:
           back: 2 Mpx
           front: QCIF
@@ -1409,11 +1376,13 @@ categories:
         state:
           score3: 3/5
         screen:
-          type: CSTN
           resolution: 128x128
           size: 2.00"
+          type: CSTN
         comms:
           usb: miniUSB
+        os:
+          version: P2K
         camera:
           back: VGA
         battery:
@@ -1430,9 +1399,12 @@ categories:
         screen:
           resolution: 176x220
           size: 2.20"
+          type: TFT
         comms:
           bluetooth: 1.2
           usb: miniUSB
+        os:
+          version: P2K/Synergy
         camera:
           back: VGA
         battery:
@@ -1450,9 +1422,12 @@ categories:
         screen:
           resolution: 176x220
           size: 1.9"
+          type: TFT
         comms:
           bluetooth: 1.2
           usb: Proprietary
+        os:
+          version: P2K
         camera:
           back: 2 Mpx
         battery:
@@ -1468,9 +1443,9 @@ categories:
           score3: 3/5
           info: Battery dead, not original.
         screen:
-          type: Mono
           resolution: 101x64
           size: 1.40"
+          type: Mono
         comms:
         battery:
           capacity: 1500
@@ -1484,9 +1459,9 @@ categories:
           score1: 1/5
           info: No battery. No LCD. No back cover. No charger.
         screen:
-          type: Mono
           resolution: 101x80
           size: 1.50"
+          type: Mono
         comms:
           infrared: yes
         battery:
@@ -1501,9 +1476,9 @@ categories:
           score1: 1/5
           info: Doesn't power on. No charger.
         screen:
-          type: Mono
           resolution: 97x33
           size: 1.60"
+          type: Mono
         comms:
         battery:
           capacity: 1000
@@ -1521,10 +1496,11 @@ categories:
         screen:
           resolution: 120x160
           size: 2.00"
+          type: TFT
         comms:
           bluetooth: 2.0
           radio: yes
-          usb: Proprietary
+          usb: PCBS10
         camera:
           back: VGA
         battery:
@@ -1543,15 +1519,16 @@ categories:
         screen:
           resolution: 120x160
           size: 1.80"
+          type: CSTN
         comms:
-          usb: Proprietary
+          usb: PCB113
         battery:
           capacity: 800
           model: AB043446LE
           removable: yes
 
       - brand: Samsung
-        model: C3350
+        model: C3350 (Xcover 2)
         color: Steel Grey
         symbol: GT-C3350
         mfg: 10/2011
@@ -1561,10 +1538,11 @@ categories:
         screen:
           resolution: 240x320
           size: 2.20"
+          type: TFT
         comms:
           bluetooth: 3.0
           radio: yes
-          usb: Proprietary
+          usb: microUSB
         camera:
           back: 2 Mpx
         battery:
@@ -1581,11 +1559,13 @@ categories:
           score2: 2/5
           info: Battery swollen. Severe usage marks and cracks.
         screen:
-          resolution: "?"
           size: 2.20"
+          type: Color
         comms:
           bluetooth: "Yes"
           usb: microUSB
+        os:
+          version: Mocor OS
         camera:
           back: VGA
         battery:

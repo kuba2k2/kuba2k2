@@ -1,125 +1,6 @@
+fields: !include collections/common.yaml
+show: story,brand,model,operator,color,symbol,mfg,state,cpu,memory,screen,comms,os,bootloader,camera,battery
 sort: os.type,brand,model
-fields:
-  - key: story
-    tooltip: info-circle
-  - key: brand
-    title: Brand
-  - key: model
-    title: Model
-    url: url
-  - key: operator
-    title: Operator
-    format:
-      - key: name
-      - icon: simlock
-        title: SimLock
-        _yes: lock
-        prefix: " "
-  - key: color
-    tooltip: palette
-  - key: symbol
-    title: Symbol
-    cls: border-end
-    missing: "-"
-  - key: mfg
-    title: Mfg. date
-    missing: "?"
-  - key: state
-    title: Condition
-    cls: border-end
-  - key: cpu
-    title: CPU
-    missing: "?"
-  - key: memory
-    title: Memory (RAM / storage)
-    missing: "?"
-    format:
-      - key: ram
-      - text: " / "
-      - key: storage
-  - key: screen
-    title: Screen
-    missing: "?"
-    format:
-      - key: resolution
-      - text: ", "
-      - key: size
-      - prefix: " "
-        key: type
-  - key: comms
-    title: Connectivity
-    missing: "?"
-    format:
-      - icon: wifi
-        title: Wi-Fi
-        _yes: wifi
-        _no: dash
-        suffix: " "
-      - icon: bluetooth
-        title: Bluetooth
-        _yes: bluetooth
-        _no: dash
-        suffix: " "
-      - icon: infrared
-        title: Infrared
-        _yes: broadcast
-        _no: dash
-        suffix: " "
-      - icon: radio
-        title: FM Radio
-        _yes: speaker
-        _no: dash
-        suffix: " "
-      - icon: gps
-        title: GPS
-        _yes: geo-alt
-        _no: dash
-        suffix: " "
-      - icon: usb
-        title: USB
-        _yes: usb-symbol
-        _no: dash
-        suffix: " "
-  - key: os
-    title: OS
-    missing: "?"
-    format:
-      - icon: type
-        suffix: " "
-      - key: type
-      - text: " "
-      - key: version
-      - prefix: " / "
-        key: ui
-  - key: bootloader
-    title: Bootloader
-    missing: "?"
-  - key: camera
-    title: Camera (back / front)
-    missing: "-"
-    format:
-      - key: back
-        missing: "-"
-      - text: " / "
-      - key: front
-        missing: "-"
-  - key: battery
-    title: Battery
-    missing: "?"
-    format:
-      - key: capacity
-        missing: "?"
-      - text: " mAh"
-      - key: type
-        prefix: " "
-      - key: model
-        prefix: " ("
-        suffix: ")"
-      - text: " / "
-      - icon: removable
-        title: Removable
-        _yes: check
-        _no: x
 
 categories:
   - title: Android devices
@@ -129,7 +10,8 @@ categories:
         symbol: RNE-L21
         mfg: 10/2017
         date: ??/2022
-        state: Cracked / OK
+        state:
+          info: Cracked / OK
         cpu: Kirin 659
         memory:
           ram: 4 GiB
@@ -156,7 +38,7 @@ categories:
         symbol: ZE500KL
         mfg: 08/2015
         date: 04/2020
-        state: OK
+        state:
         cpu: Snapdragon 410
         memory:
           ram: 2 GiB
@@ -182,7 +64,8 @@ categories:
         model: C5 Max
         symbol: TP702A
         mfg: 10/2015
-        state: Deep bricked, won't flash
+        state:
+          info: Deep bricked, won't flash
         cpu: MT6753
         memory:
           ram: 2 GiB
@@ -209,7 +92,8 @@ categories:
         symbol: SCL-L01
         mfg: 07/2015
         date: 02/2020
-        state: Dead touch (mostly)
+        state:
+          info: Dead touch (mostly)
         cpu: Snapdragon 210
         memory:
           ram: 1 GiB
@@ -236,7 +120,8 @@ categories:
         symbol: SCL-L01
         mfg: 07/2015
         date: 01/2021
-        state: Dead screen, won't boot
+        state:
+          info: Dead screen, won't boot
         cpu: Snapdragon 210
         memory:
           ram: 1 GiB
@@ -261,7 +146,7 @@ categories:
         symbol: SM-J500FN
         mfg: 07/2015
         date: ??/2022
-        state: OK
+        state:
         cpu: Snapdragon 410
         memory:
           ram: 1.5 GiB
@@ -287,7 +172,8 @@ categories:
         model: Galaxy J3
         symbol: SM-J320FN
         mfg: 05/2016
-        state: Dead screen / OK
+        state:
+          info: Dead screen / OK
         cpu: Spreadtrum SC9830
         memory:
           ram: 1.5 GiB
@@ -316,7 +202,7 @@ categories:
         symbol: ALE-L21
         mfg: 05/2015
         date: 01/2022
-        state: OK
+        state:
         cpu: Kirin 620
         memory:
           ram: 2 GiB
@@ -342,7 +228,8 @@ categories:
         symbol: 5034D
         mfg: 02/2019
         date: 08/2021
-        state: USB port dead / OK
+        state:
+          info: USB port dead / OK
         cpu: MT6739
         memory:
           ram: 2 GiB
@@ -369,7 +256,8 @@ categories:
         symbol: SM-A307FN
         mfg: 08/2019
         date: 10/2022
-        state: Cracked / OK
+        state:
+          info: Cracked / OK
         cpu: Exynos 7904
         memory:
           ram: 4 GiB
@@ -397,7 +285,8 @@ categories:
         symbol: CUN-L21
         mfg: 06/2016
         date: 05/2018
-        state: Cracked / OK
+        state:
+          info: Cracked / OK
         cpu: MT6735P
         memory:
           ram: 1 GiB
@@ -424,7 +313,8 @@ categories:
         symbol: CUN-L01
         mfg: 06/2016
         date: 02/2020
-        state: Hard-bricked, won't boot
+        state:
+          info: Hard-bricked, won't boot
         cpu: MT6582
         memory:
           ram: 1 GiB
@@ -450,7 +340,8 @@ categories:
         symbol: TE1
         mfg: 07/2014
         date: 03/2020
-        state: Cracked / OK
+        state:
+          info: Cracked / OK
         cpu: MT6572A
         memory:
           ram: 512 MiB
@@ -475,7 +366,7 @@ categories:
         symbol: MDG2
         mfg: 09/2017
         date: 01/2022
-        state: OK
+        state:
         cpu: Snapdragon 625
         memory:
           ram: 4 GiB
@@ -501,7 +392,7 @@ categories:
         symbol: LUA-L21
         mfg: 06/2016
         date: 01/2022
-        state: OK
+        state:
         cpu: MT6735M
         memory:
           ram: 1 GiB
@@ -527,7 +418,7 @@ categories:
         symbol: GT-I9305
         mfg: 09/2012
         date: 01/2022
-        state: OK
+        state:
         cpu: Exynos 4412
         memory:
           ram: 2 GiB
@@ -554,7 +445,8 @@ categories:
         symbol: GT-I9300
         mfg: 05/2012
         date: 11/2017
-        state: Dead screen, dead battery
+        state:
+          info: Dead screen, dead battery
         cpu: Exynos 4412
         memory:
           ram: 1 GiB
@@ -582,7 +474,8 @@ categories:
         symbol: LT30p
         mfg: 09/2012
         date: ??/2022
-        state: Won't boot
+        state:
+          info: Won't boot
         cpu: Snapdragon S4 Plus
         memory:
           ram: 1 GiB
@@ -609,7 +502,8 @@ categories:
         symbol: LT30p
         mfg: 09/2012
         date: 01/2022
-        state: Swollen battery
+        state:
+          info: Swollen battery
         cpu: Snapdragon S4 Plus
         memory:
           ram: 1 GiB
@@ -635,7 +529,7 @@ categories:
         model: Xperia E
         symbol: C1505
         mfg: 03/2013
-        state: OK
+        state:
         cpu: Snapdragon S1
         memory:
           ram: 512 MiB
@@ -661,7 +555,7 @@ categories:
         symbol: A1000m
         mfg: 07/2016
         date: <08/2021
-        state: OK
+        state:
         cpu: Spreadtrum SC7731
         memory:
           ram: 512 MiB
@@ -687,7 +581,8 @@ categories:
         symbol: GT-I8190N
         mfg: 11/2012
         date: 05/2018
-        state: Dead screen
+        state:
+          info: Dead screen
         cpu: NovaThor U8420
         memory:
           ram: 1 GiB
@@ -712,7 +607,8 @@ categories:
       - brand: UMI
         model: London
         mfg: 06/2016
-        state: Dead flash chip, won't boot
+        state:
+          info: Dead flash chip, won't boot
         cpu: MT6580
         memory:
           ram: 1 GiB
@@ -736,7 +632,7 @@ categories:
         symbol: GT-I9001
         mfg: 07/2011
         date: ">2020"
-        state: OK
+        state:
         cpu: Snapdragon S2
         memory:
           ram: 512 MiB
@@ -763,7 +659,8 @@ categories:
         symbol: GT-I9001
         mfg: 07/2011
         date: 03/2020
-        state: Power key missing / OK
+        state:
+          info: Power key missing / OK
         cpu: Snapdragon S2
         memory:
           ram: 512 MiB
@@ -790,7 +687,8 @@ categories:
         symbol: GT-I8160
         mfg: 05/2012
         date: 01/2019
-        state: Hole in screen / OK
+        state:
+          info: Hole in screen / OK
         cpu: NovaThor U8500
         memory:
           ram: 768 MiB
@@ -817,7 +715,7 @@ categories:
         symbol: GT-S5830
         mfg: 02/2011
         date: 09/2017
-        state: OK
+        state:
         cpu: Snapdragon S1
         memory:
           ram: 384 MiB
@@ -842,7 +740,7 @@ categories:
         symbol: SM-G350
         mfg: 10/2013
         date: 09/2017
-        state: OK
+        state:
         cpu: BCM21664
         memory:
           ram: 768 MiB
@@ -867,7 +765,7 @@ categories:
         model: Redmi Note 4
         mfg: 01/2017
         date: 02/2023
-        state: OK
+        state:
         cpu: Snapdragon 625
         memory:
           ram: 3 GiB
@@ -893,7 +791,8 @@ categories:
         symbol: RNE-L21
         mfg: 10/2017
         date: 01/2021
-        state: Dead battery, soft-bricked
+        state:
+          info: Dead battery, soft-bricked
         cpu: Kirin 659
         memory:
           ram: 4 GiB
@@ -919,7 +818,8 @@ categories:
         model: Lumia 535 Dual SIM
         symbol: RM-1089
         mfg: 12/2014
-        state: Touch problems / OK
+        state:
+          info: Touch problems / OK
         cpu: Snapdragon 200
         memory:
           ram: 1 GiB
@@ -941,7 +841,7 @@ categories:
       - brand: Xiaomi
         model: Redmi Note 4
         mfg: 01/2017
-        state: OK
+        state:
         cpu: Snapdragon 625
         memory:
           ram: 3 GiB
@@ -966,7 +866,7 @@ categories:
         model: Redmi Note 6 Pro
         mfg: 10/2018
         date: ??/2021
-        state: OK
+        state:
         cpu: Snapdragon 636
         memory:
           ram: 3 GiB
@@ -990,7 +890,8 @@ categories:
       - brand: Xiaomi
         model: Redmi 4A
         mfg: 11/2016
-        state: Dead / water damaged
+        state:
+          info: Dead / water damaged
         cpu: Snapdragon 425
         memory:
           ram: 2 GiB
@@ -1016,7 +917,7 @@ categories:
         symbol: RM-1038
         mfg: 09/2014
         date: 11/2025
-        state: OK
+        state:
         cpu: Snapdragon 400
         memory:
           ram: 1 GiB
@@ -1041,7 +942,7 @@ categories:
         symbol: RM-1017
         mfg: 08/2014
         date: 11/2025
-        state: OK
+        state:
         cpu: Snapdragon 200
         memory:
           ram: 512 MiB
@@ -1064,7 +965,7 @@ categories:
         symbol: GT-S5360
         mfg: 10/2011
         date: 11/2025
-        state: OK
+        state:
         cpu: BCM21553
         memory:
           ram: 384 MiB
@@ -1089,7 +990,7 @@ categories:
         symbol: ST26i
         mfg: 10/2012
         date: 11/2025
-        state: OK
+        state:
         cpu: Snapdragon S1
         memory:
           ram: 512 MiB
@@ -1115,7 +1016,8 @@ categories:
         symbol: M320N
         mfg: 06/2017
         date: 11/2025
-        state: Screen dead, boots
+        state:
+          info: Screen dead, boots
         cpu: MT6750
         memory:
           ram: "? GiB"
@@ -1139,7 +1041,8 @@ categories:
         symbol: M320N
         mfg: 06/2017
         date: 11/2025
-        state: Screen dead, boots
+        state:
+          info: Screen dead, boots
         cpu: MT6750
         memory:
           ram: "? GiB"
@@ -1162,7 +1065,7 @@ categories:
         model: iPhone 7
         symbol: A1778
         mfg: 09/2016
-        state: OK
+        state:
         cpu: A10 Fusion
         memory:
           ram: 2 GiB
@@ -1185,7 +1088,7 @@ categories:
     list:
       - brand: Mio
         model: Moov 300
-        state: OK
+        state:
         cpu: Samsung S3C2442
         screen:
           resolution: 480x272
@@ -1203,7 +1106,7 @@ categories:
 
       - brand: Mio
         model: Moov 300
-        state: OK
+        state:
         cpu: Samsung S3C2442
         screen:
           resolution: 480x272
@@ -1222,7 +1125,8 @@ categories:
 
       - brand: Mio
         model: Moov 300
-        state: Dead screen, dead battery
+        state:
+          info: Dead screen, dead battery
         cpu: Samsung S3C2442
         screen:
           resolution: 480x272
@@ -1238,7 +1142,7 @@ categories:
       - brand: Dell
         model: Axim X5
         mfg: 2002
-        state: OK
+        state:
         cpu: XScale PXA250 300 MHz
         memory:
           ram: 32 MiB

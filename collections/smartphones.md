@@ -1,7 +1,7 @@
 ---
 title: Smartphones
 short: Smartphones - Collections
-lastmod: 2024-10-04
+lastmod: 2025-11-23
 categories:
   - Collections
 ---

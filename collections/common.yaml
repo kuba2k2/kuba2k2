@@ -1,0 +1,296 @@
+story:
+  tooltip: info-circle
+
+brand:
+  title: Brand
+
+model:
+  title: Model
+  url: url
+
+operator:
+  title: Operator
+  format:
+    - key: name
+    - icon: simlock
+      title: SimLock
+      _yes: lock
+      prefix: " "
+
+color:
+  tooltip: palette
+
+symbol:
+  title: Symbol
+  cls: border-end
+  missing: "-"
+
+mfg:
+  title: Mfg. date
+  missing: "?"
+
+date:
+  title: Acq. date
+  missing: "?"
+
+state:
+  title: Condition
+  cls: border-end
+  format:
+    - icon: score1
+      title: Terrible
+      _yes: x
+      suffix: " 1/5"
+    - icon: score2
+      title: Bad
+      _yes: star
+      suffix: " 2/5"
+    - icon: score3
+      title: Fair
+      _yes: star-half
+      suffix: " 3/5"
+    - icon: score4
+      title: Good
+      _yes: star-fill
+      suffix: " 4/5"
+    - icon: score5
+      title: Perfect
+      _yes: stars
+      suffix: " 5/5"
+    - icon: info
+      prefix: " "
+      _yes: info-circle
+
+arch:
+
+cpu:
+  title: CPU
+  missing: "?"
+  icon: cpu
+
+gpu:
+  title: GPU
+  missing: "?"
+  icon: gpu-card
+
+ram:
+  title: RAM
+  missing: "?"
+  format:
+    - icon: sdram
+      title: SDRAM
+      _yes: memory
+      suffix: " SDRAM "
+    - icon: ddr
+      title: DDR
+      _yes: memory
+      suffix: " DDR "
+    - icon: ddr2
+      title: DDR2
+      _yes: memory
+      suffix: " DDR2 "
+    - icon: ddr3
+      title: DDR3
+      _yes: memory
+      suffix: " DDR3 "
+    - icon: ddr3l
+      title: DDR3L
+      _yes: memory
+      suffix: " DDR3L "
+    - icon: ddr4
+      title: DDR4
+      _yes: memory
+      suffix: " DDR4 "
+    - key: size
+
+storage:
+  title: Storage
+  missing: "?"
+  format:
+    - icon: ssd
+      title: SSD
+      _yes: device-ssd
+      suffix: " SSD "
+    - icon: hdd
+      title: HDD
+      _yes: device-hdd
+      suffix: " HDD "
+    - icon: nvme
+      title: NVMe
+      _yes: nvme
+      suffix: " NVMe "
+    - icon: nand
+      title: NAND
+      _yes: cpu
+      suffix: " NAND "
+    - key: size
+
+memory:
+  title: Memory (RAM / storage)
+  missing: "?"
+  format:
+    - icon: memory
+      _no: memory
+      suffix: " "
+    - key: ram
+    - text: " / "
+    - icon: hdd
+      _no: hdd
+      suffix: " "
+    - key: storage
+
+screen:
+  title: Screen
+  missing: "?"
+  icon: display
+  format:
+    - key: resolution
+      suffix: ", "
+    - key: size
+    - prefix: " "
+      key: type
+
+peripherals:
+  title: Peripherals
+  missing: "?"
+  format:
+    - icon: cdrom
+      title: Optical
+      _yes: disc
+      _no: dash
+      suffix: " "
+    - icon: floppy
+      title: Floppy
+      _yes: floppy
+      _no: dash
+      suffix: " "
+    - icon: usb
+      title: USB
+      _yes: usb-symbol
+      _no: dash
+      suffix: " "
+    - icon: sdcard
+      title: SD Card
+      _yes: sd-card
+      _no: dash
+      suffix: " "
+    - icon: pcmcia
+      title: PCMCIA
+      _yes: pci-card
+      _no: dash
+      suffix: " "
+    - icon: webcam
+      title: Webcam
+      _yes: webcam
+      _no: dash
+      suffix: " "
+
+network:
+  title: Networking
+  missing: "?"
+  format:
+    - icon: ethernet
+      title: Ethernet
+      _yes: ethernet
+      _no: dash
+      suffix: " "
+    - icon: wifi
+      title: Wi-Fi
+      _yes: wifi
+      _no: dash
+      suffix: " "
+    - icon: bluetooth
+      title: Bluetooth
+      _yes: bluetooth
+      _no: dash
+      suffix: " "
+    - icon: modem
+      title: Modem
+      _yes: modem
+      _no: dash
+      suffix: " "
+    - icon: infrared
+      title: Infrared
+      _yes: broadcast
+      _no: dash
+      suffix: " "
+
+comms:
+  title: Connectivity
+  missing: "?"
+  format:
+    - icon: wifi
+      title: Wi-Fi
+      _yes: wifi
+      _no: dash
+      suffix: " "
+    - icon: bluetooth
+      title: Bluetooth
+      _yes: bluetooth
+      _no: dash
+      suffix: " "
+    - icon: infrared
+      title: Infrared
+      _yes: broadcast
+      _no: dash
+      suffix: " "
+    - icon: radio
+      title: FM Radio
+      _yes: speaker
+      _no: dash
+      suffix: " "
+    - icon: gps
+      title: GPS
+      _yes: geo-alt
+      _no: dash
+      suffix: " "
+    - icon: usb
+      title: USB
+      _yes: usb-symbol
+      _no: dash
+      suffix: " "
+
+os:
+  title: OS
+  missing: "?"
+  format:
+    - icon: type
+      icons:
+        linux: tux
+      suffix: " "
+    - key: type
+    - text: " "
+    - key: version
+    - prefix: " / "
+      key: ui
+
+bootloader:
+  title: Bootloader
+  missing: "?"
+
+camera:
+  title: Camera (back / front)
+  missing: "-"
+  format:
+    - key: back
+      missing: "-"
+    - key: front
+      prefix: " / "
+
+battery:
+  title: Battery
+  missing: "?"
+  format:
+    - key: capacity
+      missing: "?"
+    - text: " mAh"
+    - key: type
+      prefix: " "
+    - key: model
+      prefix: " ("
+      suffix: ")"
+    - text: " / "
+    - icon: removable
+      title: Removable
+      _yes: check
+      _no: x

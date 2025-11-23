@@ -1,7 +1,7 @@
 ---
 title: Cell phones
 short: Cell phones - Collections
-lastmod: 2024-10-05
+lastmod: 2025-11-23
 categories:
   - Collections
 ---

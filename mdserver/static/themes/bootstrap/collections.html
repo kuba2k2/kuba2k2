@@ -5,21 +5,27 @@
 {{ page_boxes.lead(page, util) }}
 {% endblock %}
 
-{%- macro icon(name, yes, no, title) -%}
+{%- macro icon(name, yes, no, title, icons) -%}
 {%- if name or no -%}
-<i class="bi bi-{{ ((yes and name and yes or name) or no)|lower }}" data-bs-toggle="tooltip"
+{% set icon = ((yes and name and yes or name) or no)|lower %}
+{% set icon = icons.get(icon, icon) %}
+<i class="bi bi-{{ icon }}" data-bs-toggle="tooltip"
 	title="{{ title or '' }}{{ title and name and ' - ' or '' }}{{ name or '' }}"></i>
 {%- endif -%}
 {%- endmacro -%}
 
-{% macro text(item, field) %}
-{% if field.key in item and field.format %}
+{% macro textvalue(value, field) %}
+{# SHOW FIELD ICON #}
+{% if field.icon %}
+<i class="bi bi-{{ field.icon|lower }}"></i>
+{% endif %}
+{% if field.format %}
 {% for fmt in field.format -%}
 {# BUILD FIELD CONTENT #}
 {%- set value -%}
-{{- icon(item[field.key][fmt.icon], fmt._yes, fmt._no, fmt.title) -}}
+{{- icon(value[fmt.icon], fmt._yes, fmt._no, fmt.title, fmt.icons or dict()) -}}
 {{- fmt.text or "" -}}
-{{- item[field.key][fmt.key] or fmt.missing or "" -}}
+{{- value[fmt.key] or fmt.missing or "" -}}
 {%- endset -%}
 {# SHOW FIELD CONTENT WITH PREFIX/SUFFIX #}
 {{- value and fmt.prefix or "" -}}
@@ -28,7 +34,19 @@
 {%- endfor %}
 {% else %}
 {# SHOW SIMPLE FIELDS #}
-{{ item[field.key] or field.missing or "" }}
+{{ value or field.missing or "" }}
+{% endif %}
+{% endmacro %}
+
+{% macro text(item, key, field) %}
+{% if item[key] and item[key] is iterable and (item[key] is not string and item[key] is not mapping)  %}
+{% for value in item[key] %}
+{{ textvalue(value, field) }}
+{% endfor %}
+{% elif key in item %}
+{{ textvalue(item[key], field) }}
+{% else %}
+{{ field.missing or "" }}
 {% endif %}
 {% endmacro %}
 
@@ -46,28 +64,32 @@
 	{% endfor %}
 	{% endset %}
 	{# OPTIONAL TITLE #}
+	{% if category.title %}
 	<h2 class="mb-3">{{ category.title }}</h2>
+	{% endif %}
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
 			<tr>
-				{% for field in sxs.fields %}
-				{% if field.key in fields %}
+				{% for key in sxs.show.split(",") %}
+				{% if key in fields %}
+				{% set field = sxs.fields[key] %}
 				<th class="{{ field.cls }}">{{ field.title }}</th>
 				{% endif %}
 				{% endfor %}
 			</tr>
 			{% for item in category.list|sort(attribute=sxs.sort) %}
 			<tr>
-				{% for field in sxs.fields %}
-				{% if field.key in fields %}
+				{% for key in sxs.show.split(",") %}
+				{% if key in fields %}
+				{% set field = sxs.fields[key] %}
 				<td nowrap class="{{ field.cls }}">
 					{% if field.url and item[field.url] %}
-					<a href="{{ item[field.url] }}">{{ text(item, field) }}</a>
-					{% elif field.tooltip and item[field.key] %}
+					<a href="{{ item[field.url] }}">{{ text(item, key, field) }}</a>
+					{% elif field.tooltip and item[key] %}
 					<i class="bi bi-{{ field.tooltip }}" data-bs-toggle="tooltip" data-bs-placement="right"
-						data-bs-title="{{ text(item, field) }}"></i>
+						data-bs-title="{{ text(item, key, field) }}"></i>
 					{% else %}
-					{{ text(item, field) }}
+					{{ text(item, key, field) }}
 					{% endif %}
 				</td>
 				{% endif %}

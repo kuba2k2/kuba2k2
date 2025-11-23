@@ -1,0 +1,123 @@
+fields: !include collections/common.yaml
+show: story,brand,model,symbol,mfg,date,state,arch,cpu,gpu,ram,storage,peripherals,network,os
+sort: brand,model
+
+categories:
+  - list:
+      - brand: ADB
+        model: ADB-2670WF
+        mfg: 01/2021
+        date: 08/2022
+        state:
+          score2: 2/5
+        arch: ARM
+        cpu: MStar MSO9380AMZ @ 4x 1.5 GHz
+        ram:
+          ddr4: Samsung K4A8G16
+          size: 2 GiB
+        storage:
+          - nand: Macronix MX30LF4G18AC
+            size: 512 MiB
+        peripherals:
+          usb: 1x USB 2.0
+          sdcard: microSD
+        network:
+          ethernet: 10/100 Mbps
+          wifi: b/g/n/ac
+          bluetooth: yes
+        os:
+          type: Linux
+          version: 3.10.40
+        url: /posts/iptv-reverse-engineering/part-1/
+
+      - brand: Wyse
+        model: Cx0
+        symbol: C90LEW
+        mfg: 07/2011
+        date: 08/2025
+        state:
+          score4: 4/5
+        arch: x86
+        cpu: VIA C7 @ 1x 1.0 GHz
+        ram:
+          ddr2: Apacer 75.073AZ.G00
+          size: 1 GiB
+        storage:
+          - ssd: PATA, Apacer 8Y.4DD16.7256B
+            size: 2 GB
+        peripherals:
+          usb: 4x USB 2.0
+        network:
+          ethernet: VIA VT612x GbE
+        os:
+          type: Windows
+          version: Embedded Standard XP
+
+      - brand: Wyse
+        model: Cx0
+        symbol: C90LEW
+        mfg: 07/2011
+        date: 08/2025
+        state:
+          score4: 4/5
+        arch: x86
+        cpu: VIA C7 @ 1x 1.0 GHz
+        ram:
+          ddr2: Apacer 75.073AZ.G00
+          size: 1 GiB
+        storage:
+          - ssd: PATA, Apacer 8Y.4DD16.7256B
+            size: 2 GB
+        peripherals:
+          usb: 4x USB 2.0
+        network:
+          ethernet: VIA VT612x GbE
+        os:
+          type: Windows
+          version: Embedded Standard XP
+
+      - brand: Wyse
+        model: Dx0
+        symbol: D90D7
+        mfg: 09/2014
+        date: 08/2025
+        state:
+          score4: 4/5
+        arch: x86-64
+        cpu: AMD T48E @ 2x 1.4 GHz
+        ram:
+          ddr3: Hynix HMT451S6AFR8C
+          size: 4 GiB
+        storage:
+          - ssd: SATA, Apacer 8Y.F1CD4.LR25B
+            size: 16 GB
+        peripherals:
+          usb: 4x USB 2.0
+        network:
+          ethernet: yes
+        os:
+          type: Windows
+          version: Embedded Standard 7
+
+      - brand: Wyse
+        model: Dx0
+        symbol: D90D7
+        mfg: 09/2014
+        date: 08/2025
+        state:
+          score4: 4/5
+        arch: x86-64
+        cpu: AMD T48E @ 2x 1.4 GHz
+        ram:
+          ddr3: Hynix HMT451S6AFR8C
+          size: 4 GiB
+        storage:
+          - ssd: SATA, Apacer 8Y.F1CD4.LR25B
+            size: 16 GB
+        peripherals:
+          usb: 4x USB 2.0
+        network:
+          ethernet: yes
+        os:
+          type: Windows
+          version: Embedded Standard 7

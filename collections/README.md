@@ -10,10 +10,11 @@ I have several collections of various electronic devices - few ones that I bough
 Categorizing every single type of devices would be nearly impossible (without adding pages for just a single item), so I've worked out a few main categories:
 
 - Laptops (TBD) - portable PCs with the x86 architecture.
-- [Smartphones](/collections/smartphones.html) - "modern" touchscreen phones, with cellular connectivity; also some PDAs.
-- Tablets (TBD) - mobile devices with larger touchscreens, usually without 2G/3G/4G modems.
-- [Phones](/collections/phones.html) - older generation cell phones, usually with a physical keyboard and no touchscreen.
+- [Mini PCs/STBs](minipc.md) - small computers, embedded systems without displays (that includes set-top boxes).
 - Computers (TBD) - classic desktops, without a built-in monitor/keyboard/etc; also some PC parts/expansion cards.
+- [Smartphones](smartphones.md) - "modern" touchscreen phones, with cellular connectivity; also some PDAs.
+- Tablets (TBD) - mobile devices with larger touchscreens, usually without 2G/3G/4G modems.
+- [Phones](phones.md) - older generation cell phones, usually with a physical keyboard and no touchscreen.
 
 A couple of notes about the "scoring system": devices in some categories have their visual condition and working state assessed on a 1-5 scale:
 

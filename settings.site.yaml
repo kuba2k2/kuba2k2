@@ -55,13 +55,15 @@ identity:
         menu:
           # - title: Laptops
           #   url: /collections/laptops.html
+          - title: Mini PCs/STBs
+            url: /collections/minipc.html
+          # - title: Computers
+          #   url: /collections/computers.html
           - title: Smartphones
             url: /collections/smartphones.html
           # - title: Tablets
           #   url: /collections/tablets.html
           - title: Phones
             url: /collections/phones.html
-          # - title: Computers
-          #   url: /collections/computers.html
       # - title: About me
       #   url: /about/

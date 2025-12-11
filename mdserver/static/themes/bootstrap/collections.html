@@ -1,7 +1,7 @@
 {% extends "bootstrap/base/base.html" %}
+{% import "bootstrap/macros/page-boxes.html" as page_boxes %}
 
 {% block lead %}
-{% import "bootstrap/macros/page-boxes.html" as page_boxes %}
 {{ page_boxes.lead(page, util) }}
 {% endblock %}
 
@@ -109,13 +109,7 @@
 {% endblock %}
 
 {% block contentend %}
+{% if sxs.categories %}
 {% include "bootstrap/parts/base-comments.html" %}
-{% endblock %}
-
-{% block bodyend %}
-{{ super() }}
-<script>
-	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-</script>
+{% endif %}
 {% endblock %}

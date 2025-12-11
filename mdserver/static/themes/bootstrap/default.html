@@ -1,9 +1,9 @@
 {% extends "bootstrap/base/base.html" %}
+{% import "bootstrap/macros/page-boxes.html" as page_boxes %}
 
 {% block lead %}
 {% if page.categories %}
 {# POST HEADER FOR PAGES WITH ASSIGNED CATEGORY #}
-{% import "bootstrap/macros/page-boxes.html" as page_boxes %}
 {{ page_boxes.lead(page, util) }}
 {% endif %}
 {% endblock %}

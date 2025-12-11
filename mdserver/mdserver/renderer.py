@@ -8,11 +8,11 @@ import frontmatter
 import markdown
 import yaml
 from fastapi import Request
-from fastapi.responses import Response
-from jinja2 import Template
+from fastapi.responses import HTMLResponse, Response
+from jinja2 import FileSystemLoader, Template
 
 from . import util
-from .globals import database, get_theme, settings, templates
+from .globals import database, get_theme, settings
 from .models import Page
 
 
@@ -23,6 +23,7 @@ def render_context(
     sxs: dict | None,
 ) -> dict:
     return dict(
+        **__builtins__,
         # global vars
         settings=settings,
         identity=settings.identity,
@@ -100,11 +101,6 @@ def render_content(request: Request, path: Path) -> Page:
 def render_page(request: Request, page: Page) -> Response:
     theme = get_theme(settings.identity.default_theme)
 
-    # fallback to default if template does not exist
-    template_path = theme.path / f"{page.template}.html"
-    if not template_path.is_file():
-        page.template = "default"
-
     context = render_context(
         request=request,
         page=page,
@@ -112,8 +108,18 @@ def render_page(request: Request, page: Page) -> Response:
         sxs=None,
     )
 
+    if page.template and page.template.startswith("./"):
+        template_path = settings.data_path / page.dirpath / page.template
+    else:
+        template_path = theme.path / f"{page.template}.html"
+
+    # fallback to default if template does not exist
+    if not template_path.is_file():
+        print(f"Template '{template_path}' is not a file, falling back to default")
+        template_path = theme.path / "default.html"
+
     # render and serve the template response
-    return templates.TemplateResponse(
-        f"{theme.name}/{page.template}.html",
-        context,
-    )
+    template = Template(template_path.read_text())
+    template.environment.loader = FileSystemLoader(settings.themes_path)
+    html = template.render(context)
+    return HTMLResponse(html)

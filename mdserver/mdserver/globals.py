@@ -5,7 +5,6 @@ from os import getenv, makedirs
 from os.path import dirname
 from pathlib import Path
 
-from fastapi.templating import Jinja2Templates
 from pymdownx import emoji
 
 from .database import Database
@@ -54,9 +53,6 @@ try:
 except Exception as e:
     print(e)
     database = Database()
-
-# load the templates
-templates = Jinja2Templates(directory=settings.themes_path)
 
 # keep loaded themes
 themes: dict[str, Theme] = {}

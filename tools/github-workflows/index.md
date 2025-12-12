@@ -5,7 +5,7 @@ image: unsplash.jpg
 date: 2023-08-28
 lastmod: 2024-10-12
 categories:
-  - software
+  - Tools
 ---
 
 A collection of GitHub Actions workflows used by some of my projects.

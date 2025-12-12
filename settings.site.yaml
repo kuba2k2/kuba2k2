@@ -3,6 +3,7 @@ page_template_map:
   "!/posts/.+": "posts-single"
 page_type_map:
   "/posts/.+": "post"
+  "/tools/.+": "tool"
 per_page: 10
 scan_paths:
   - ./posts/
@@ -68,5 +69,10 @@ identity:
           #   url: /collections/tablets.html
           - title: Phones
             url: /collections/phones.html
+      - title: Tools
+        url: /tools/
+        menu:
+          - title: GitHub Workflows
+            url: /tools/github-workflows/
       # - title: About me
       #   url: /about/

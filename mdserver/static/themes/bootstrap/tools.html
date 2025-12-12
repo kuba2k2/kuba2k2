@@ -1,0 +1,30 @@
+{% extends "bootstrap/base/base.html" %}
+{% import "bootstrap/macros/page-boxes.html" as page_boxes %}
+
+{% set posts = util.filtered(database.pages.values(), {}, "tool") %}
+
+{% block lead %}
+{{ page_boxes.lead(page, util) }}
+{% endblock %}
+
+{% block content %}
+<article>
+	{{ html|safe }}
+
+	{% if page.type != "tool" %}
+	<div class="row align-items-stretch pb-4">
+		{% for item in posts %}
+		<div class="col-sm-6 col-md-4 col-xl-3">
+			{{ page_boxes.simple(item, util) }}
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+</article>
+{% endblock %}
+
+{% block contentend %}
+{% if page.type == "tool" %}
+{% include "bootstrap/parts/base-comments.html" %}
+{% endif %}
+{% endblock %}

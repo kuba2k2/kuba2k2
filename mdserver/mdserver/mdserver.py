@@ -1,5 +1,6 @@
 # Copyright (c) Kuba Szczodrzyński 2023-05-10.
 
+from mimetypes import guess_type
 from pathlib import Path
 
 import yaml
@@ -69,7 +70,17 @@ async def root(
         # redirect files without a trailing slash
         if path_str and path_str.endswith("/"):
             return RedirectResponse("/" + path_str.rstrip("/") + query)
-        return FileResponse(path)
+        # guess media type by extension
+        media_type = guess_type(path)[0]
+        # if not found, try to detect by first 1024 bytes
+        if not media_type:
+            with path.open("rb") as f:
+                header = f.read(1024)
+            if b"\x00" in header:
+                media_type = "application/octet-stream"
+            else:
+                media_type = "text/plain"
+        return FileResponse(path, media_type=media_type)
 
     # serve Markdown files
     if path.suffix in index_suffix and path.with_suffix(".md").is_file():

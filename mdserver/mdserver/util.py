@@ -258,3 +258,14 @@ def querymod(query: dict, **params) -> str:
     if "page" not in params:
         qs.pop("page", None)
     return "?" + urlencode(qs)
+
+
+# https://stackoverflow.com/a/1094933/9438331
+def sizeof(num: int, suffix="B", base=1024.0) -> str:
+    for unit in ["", "K", "M", "G", "T", "P", "E", "Z"]:
+        if base == 1024 and unit:
+            unit += "i"
+        if abs(num) < base:
+            return f"{num:.1f} {unit}{suffix}".replace(".0 ", " ")
+        num /= base
+    return f"{num:.1f} Y{suffix}".replace(".0 ", " ")

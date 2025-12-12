@@ -14,6 +14,7 @@ identity:
     reveng: Reverse Engineering
     hwhacking: Hardware Hacking
     hwrepair: Hardware Repair
+    writeups: Write-ups
   # extras for theme
   title: kuba2k2
   brand: kuba2k2
@@ -39,6 +40,8 @@ identity:
             url: /posts/?category=Software
           - title: Computers
             url: /posts/?category=Computers
+          - title: Write-ups
+            url: /posts/?category=Write-ups
           - type: divider
           - type: header
             title: Browse posts

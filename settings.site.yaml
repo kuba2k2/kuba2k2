@@ -72,6 +72,8 @@ identity:
       - title: Tools
         url: /tools/
         menu:
+          - title: Linux Static Binaries
+            url: /tools/linux-static-binaries/
           - title: GitHub Workflows
             url: /tools/github-workflows/
       # - title: About me

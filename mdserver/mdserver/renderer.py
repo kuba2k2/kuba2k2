@@ -108,9 +108,10 @@ def render_page(request: Request, page: Page) -> Response:
         sxs=None,
     )
 
+    template_path = settings.data_path / page.dirpath / "template.html"
     if page.template and page.template.startswith("./"):
         template_path = settings.data_path / page.dirpath / page.template
-    else:
+    elif not template_path.is_file():
         template_path = theme.path / f"{page.template}.html"
 
     # fallback to default if template does not exist

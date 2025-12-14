@@ -16,6 +16,7 @@ Linux tools for various architectures, linked statically. Useful for exploring e
 
 - [Serverless Industries](https://serverless.industries/2023/07/02/static-binaries.en.html) - arch: `aarch64`, `armv7`, `x86`, `x86_64`
 - [ryanwoodsmall/static-binaries](https://github.com/ryanwoodsmall/static-binaries) - arch: `aarch64`, `armv7`, `or1k`, `riscv64`, `x86`, `x86_64`
+- [guyush1/gdb-static](https://github.com/guyush1/gdb-static) - arch: `aarch64`, `armv7`, `mips`, `mipsel`, `powerpc`, `x86_64`
 
 **Other repositories with static builds** (not included on this page):
 

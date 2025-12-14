@@ -91,15 +91,11 @@
 			{% endif %}
 
 			{% if info.source %}
-			<li>Source: <a href="{{ info.source }}">click here</a></li>
+			<li>Source: <a href="{{ info.source }}">{{ info.source }}</a></li>
 			{% endif %}
 
 			{% if info.build %}
 			<li>Build command: <code class="text-nowrap">{{ info.build }}</code></li>
-			{% endif %}
-
-			{% if info.commands %}
-			<li>Available commands: <code class="text-nowrap">{{ info.commands }}</code></li>
 			{% endif %}
 
 			{% if info.config %}
@@ -118,6 +114,21 @@
 			<li>SHA1: <code class="text-nowrap">{{ info.sha1sum }}</code></li>
 			{% endif %}
 		</ul>
+
+		{%- if info.commands -%}
+		<p>Available commands:</p>
+		<table class="table table-sm">
+			{%- for i, cmd in enumerate(info.commands.split()) -%}
+				{%- if i == 0 -%}
+				<tr>
+				{%- elif (i % 5) == 0 -%}
+				</tr><tr>
+				{%- endif -%}
+				<td>{{ cmd }}</td>
+			{%- endfor -%}
+			</tr>
+		</table>
+		{%- endif -%}
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

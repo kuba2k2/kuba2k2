@@ -7,20 +7,20 @@
 
 {%- macro icon(name, yes, no, title, icons) -%}
 {%- if name or no -%}
-{% set icon = ((yes and name and yes or name) or no)|lower %}
-{% set icon = icons.get(icon, icon) %}
-<i class="bi bi-{{ icon }}" data-bs-toggle="tooltip"
-	title="{{ title or '' }}{{ title and name and ' - ' or '' }}{{ name or '' }}"></i>
+{%- set icon = ((yes and name and yes or name) or no)|lower -%}
+{%- set icon = icons.get(icon, icon) -%}
+{{- " " -}}
+<i class="bi bi-{{ icon }}" data-bs-toggle="tooltip" title="{{ title or '' }}{{ title and name and ' - ' or '' }}{{ name or '' }}"></i>
 {%- endif -%}
 {%- endmacro -%}
 
 {% macro textvalue(value, field) %}
 {#- SHOW FIELD ICON -#}
-{% if field.icon %}
-<i class="bi bi-{{ field.icon|lower }}"></i>
-{% endif %}
-{% if field.format %}
-{% for fmt in field.format -%}
+{%- if field.icon -%}
+<i class="bi bi-{{ field.icon|lower }}"></i>{{- " " -}}
+{%- endif -%}
+{%- if field.format -%}
+{%- for fmt in field.format -%}
 {#- BUILD FIELD CONTENT -#}
 {%- set value -%}
 {{- icon(value[fmt.icon], fmt._yes, fmt._no, fmt.title, fmt.icons or dict()) -}}
@@ -31,24 +31,24 @@
 {{- value and fmt.prefix or "" -}}
 {{- value -}}
 {{- value and fmt.suffix or "" -}}
-{%- endfor %}
-{% else %}
+{%- endfor -%}
+{%- else %}
 {#- SHOW SIMPLE FIELDS -#}
-{{ value or field.missing or "" }}
-{% endif %}
-{% endmacro %}
+{{ value or field.missing or "" -}}
+{%- endif -%}
+{%- endmacro %}
 
-{% macro text(item, key, field) %}
-{% if item[key] and item[key] is iterable and (item[key] is not string and item[key] is not mapping)  %}
-{% for value in item[key] %}
-{{ textvalue(value, field) }}
-{% endfor %}
-{% elif key in item %}
-{{ textvalue(item[key], field) }}
-{% else %}
-{{ field.missing or "" }}
-{% endif %}
-{% endmacro %}
+{%- macro text(item, key, field) -%}
+{%- if item[key] and item[key] is iterable and (item[key] is not string and item[key] is not mapping) -%}
+{%- for value in item[key] -%}
+{{- textvalue(value, field) -}}
+{%- endfor -%}
+{%- elif key in item -%}
+{{- textvalue(item[key], field) -}}
+{%- else -%}
+{{- field.missing or "" -}}
+{%- endif -%}
+{%- endmacro -%}
 
 {% block content %}
 <article>
@@ -56,52 +56,51 @@
 
 	{% for category in sxs.categories %}
 	{#- FIND FIELDS PRESENT IN CATEGORY -#}
-	{% set fields %}
-	{% for item in category.list %}
-	{% for field in item %}
+	{%- set fields -%}
+	{%- for item in category.list -%}
+	{%- for field in item -%}
 	{{ field }}
-	{% endfor %}
-	{% endfor %}
-	{% endset %}
+	{%- endfor -%}
+	{%- endfor -%}
+	{%- endset -%}
 	{#- OPTIONAL TITLE -#}
-	{% if category.title %}
+	{%- if category.title %}
 	<h2 class="mb-3">{{ category.title }}</h2>
-	{% endif %}
+	{%- endif %}
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
 			<tr>
-				{% for key in sxs.show.split(",") %}
-				{% if key in fields %}
-				{% set field = sxs.fields[key] %}
+				{%- for key in sxs.show.split(",") -%}
+				{%- if key in fields -%}
+				{%- set field = sxs.fields[key] %}
 				<th class="{{ field.cls }}">{{ field.title }}</th>
-				{% endif %}
-				{% endfor %}
+				{%- endif -%}
+				{%- endfor %}
 			</tr>
-			{% for item in category.list|sort(attribute=sxs.sort) %}
+			{%- for item in category.list|sort(attribute=sxs.sort) %}
 			<tr>
-				{% for key in sxs.show.split(",") %}
-				{% if key in fields %}
-				{% set field = sxs.fields[key] %}
+				{%- for key in sxs.show.split(",") -%}
+				{%- if key in fields -%}
+				{%- set field = sxs.fields[key] %}
 				<td nowrap class="{{ field.cls }}">
-					{% if field.url and item[field.url] %}
+					{%- if field.url and item[field.url] -%}
 					<a href="{{ item[field.url] }}">{{ text(item, key, field) }}</a>
-					{% elif field.tooltip and item[key] %}
-					<i class="bi bi-{{ field.tooltip }}" data-bs-toggle="tooltip" data-bs-placement="right"
-						data-bs-title="{{ text(item, key, field) }}"></i>
-					{% else %}
+					{%- elif field.tooltip and item[key] -%}
+					<i class="bi bi-{{ field.tooltip }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ text(item, key, field) }}"></i>
+					{%- else -%}
 					{{ text(item, key, field) }}
-					{% endif %}
+					{%- endif -%}
 				</td>
-				{% endif %}
-				{% endfor %}
+				{%- endif -%}
+				{%- endfor %}
 			</tr>
-			{% endfor %}
+			{%- endfor %}
 		</table>
 	</div>
-	{% if loop.revindex0 %}
+	{%- if loop.revindex0 %}
 	<hr>
-	{% endif %}
-	{% endfor %}
+	{%- endif -%}
+	{%- endfor %}
 </article>
 {% endblock %}
 

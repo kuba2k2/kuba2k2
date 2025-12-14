@@ -1,31 +1,31 @@
 {% import "bootstrap/macros/page-boxes.html" as page_boxes %}
 {% set posts = util.filtered(database.pages.values(), None, "post") %}
 
-{% macro contents(items) %}
-{% for level, text in items %}
+{%- macro contents(items) -%}
+{%- for level, text in items %}
 <span>{{ "#" * (level-1) }}</span>
 <a href="#{{ util.slugify(text) }}" class="text-decoration-hover">{{ text }}</a><br>
-{% endfor %}
-{% endmacro %}
+{%- endfor -%}
+{%- endmacro -%}
 
 <div class="position-sticky" style="top: 2rem;">
 	{#- ABOUT/CONTENTS -#}
-	{% if page.contents %}
+	{%- if page.contents %}
 	<div class="p-4 mb-3 bg-body-tertiary rounded">
 		<h4 class="font-brand">Contents</h4>
 		<p class="mb-0 page-contents">
-			{{ contents(page.contents[0:5]) }}
+			{{- contents(page.contents[0:5]) }}
 		</p>
-		{% if page.contents|length > 5 %}
+		{%- if page.contents|length > 5 %}
 		<details class="page-contents">
 			<summary class="icon-link gap-1 icon-link-hover pt-2 text-decoration-underline link-primary-subtle">
 				Expand
 				<i class="bi bi-chevron-right"></i>
 			</summary>
 			<div class="clear-both pt-2"></div>
-			{{ contents(page.contents[5:]) }}
+			{{- contents(page.contents[5:]) }}
 		</details>
-		{% endif %}
+		{%- endif %}
 	</div>
 	{% else %}
 	<div class="p-4 mb-3 bg-body-tertiary rounded">
@@ -40,13 +40,13 @@
 	<div class="pt-2 tag-cloud">
 		<h4 class="font-brand border-bottom pb-2">Popular tags</h4>
 		<ol class="list-unstyled d-flex flex-wrap align-items-center justify-content-center">
-			{% for tag, count in util.group_by_tag(posts, 15) %}
+			{%- for tag, count in util.group_by_tag(posts, 15) %}
 			<li>
 				<a class="text-decoration-hover font-brand" href="/posts/?tag={{ tag }}" style="--size: {{ count }};">
-					{{ tag }}
+					{{- tag -}}
 				</a>
 			</li>
-			{% endfor %}
+			{%- endfor %}
 		</ol>
 	</div>
 
@@ -57,11 +57,11 @@
 			<i class="bi bi-chevron-right float-right"></i>
 		</h4>
 	</a>
-	{% for item in posts[0:3] %}
+	{%- for item in posts[0:3] %}
 	<div class="border-top">
-		{{ page_boxes.simple(item, util) }}
+		{{- page_boxes.simple(item, util) -}}
 	</div>
-	{% endfor %}
+	{%- endfor %}
 	<a href="/posts/" class="icon-link gap-1 icon-link-hover pb-3 pt-2 border-top w-100">
 		See more
 		<i class="bi bi-chevron-right"></i>
@@ -71,12 +71,13 @@
 	<div class="pt-2">
 		<h4 class="font-brand border-bottom pb-2">Browse posts</h4>
 		<ol class="list-unstyled">
-			{% for date, count in util.group_by_month(posts)[0:15] %}
+			{%- for date, count in util.group_by_month(posts)[0:15] %}
 			<li>
-				<a href="/posts/?year={{ date.year }}&month={{ date.month }}">{{ util.monthfmt(date) }}</a>
-				({{ count }})
+				<a href="/posts/?year={{ date.year }}&month={{ date.month }}">
+					{{- util.monthfmt(date) -}}
+				</a> ({{ count }})
 			</li>
-			{% endfor %}
+			{%- endfor %}
 		</ol>
 	</div>
 
@@ -84,12 +85,13 @@
 	<div class="pt-2">
 		<h4 class="font-brand border-bottom pb-2">Browse categories</h4>
 		<ol class="list-unstyled">
-			{% for category, count in util.group_by_category(posts) %}
+			{%- for category, count in util.group_by_category(posts) %}
 			<li>
-				<a href="/posts/?category={{ category }}">{{ category }}</a>
-				({{ count }})
+				<a href="/posts/?category={{ category }}">
+					{{- category -}}
+				</a> ({{ count }})
 			</li>
-			{% endfor %}
+			{%- endfor %}
 		</ol>
 	</div>
 </div>

@@ -3,78 +3,78 @@
 {% block content %}
 {{ super() }}
 
-{% set binpath = settings.data_path / page.dirpath / "linux" %}
-{% set arch_paths = list(binpath.glob("*")) %}
+{%- set binpath = settings.data_path / page.dirpath / "linux" -%}
+{%- set arch_paths = list(binpath.glob("*")) -%}
 
-{% set arch_bins = dict() %}
-{% set all_bins = set() %}
+{%- set arch_bins = dict() -%}
+{%- set all_bins = set() -%}
 
-{% for arch_path in arch_paths %}
-	{% set arch = arch_path.name %}
-	{% set prog_paths = list(arch_path.glob("*")) %}
-	{% set desc_path = arch_path / "descript.ion" %}
-	{% set description = dict() %}
+{%- for arch_path in arch_paths -%}
+	{%- set arch = arch_path.name -%}
+	{%- set prog_paths = list(arch_path.glob("*")) -%}
+	{%- set desc_path = arch_path / "descript.ion" -%}
+	{%- set description = dict() -%}
 
 	{#- CHECK IF DESCRIPT.ION EXISTS -#}
-	{% if desc_path.is_file() %}
+	{%- if desc_path.is_file() -%}
 		{#- REMOVE FROM FOUND PROGRAMS -#}
-		{% set _ = prog_paths.remove(desc_path) %}
+		{%- set _ = prog_paths.remove(desc_path) -%}
 		{#- READ TEXT, ITERATE OVER LINES -#}
-		{% set desc_lines = desc_path.read_text("iso-8859-2").splitlines() %}
-		{% for desc_line in desc_lines %}
+		{%- set desc_lines = desc_path.read_text("iso-8859-2").splitlines() -%}
+		{%- for desc_line in desc_lines -%}
 			{#- PARTITION BY SPACE, ADD PROGRAM TO DICT -#}
-			{% set prog, _, info_lines = desc_line.partition(" ") %}
-			{% set _ = description.update({prog: dict()}) %}
+			{%- set prog, _, info_lines = desc_line.partition(" ") -%}
+			{%- set _ = description.update({prog: dict()}) -%}
 			{#- SPLIT BY \n AND ITERATE OVER LINES -#}
-			{% set info_lines = info_lines.strip("\x04\xC2").split("\\n") %}
-			{% for info_line in info_lines %}
+			{%- set info_lines = info_lines.strip("\x04\xC2").split("\\n") -%}
+			{%- for info_line in info_lines -%}
 				{#- PARTITION BY COLON, ADD K/V TO DICT -#}
-				{% set key, _, value = info_line.partition(": ") %}
-				{% set _ = description[prog].update({key: value}) %}
-			{% endfor %}
-		{% endfor %}
-	{% endif %}
+				{%- set key, _, value = info_line.partition(": ") -%}
+				{%- set _ = description[prog].update({key: value}) -%}
+			{%- endfor -%}
+		{%- endfor -%}
+	{%- endif -%}
 
-	{% set _ = arch_bins.update({arch: dict()}) %}
-	{% for prog in description %}
-		{% set _ = arch_bins[arch].update({prog: description.get(prog) or dict()}) %}
-		{% set _ = all_bins.add(prog) %}
-	{% endfor %}
-{% endfor %}
+	{%- set _ = arch_bins.update({arch: dict()}) -%}
+	{%- for prog in description -%}
+		{%- set _ = arch_bins[arch].update({prog: description.get(prog) or dict()}) -%}
+		{%- set _ = all_bins.add(prog) -%}
+	{%- endfor -%}
+{%- endfor -%}
 
 <div class="table-responsive">
 <table class="table table-striped table-hover">
 	<tr>
 		<th>&nbsp;</th>
-		{% for arch in arch_bins|sort %}
+		{%- for arch in arch_bins|sort %}
 		<th>{{ arch }}</th>
-		{% endfor %}
+		{%- endfor %}
 	</tr>
 
-	{% for prog in all_bins|sort %}
+	{%- for prog in all_bins|sort %}
 	<tr>
 		<td>{{ prog }}</td>
 
-		{% for arch in arch_bins|sort %}
+		{%- for arch in arch_bins|sort %}
 		<td>
-			{% if prog in arch_bins[arch] %}
+			{%- if prog in arch_bins[arch] %}
 			<a href="linux/{{ arch }}/{{ prog }}">
 				{{ util.sizeof((binpath / arch / prog).stat().st_size) -}}
 			</a>
 			<i class="bi bi-info-circle" data-bs-toggle="modal" data-bs-target="#{{ prog }}-{{ arch }}"></i>
-			{% else %}
+			{%- else %}
 			-
-			{% endif %}
+			{%- endif %}
 		</td>
-		{% endfor %}
+		{%- endfor %}
 	</tr>
-	{% endfor %}
+	{%- endfor %}
 </table>
 </div>
 
-{% for prog in all_bins|sort %}
-{% for arch in arch_bins|sort %}
-{% if prog in arch_bins[arch] %}
+{%- for prog in all_bins|sort -%}
+{%- for arch in arch_bins|sort -%}
+{%- if prog in arch_bins[arch] %}
 <div class="modal fade" tabindex="-1" id="{{ prog }}-{{ arch }}">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
@@ -84,51 +84,55 @@
 	</div>
 	<div class="modal-body overflow-auto text-nowrap">
 		<ul>
-			{% set info = arch_bins[arch][prog] %}
+			{%- set info = arch_bins[arch][prog] -%}
 
-			{% if info.version %}
+			{%- if info.version %}
 			<li>Version: <code class="text-nowrap">{{ info.version }}</code></li>
-			{% endif %}
+			{%- endif %}
 
-			{% if info.source %}
+			{%- if info.source %}
 			<li>Source: <a href="{{ info.source }}">{{ info.source }}</a></li>
-			{% endif %}
+			{%- endif %}
 
-			{% if info.build %}
+			{%- if info.build %}
 			<li>Build command: <code class="text-nowrap">{{ info.build }}</code></li>
-			{% endif %}
+			{%- endif %}
 
-			{% if info.config %}
+			{%- if info.config %}
 			<li>Config file: <a href="linux/{{ arch }}/{{ info.config }}">{{ info.config }}</a></li>
-			{% endif %}
+			{%- endif %}
 
-			{% if info.file %}
+			{%- if info.file %}
 			<li>File info: <code class="text-nowrap">{{ info.file }}</code></li>
-			{% endif %}
+			{%- endif %}
 
-			{% if info.md5sum %}
+			{%- if info.md5sum %}
 			<li>MD5: <code class="text-nowrap">{{ info.md5sum }}</code></li>
-			{% endif %}
+			{%- endif %}
 
-			{% if info.sha1sum %}
+			{%- if info.sha1sum %}
 			<li>SHA1: <code class="text-nowrap">{{ info.sha1sum }}</code></li>
-			{% endif %}
+			{%- endif %}
 		</ul>
 
-		{%- if info.commands -%}
+		{%- if info.commands %}
 		<p>Available commands:</p>
 		<table class="table table-sm">
 			{%- for i, cmd in enumerate(info.commands.split()) -%}
-				{%- if i == 0 -%}
-				<tr>
-				{%- elif (i % 5) == 0 -%}
-				</tr><tr>
-				{%- endif -%}
+
+			{%- if i == 0 %}
+			<tr>
+			{%- elif (i % 5) == 0 -%}
+			</tr>
+			<tr>
+			{%- endif -%}
+
 				<td>{{ cmd }}</td>
+
 			{%- endfor -%}
 			</tr>
 		</table>
-		{%- endif -%}
+		{%- endif %}
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -136,8 +140,8 @@
 </div>
 </div>
 </div>
-{% endif %}
-{% endfor %}
-{% endfor %}
+{%- endif -%}
+{%- endfor -%}
+{%- endfor -%}
 
 {% endblock %}

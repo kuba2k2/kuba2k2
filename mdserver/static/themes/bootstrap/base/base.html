@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
-{% block head %}
-<link rel="stylesheet" href="/static/themes/bootstrap/style.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap">
-<script src="https://getbootstrap.com/docs/5.3/assets/js/color-modes.js"></script>
-{% endblock %}
+{%- block head %}
+	<link rel="stylesheet" href="/static/themes/bootstrap/style.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap">
+	<script src="https://getbootstrap.com/docs/5.3/assets/js/color-modes.js"></script>
+{%- endblock %}
 
 {% block body %}
 {% include "bootstrap/parts/base-color-switch.html" %}
 
-{#- HEADER -#}
+{#- HEADER #}
 <header class="container">
 	{% include "bootstrap/parts/base-header.html" %}
 </header>

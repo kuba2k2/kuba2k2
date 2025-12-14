@@ -9,12 +9,12 @@
 {% block body %}
 {% include "bootstrap/parts/base-color-switch.html" %}
 
-{# HEADER #}
+{#- HEADER -#}
 <header class="container">
 	{% include "bootstrap/parts/base-header.html" %}
 </header>
 
-{# MAIN #}
+{#- MAIN -#}
 {% block main %}
 <main class="container">
 	{% block lead %}{% endblock %}
@@ -27,7 +27,7 @@
 
 <div class="clear-both mb-4"></div>
 
-{# FOOTER #}
+{#- FOOTER -#}
 <footer class="mt-auto py-4 text-center text-body-secondary bg-body-tertiary">
 	<p class="m-0">{{ identity.footer|safe }}</p>
 </footer>

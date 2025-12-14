@@ -2,12 +2,12 @@
 
 {% macro image(page, util, cls, attrs="") %}
 {% if page.image %}
-{# PAGE IMAGE IF SET #}
+{#- PAGE IMAGE IF SET -#}
 <img class="object-fit-cover {{ cls }}" src="{{ page.image }}" {{ attrs|safe }}>
 {% else %}
-{# OTHERWISE DUMMY SPAN WITH BACKGROUND COLOR #}
+{#- OTHERWISE DUMMY SPAN WITH BACKGROUND COLOR -#}
 <span class="{{ cls }} bg-{{ util.hashchoice(page.title or page.url, colors) }} h-100 w-100 d-inline-block opacity-75">
-	{# SHOW HIDDEN IMG TO KEEP SIZE #}
+	{#- SHOW HIDDEN IMG TO KEEP SIZE -#}
 	<img class="opacity-0" {{ attrs|safe }}>
 </span>
 {% endif %}

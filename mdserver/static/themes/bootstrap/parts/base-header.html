@@ -28,31 +28,31 @@
 		<div class="nav nav-underline justify-content-between navbar-nav gap-1 gap-{{ identity.navbar.expand }}-4">
 			{% set full_url = page.url + (query and "?" + query|string or "") %}
 
-			{# TOP LEVEL MENU LOOP - START #}
+			{#- TOP LEVEL MENU LOOP - START -#}
 			{% for item in identity.menu.navbar %}
-			{# DETERMINE ACTIVE STATE #}
+			{#- DETERMINE ACTIVE STATE -#}
 			{% if item.url == "/" %}
 			{% set active = full_url == item.url and 'active' or '' %}
 			{% else %}
 			{% set active = full_url.startswith(item.url) and 'active' or '' %}
 			{% endif %}
-			{# NO SUB MENU #}
+			{#- NO SUB MENU -#}
 			{% if not item.menu %}
 			<a class="nav-item nav-link link-body-emphasis {{ active }}" href="{{ item.url }}">
 				{{ item.title }}
 			</a>
-			{# WITH SUB MENU #}
+			{#- WITH SUB MENU -#}
 			{% else %}
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle link-body-emphasis {{ active }}" href="{{ item.url }}">
 					{{ item.title }}
 				</a>
 				<ul class="dropdown-menu">
-					{# SUB MENU RECURSIVE LOOP - START #}
+					{#- SUB MENU RECURSIVE LOOP - START -#}
 					{% for item in item.menu recursive %}
 					{% set active = full_url.startswith(item.url or "-") and 'active' or '' %}
 					<li class="{{ item.menu and 'dropdown dropend' or '' }}">
-						{# DEFAULT ITEM TYPE #}
+						{#- DEFAULT ITEM TYPE -#}
 						{% if not item.type %}
 						<a class="dropdown-item {{ item.menu and 'dropdown-toggle' or '' }} {{ active }}"
 							href="{{ item.url }}">
@@ -63,20 +63,20 @@
 							{{ loop(item.menu) }}
 						</ul>
 						{% endif %}
-						{# HEADER IN DROPDOWN #}
+						{#- HEADER IN DROPDOWN -#}
 						{% elif item.type == "header" %}
 						<p class="h6 dropdown-header">{{ item.title }}</p>
-						{# DIVIDER IN DROPDOWN #}
+						{#- DIVIDER IN DROPDOWN -#}
 						{% elif item.type == "divider" %}
 						<hr class="dropdown-divider">
 						{% endif %}
 					</li>
-					{# SUB MENU RECURSIVE LOOP - END #}
+					{#- SUB MENU RECURSIVE LOOP - END -#}
 					{% endfor %}
 				</ul>
 			</li>
 			{% endif %}
-			{# TOP LEVEL MENU LOOP - END #}
+			{#- TOP LEVEL MENU LOOP - END -#}
 			{% endfor %}
 		</div>
 	</div>

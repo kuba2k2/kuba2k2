@@ -15,25 +15,25 @@
 {%- endmacro -%}
 
 {% macro textvalue(value, field) %}
-{# SHOW FIELD ICON #}
+{#- SHOW FIELD ICON -#}
 {% if field.icon %}
 <i class="bi bi-{{ field.icon|lower }}"></i>
 {% endif %}
 {% if field.format %}
 {% for fmt in field.format -%}
-{# BUILD FIELD CONTENT #}
+{#- BUILD FIELD CONTENT -#}
 {%- set value -%}
 {{- icon(value[fmt.icon], fmt._yes, fmt._no, fmt.title, fmt.icons or dict()) -}}
 {{- fmt.text or "" -}}
 {{- value[fmt.key] or fmt.missing or "" -}}
 {%- endset -%}
-{# SHOW FIELD CONTENT WITH PREFIX/SUFFIX #}
+{#- SHOW FIELD CONTENT WITH PREFIX/SUFFIX -#}
 {{- value and fmt.prefix or "" -}}
 {{- value -}}
 {{- value and fmt.suffix or "" -}}
 {%- endfor %}
 {% else %}
-{# SHOW SIMPLE FIELDS #}
+{#- SHOW SIMPLE FIELDS -#}
 {{ value or field.missing or "" }}
 {% endif %}
 {% endmacro %}
@@ -55,7 +55,7 @@
 	{{ html|safe }}
 
 	{% for category in sxs.categories %}
-	{# FIND FIELDS PRESENT IN CATEGORY #}
+	{#- FIND FIELDS PRESENT IN CATEGORY -#}
 	{% set fields %}
 	{% for item in category.list %}
 	{% for field in item %}
@@ -63,7 +63,7 @@
 	{% endfor %}
 	{% endfor %}
 	{% endset %}
-	{# OPTIONAL TITLE #}
+	{#- OPTIONAL TITLE -#}
 	{% if category.title %}
 	<h2 class="mb-3">{{ category.title }}</h2>
 	{% endif %}

@@ -15,20 +15,20 @@
 	{% set desc_path = arch_path / "descript.ion" %}
 	{% set description = dict() %}
 
-	{# CHECK IF DESCRIPT.ION EXISTS #}
+	{#- CHECK IF DESCRIPT.ION EXISTS -#}
 	{% if desc_path.is_file() %}
-		{# REMOVE FROM FOUND PROGRAMS #}
+		{#- REMOVE FROM FOUND PROGRAMS -#}
 		{% set _ = prog_paths.remove(desc_path) %}
-		{# READ TEXT, ITERATE OVER LINES #}
+		{#- READ TEXT, ITERATE OVER LINES -#}
 		{% set desc_lines = desc_path.read_text("iso-8859-2").splitlines() %}
 		{% for desc_line in desc_lines %}
-			{# PARTITION BY SPACE, ADD PROGRAM TO DICT #}
+			{#- PARTITION BY SPACE, ADD PROGRAM TO DICT -#}
 			{% set prog, _, info_lines = desc_line.partition(" ") %}
 			{% set _ = description.update({prog: dict()}) %}
-			{# SPLIT BY \n AND ITERATE OVER LINES #}
+			{#- SPLIT BY \n AND ITERATE OVER LINES -#}
 			{% set info_lines = info_lines.strip("\x04\xC2").split("\\n") %}
 			{% for info_line in info_lines %}
-				{# PARTITION BY COLON, ADD K/V TO DICT #}
+				{#- PARTITION BY COLON, ADD K/V TO DICT -#}
 				{% set key, _, value = info_line.partition(": ") %}
 				{% set _ = description[prog].update({key: value}) %}
 			{% endfor %}

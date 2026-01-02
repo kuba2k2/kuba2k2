@@ -123,6 +123,10 @@ storage:
       title: NAND
       _yes: cpu
       suffix: " NAND "
+    - icon: spinor
+      title: SPI-NOR
+      _yes: cpu
+      suffix: " SPI-NOR "
     - key: size
 
 memory:

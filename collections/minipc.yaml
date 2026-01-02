@@ -13,7 +13,7 @@ categories:
         arch: ARM
         cpu: MStar MSO9380AMZ @ 4x 1.5 GHz
         ram:
-          ddr4: Samsung K4A8G16
+          ddr4: 2x Samsung K4A8G16
           size: 2 GiB
         storage:
           - nand: Macronix MX30LF4G18AC
@@ -40,7 +40,7 @@ categories:
         arch: x86
         cpu: VIA C7 @ 1x 1.0 GHz
         ram:
-          ddr2: Apacer 75.073AZ.G00
+          ddr2: 1x Apacer 75.073AZ.G00
           size: 1 GiB
         storage:
           - ssd: PATA, Apacer 8Y.4DD16.7256B
@@ -63,7 +63,7 @@ categories:
         arch: x86
         cpu: VIA C7 @ 1x 1.0 GHz
         ram:
-          ddr2: Apacer 75.073AZ.G00
+          ddr2: 1x Apacer 75.073AZ.G00
           size: 1 GiB
         storage:
           - ssd: PATA, Apacer 8Y.4DD16.7256B
@@ -86,7 +86,7 @@ categories:
         arch: x86-64
         cpu: AMD T48E @ 2x 1.4 GHz
         ram:
-          ddr3: Hynix HMT451S6AFR8C
+          ddr3: 1x Hynix HMT451S6AFR8C
           size: 4 GiB
         storage:
           - ssd: SATA, Apacer 8Y.F1CD4.LR25B
@@ -109,7 +109,7 @@ categories:
         arch: x86-64
         cpu: AMD T48E @ 2x 1.4 GHz
         ram:
-          ddr3: Hynix HMT451S6AFR8C
+          ddr3: 1x Hynix HMT451S6AFR8C
           size: 4 GiB
         storage:
           - ssd: SATA, Apacer 8Y.F1CD4.LR25B
@@ -121,3 +121,27 @@ categories:
         os:
           type: Windows
           version: Embedded Standard 7
+
+      - brand: TP-LINK
+        model: TL-WR702N
+        mfg: 08/2014
+        state:
+          score4: 4/5
+        arch: MIPS
+        cpu: Atheros AR9331 @ 1x 400 MHz
+        ram:
+          ddr: 1x Micron MT46V32M16
+          size: 64 MiB
+        storage:
+          - spinor: ISSI 25LP128
+            size: 16 MiB
+        peripherals:
+          usb: FT232BL USB-UART
+        network:
+          ethernet: 10/100 Mbps
+          wifi: b/g/n
+        os:
+          type: Linux
+          version: 6.6.119
+          ui: OpenWrt 24.10.5
+        url: /posts/modding-tiny-router-with-openwrt/

@@ -33,7 +33,7 @@ on:
 jobs:
   build-nsis:
     name: makensis
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -51,7 +51,7 @@ jobs:
         run: ${{ inputs.pre-build }}
 
       - name: Build NSIS installer
-        uses: joncloud/makensis-action@v4
+        uses: joncloud/makensis-action@v5
         with:
           script-file: ${{ inputs.script-file }}
 

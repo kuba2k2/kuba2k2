@@ -9,7 +9,7 @@ categories:
 tags:
   - raspberry pi
   - tft lcd
-  - screen
+  - parallel rgb
   - cpld
   - verilog
   - tcon

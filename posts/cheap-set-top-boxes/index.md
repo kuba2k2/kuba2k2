@@ -3,6 +3,7 @@ title: Dirt cheap set-top boxes
 description: A quick unboxing of my new findings.
 image: image.webp
 date: 2026-01-09
+lastmod: 2026-02-22
 categories:
   - embedded
 tags:
@@ -140,3 +141,33 @@ Along with the boxes, I got 3x Xiaomi Bluetooth remotes, one Xiaomi IR remote, a
 Was it worth it? For me - sure! The cost of all that was negligible, and I will definitely have fun time messing with some of these in the future.
 
 Am I putting Alpine Linux on them? You bet.
+
+## Update: Feb 22, 2026
+
+I finally got some free time to create Buildroot trees for a few of these devices. I just wanted to update this post with new details I found.
+
+First of all, I started with the "MX", which I previously assumed had an Allwinner A13 CPU - I've had experience with A13s in the past, so I wanted to start with something familiar. That assumption turned out to be completely wrong, however - under the heatsink lies an **Amlogic AML8726-MX** CPU (*could this be why the device is named this way...?*). The boot log also revealed *a lot* of corrupted NAND pages... so I immediately put it away, as this wasn't going to be a fun time anyway.
+
+For the next dead STB revival, I tried the "Alfawise S95". This one didn't output *anything* on the UART - just some garbage bytes in a regular interval. I also noticed that the red SPDIF light was turning on intermittently - this indicated some kind of power failure.
+
+Checking with the multimeter revealed that my 5V power supply was going into over-current protection shutdown - so there was **most likely a short-circuit** somewhere on the motherboard. By using a thermal camera (`HIKMICRO E02`), I found that the CPU and the 1V buck regulator were getting hot quickly, only for a split second - before the power supply shuts down: *[insert thermal camera image here]*
+
+Further testing with a multimeter on continuity mode showed only about 36 mV of voltage drop on the 1V supply line (I'm not an expert here, but the multimeter was beeping - so there was a short somewhere). This could indicate several problems - damaged CPU, damaged DC-DC regulator, or perhaps some shorted-out capacitors (probably not, since they weren't getting hot).
+
+Using an oscilloscope finally gave me satisfying results. I was able to observe a voltage spike on the 1V line, right after the power was supplied, and just before it was being cut off. I noticed something clearly wrong - **the voltage reached 2V** every time, and this was a 1V supply line.
+
+![Oscilloscope measurement on the 1V line](alfawise-scope.png)
+
+I decided to remove the suspicious regulator, which turned out really difficult, because of the massive ground planes around (my soldering iron just couldn't to heat it up, neither did the hot air gun). Plugging the box into power without the regulator no longer tripped the over-current protection! Furthermore, applying 1V externally just brought the device back to life.
+
+![Boot up screen](alfawise-screen.webp)
+
+And... that's as much as it could do. As it turned out, the **eMMC had some corrupted blocks**, which prevented the system from booting. By using U-Boot's `mmc read` + `usb write` commands and a quick Python script, I was able to pinpoint exactly which blocks were faulty (causing the device to hang infinitely), as well as take a full 16 GiB backup of the eMMC.
+
+The corrupted blocks were about 128 KiB in total, within a file called `/system/lib/libamplayer.so`. I figured it probably wasn't critical for booting the OS (which wasn't booting anyway), so I used U-Boot to rewrite the corrupted blocks with random data - just to make them "valid" again.
+
+After this operation the blocks were readable again, and the device booted up successfully:
+
+![Home screen](alfawise-home.webp)
+
+A few days later I installed a replacement DC-DC regulator - used a `SY8088`, since that's all I had with a compatible pinout. The original had an `A37k` marking, and there's exactly nothing to be found about it. With this, the box was fully functional once again.

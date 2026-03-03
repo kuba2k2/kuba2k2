@@ -57,7 +57,7 @@
 
 		{%- for arch in arch_bins|sort %}
 		<td>
-			{%- if prog in arch_bins[arch] %}
+			{%- if prog in arch_bins[arch] and (binpath / arch / prog).is_file() %}
 			<a href="linux/{{ arch }}/{{ prog }}">
 				{{ util.sizeof((binpath / arch / prog).stat().st_size) -}}
 			</a>

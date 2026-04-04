@@ -3,6 +3,10 @@ name: "[reusable] test-python"
 on:
   workflow_call:
     inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
       python-version:
         required: false
         type: string
@@ -18,7 +22,7 @@ on:
 jobs:
   test-python:
     name: pytest
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

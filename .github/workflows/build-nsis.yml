@@ -3,6 +3,10 @@ name: "[reusable] build-nsis"
 on:
   workflow_call:
     inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "windows-2022"
       input-artifact:
         required: false
         type: string
@@ -33,7 +37,7 @@ on:
 jobs:
   build-nsis:
     name: makensis
-    runs-on: windows-2022
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

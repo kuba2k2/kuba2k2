@@ -6,6 +6,10 @@ on:
       NPM_TOKEN:
         required: true
     inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
       node-version:
         required: false
         type: string
@@ -14,7 +18,7 @@ on:
 jobs:
   publish-npm:
     name: install & publish
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

@@ -2,6 +2,11 @@ name: "[reusable] version"
 
 on:
   workflow_call:
+    inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
     outputs:
       now-short:
         value: ${{ jobs.version.outputs.now-short }}
@@ -17,7 +22,7 @@ on:
 jobs:
   version:
     name: version number
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
     outputs:
       now-short: ${{ steps.version.outputs.now-short }}
       now-long: ${{ steps.version.outputs.now-long }}

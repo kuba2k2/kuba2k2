@@ -6,6 +6,10 @@ on:
       PYPI_TOKEN:
         required: true
     inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
       python-version:
         required: false
         type: string
@@ -14,7 +18,7 @@ on:
 jobs:
   publish-pypi:
     name: poetry build & publish
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

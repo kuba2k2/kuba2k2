@@ -3,6 +3,10 @@ name: "[reusable] gh-release"
 on:
   workflow_call:
     inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
       artifact:
         required: false
         type: string
@@ -13,7 +17,7 @@ on:
 jobs:
   gh-release:
     name: download, release
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4

@@ -5,11 +5,16 @@ on:
     secrets:
       PLATFORMIO_AUTH_TOKEN:
         required: true
+    inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
 
 jobs:
   publish-pio-platform:
     name: pio package publish
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

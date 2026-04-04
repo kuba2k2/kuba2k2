@@ -3,6 +3,10 @@ name: "[reusable] test-node"
 on:
   workflow_call:
     inputs:
+      runs-on:
+        required: false
+        type: string
+        default: "ubuntu-latest"
       node-version:
         required: false
         type: string
@@ -15,7 +19,7 @@ on:
 jobs:
   test-node:
     name: test
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

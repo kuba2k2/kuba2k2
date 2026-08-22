@@ -1,0 +1,3 @@
+[submodule "posts/writeups/arris-vip-custom-firmware/repo"]
+	path = posts/writeups/arris-vip-custom-firmware/repo
+	url = https://github.com/kuba2k2/vipboot

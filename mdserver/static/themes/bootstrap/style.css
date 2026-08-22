@@ -39,6 +39,10 @@ body {
 }
 
 /* PAGE CONTENT / ARTICLE */
+article {
+	text-align: justify;
+}
+
 article .table {
 	width: unset !important;
 }
